@@ -1,4 +1,4 @@
-# AGENTS.md — Guida operativa per agenti (ReCUPera-sito-completo)
+# AGENTS.md — Guida operativa per agenti (recupera-sito-completo)
 
 Questo file è l'unica fonte di istruzioni per agenti e contributori su questo repo. `CLAUDE.md` e `GEMINI.md` rimandano qui.
 
