@@ -1,0 +1,15 @@
+# File da NON caricare su Vercel (la CLI carica i file locali): segreti, dipendenze, build locali.
+# Le variabili d'ambiente di produzione stanno nel progetto Vercel, non in questi file.
+.env
+.env.*
+**/.env
+**/.env.*
+!**/.env.example
+node_modules
+**/node_modules
+dist
+**/dist
+vercel-out
+.vercel
+.DS_Store
+*.log

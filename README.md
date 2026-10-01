@@ -58,9 +58,13 @@ Dashboard e test server condividono lo stesso account admin (Supabase Auth, `app
 
 ## Pubblicazione su Vercel
 
+Produzione: **https://recupera-sito-completo.vercel.app** (progetto Vercel `recupera-sito-completo`). Deploy dalla CLI: `npx vercel deploy` (anteprima, protetta da Vercel Authentication) e `npx vercel deploy --prod`. Il repo GitHub non è collegato (l'app GitHub di Vercel non ha accesso all'organizzazione): per i deploy automatici a ogni push va autorizzata da GitHub.
+
 Su Vercel non ci sono processi sempre accesi, quindi il gateway non serve: le stesse regole sono in `vercel.json`.
 
 - **Statici** (CDN): `npm run build:vercel` costruisce la dashboard e prepara `vercel-out/` con landing, design, `/dashboard/`, `/prenota/`, `/test-server/` (`scripts/build-vercel.mjs`).
+- **404**: `api/non-trovato.js` risponde 404 con `web/404.html` a ogni indirizzo sconosciuto (altrimenti Vercel rimanderebbe alla landing con 200). Le chiamate dirette a `/api/prenota` ecc. danno 404.
+- **`.vercelignore`**: i `.env` locali, `node_modules` e le build non vengono mai caricati su Vercel.
 - **API** (funzioni serverless in `api/`): `api/prenota.js`, `api/dashboard.js`, `api/test-server.js` importano le app Express e tolgono il prefisso, come il gateway. Il reset del test server gira dentro la richiesta (`maxDuration` 300 s).
 - **Sicurezza** (intestazioni per tutto il sito in `vercel.json`): HSTS, Content Security Policy senza script inline, `X-Frame-Options: DENY`, `nosniff`, `Referrer-Policy`, `Permissions-Policy`; `no-store` sulle API. Login admin limitati a 10 tentativi ogni 5 minuti per IP (dashboard e test server), CORS chiuso (stessa origine), `service_role` e `DATABASE_URL` solo nelle variabili d'ambiente del progetto Vercel.
 

@@ -5,35 +5,103 @@
   "buildCommand": "npm run build:vercel",
   "outputDirectory": "vercel-out",
   "functions": {
-    "api/prenota.js": { "maxDuration": 30 },
-    "api/dashboard.js": { "maxDuration": 30 },
-    "api/test-server.js": { "maxDuration": 300 }
+    "api/prenota.js": {
+      "maxDuration": 30
+    },
+    "api/dashboard.js": {
+      "maxDuration": 30
+    },
+    "api/test-server.js": {
+      "maxDuration": 300
+    },
+    "api/non-trovato.js": {
+      "maxDuration": 10,
+      "includeFiles": "web/404.html"
+    }
   },
   "redirects": [
-    { "source": "/prenota", "destination": "/prenota/", "permanent": true },
-    { "source": "/dashboard", "destination": "/dashboard/", "permanent": true },
-    { "source": "/test-server", "destination": "/test-server/", "permanent": true }
+    {
+      "source": "/prenota",
+      "destination": "/prenota/",
+      "permanent": true
+    },
+    {
+      "source": "/dashboard",
+      "destination": "/dashboard/",
+      "permanent": true
+    },
+    {
+      "source": "/test-server",
+      "destination": "/test-server/",
+      "permanent": true
+    }
   ],
   "rewrites": [
-    { "source": "/prenota/api/:path*", "destination": "/api/prenota" },
-    { "source": "/prenota/health", "destination": "/api/prenota" },
-    { "source": "/prenota/client-config", "destination": "/api/prenota" },
-    { "source": "/dashboard/api/:path*", "destination": "/api/dashboard" },
-    { "source": "/test-server/api/:path*", "destination": "/api/test-server" },
-    { "source": "/prenota/design/:file*", "destination": "/design/:file*" },
-    { "source": "/test-server/design/:file*", "destination": "/design/:file*" },
-    { "source": "/dashboard/:path*", "destination": "/dashboard/index.html" }
+    {
+      "source": "/prenota/api/:path*",
+      "destination": "/api/prenota"
+    },
+    {
+      "source": "/prenota/health",
+      "destination": "/api/prenota"
+    },
+    {
+      "source": "/prenota/client-config",
+      "destination": "/api/prenota"
+    },
+    {
+      "source": "/dashboard/api/:path*",
+      "destination": "/api/dashboard"
+    },
+    {
+      "source": "/test-server/api/:path*",
+      "destination": "/api/test-server"
+    },
+    {
+      "source": "/prenota/design/:file*",
+      "destination": "/design/:file*"
+    },
+    {
+      "source": "/test-server/design/:file*",
+      "destination": "/design/:file*"
+    },
+    {
+      "source": "/dashboard/:path*",
+      "destination": "/dashboard/index.html"
+    },
+    {
+      "source": "/(.*)",
+      "destination": "/api/non-trovato"
+    }
   ],
   "headers": [
     {
       "source": "/(.*)",
       "headers": [
-        { "key": "Strict-Transport-Security", "value": "max-age=63072000; includeSubDomains; preload" },
-        { "key": "X-Content-Type-Options", "value": "nosniff" },
-        { "key": "X-Frame-Options", "value": "DENY" },
-        { "key": "Referrer-Policy", "value": "strict-origin-when-cross-origin" },
-        { "key": "Permissions-Policy", "value": "camera=(), microphone=(), geolocation=(), payment=(), usb=()" },
-        { "key": "Cross-Origin-Opener-Policy", "value": "same-origin" },
+        {
+          "key": "Strict-Transport-Security",
+          "value": "max-age=63072000; includeSubDomains; preload"
+        },
+        {
+          "key": "X-Content-Type-Options",
+          "value": "nosniff"
+        },
+        {
+          "key": "X-Frame-Options",
+          "value": "DENY"
+        },
+        {
+          "key": "Referrer-Policy",
+          "value": "strict-origin-when-cross-origin"
+        },
+        {
+          "key": "Permissions-Policy",
+          "value": "camera=(), microphone=(), geolocation=(), payment=(), usb=()"
+        },
+        {
+          "key": "Cross-Origin-Opener-Policy",
+          "value": "same-origin"
+        },
         {
           "key": "Content-Security-Policy",
           "value": "default-src 'self'; script-src 'self'; script-src-attr 'none'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data:; connect-src 'self' https://jjkxvbjwruobclgwhtdt.supabase.co; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; upgrade-insecure-requests"
@@ -42,7 +110,12 @@
     },
     {
       "source": "/(prenota|dashboard|test-server)/api/(.*)",
-      "headers": [{ "key": "Cache-Control", "value": "no-store" }]
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "no-store"
+        }
+      ]
     }
   ]
 }
