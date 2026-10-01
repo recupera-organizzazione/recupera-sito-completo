@@ -99,17 +99,23 @@ Errori sempre nel formato `{ "error": { "code", "message" } }`. 🔒 = richiede 
 | GET | `/catalogo` | ASL, prestazioni, strutture, medici e offerta, per tradurre gli id di slot e prenotazioni |
 | GET | `/prenotazioni` 🔒 | filtri: `tipo` (`loggata`, `fittizia`, `tutte`), `stato` (`booked`, `cancelled`, `tutti`), `prestazione`, `struttura`, `paziente`, `da`, `a` (YYYY-MM-DD), `limit` (max 500), `offset` |
 | POST | `/test/disdici-casuale` 🔒 | `{ target_id? }` disdice una prenotazione fittizia compatibile con una prenotazione reale (vedi sotto) |
-| POST | `/test/prenotazione-prova` 🔒 | `{ prestazione? }` l'utente di prova (`utente.prova@prenota.recupera.test`) prenota uno slot libero tra 30 e 120 giorni con `public.book_available_slot`; la prenotazione risulta loggata |
+| POST | `/test/prenotazione-prova` 🔒 | `{ prestazione? }` l'account di prova con login (`paziente.test@prenota.recupera.test`, altrimenti `utente.prova@…` senza login) prenota uno dei primi slot liberi con `public.book_available_slot`; la prenotazione risulta loggata e può ricevere proposte di anticipo |
 | GET | `/test/disdette` 🔒 | ultime 50 disdette di test |
+| POST | `/test/reset` 🔒 | `{ conferma: "RESET" }` riporta il database allo stato iniziale (vedi sotto); risponde `202` e prosegue in background |
+| GET | `/test/reset` 🔒 | stato dell'ultimo reset: `stato` (`mai_eseguito`, `in_corso`, `completato`, `errore`), `passi`, `passo`, `dettagli` |
 | GET | `/slot/liberi` 🔒 | slot futuri liberi con nomi dal catalogo; filtri `prestazione`, `struttura`, `asl`, `da`, `a`, `limit`, `offset`; in più `mesi` (liberi per mese) e `primi` (prima disponibilità per prestazione); `da_disdetta` = slot liberato da una disdetta |
 | GET | `/statistiche/centri` 🔒 | `da`, `a` (default: prossime 8 settimane) → slot, prenotati, liberi e riempimento per struttura, dal più pieno |
 | GET | `/statistiche/dataset` 🔒 | confronto per ASL e prestazione tra prenotazioni settimanali del dataset e simulate, con pressione e riempimento |
 
+### Reset del database
+
+Pulsante **Resetta il database** nella scheda *Test disdetta* (chiede di scrivere `RESET`). In **una sola transazione** (circa 80 secondi; se fallisce non cambia nulla): svuota `slots`, `appointments`, `waiting_list`, `notifications`, `cancellation_events`, `slot_offers` e `test_server.disdette_test` — **anche le prenotazioni degli utenti reali**, gli account restano — poi rigenera l'agenda da domani al 31/12/2028 con solo prenotazioni fittizie (come i seed 04 e 05: liste piene fino a fine 2027, 2028 calibrato sul dataset). Funzioni `test_server.reset_svuota`, `reset_genera_anno`, `reset_riempi_anno` (migrazione `20261001230100_reset_e_proposte.sql`). Durante il reset Prenota e dashboard restano in attesa.
+
 ### Disdetta casuale compatibile
 
-1. Sceglie un **target reale**: la prenotazione loggata indicata da `target_id`, oppure una a caso tra quelle future (oltre 2 giorni). Se non ce ne sono, usa una voce di lista d'attesa di un utente reale.
-2. Cerca a caso una **prenotazione fittizia compatibile**: stessa prestazione, slot tra più di 24 ore e **prima** di quello del target, preferendo la stessa ASL (per la lista d'attesa rispetta strutture, medici e finestra di date richieste).
-3. La disdice con `public.cancel_appointment_and_reallocate` (logica del team Prenota): lo slot torna libero o viene riassegnato dalla lista d'attesa.
+1. Sceglie un **target reale**: la prenotazione indicata da `target_id`, oppure una a caso tra quelle future (oltre 2 giorni), di un utente che può ricevere proposte (`public.is_real_patient`: reale e con login) e senza una proposta già in sospeso. Se non ce ne sono, usa una voce di lista d'attesa di un utente reale.
+2. Cerca a caso una **prenotazione fittizia compatibile**: stessa prestazione esatta (catalogo `offerta`), slot tra più di 24 ore e **prima** di quello del target, senza sovrapposizioni, preferendo la stessa ASL (per la lista d'attesa rispetta strutture, medici e finestra di date richieste).
+3. La disdice con `public.cancel_appointment_and_reallocate`: lo slot va alla lista d'attesa reale oppure diventa una **proposta di anticipo** per un utente reale con una prenotazione successiva (vedi `apps/prenota/README.md`), che la accetta o rifiuta da Prenota. I pazienti fittizi non ricevono mai nulla.
 4. Risponde con slot liberato, target e giorni di anticipo possibili; registra tutto in `test_server.disdette_test`.
 
 Se non esistono prenotazioni reali o nessuna è compatibile risponde `404 nessuna_compatibile`.

@@ -68,6 +68,11 @@
         </section>
 
         <section class="view-panel" data-panel="overview">
+          <section id="offerPanel" class="surface offer-panel hidden" aria-labelledby="offerTitle">
+            <div class="surface-heading"><div><p class="eyebrow">PROPOSTE DI ANTICIPO</p><h2 id="offerTitle">Si è liberato un posto prima</h2></div><span id="offerCount" class="count-badge">0</span></div>
+            <p class="muted-copy">Una disdetta ha liberato una visita prima della tua. Se accetti, il nuovo appuntamento sostituisce quello attuale; se rifiuti, mantieni la tua prenotazione.</p>
+            <div id="offerList" class="offer-list" aria-live="polite"></div>
+          </section>
           <div class="overview-grid">
             <section class="surface patient-only"><div class="surface-heading"><div><p class="eyebrow">DISPONIBILITÀ</p><h2>Trova una visita</h2></div><span id="slotListCount" class="count-badge">0</span></div>
               <form id="slotSearchForm" class="slot-search">

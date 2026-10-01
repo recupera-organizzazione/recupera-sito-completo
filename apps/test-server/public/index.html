@@ -267,9 +267,10 @@ summary { cursor: pointer; color: var(--accento); font-weight: 600; margin-botto
         <div class="card">
           <h2>1. Prenotazione di un utente loggato</h2>
           <p class="muted">
-            Crea una prenotazione con l'<em>utente di prova</em> (utente.prova@prenota.recupera.test), che risulta
-            "loggata", su una delle prime disponibilità. In alternativa registrati su <a href="/prenota/" target="_blank" rel="noopener">App Prenota</a>
-            e prenota da lì: anche quelle prenotazioni risultano loggate.
+            Crea una prenotazione con l'account di prova <em>paziente.test@prenota.recupera.test</em> (ha il login su Prenota:
+            password da chi gestisce il progetto) su una delle prime disponibilità, di solito nel 2028.
+            In alternativa registrati su <a href="/prenota/" target="_blank" rel="noopener">App Prenota</a> e prenota da lì.
+            Le proposte di anticipo arrivano solo a utenti reali con login, mai ai pazienti fittizi.
           </p>
           <form id="prova-form" class="filtri">
             <label>Prestazione <select name="prestazione" class="sel-prestazione"><option value="">Qualsiasi</option></select></label>
@@ -281,14 +282,28 @@ summary { cursor: pointer; color: var(--accento); font-weight: 600; margin-botto
         <div class="card">
           <h2>2. Disdetta casuale compatibile</h2>
           <p class="muted">
-            Disdice a caso una prenotazione fittizia con la stessa prestazione e uno slot precedente
-            a quello di una prenotazione loggata (stessa ASL se possibile). Lascia vuoto l'ID per scegliere il target a caso.
+            Disdice a caso una prenotazione fittizia della stessa prestazione e precedente a quella di un utente reale
+            (stessa ASL se possibile). Lo slot liberato va alla lista d'attesa reale oppure diventa una
+            <strong>proposta di anticipo</strong>: l'utente reale con una prenotazione successiva la vede in Prenota
+            (Panoramica) con data, struttura, ASL e i pulsanti Accetta / Rifiuta. Lascia vuoto l'ID per scegliere il target a caso.
           </p>
           <form id="disdici-form" class="filtri">
             <label>ID prenotazione target (opzionale) <input name="target_id" size="38" placeholder="uuid"></label>
             <button type="submit" class="pericolo">Disdici a caso</button>
           </form>
           <div id="disdici-esito" class="esito-box" hidden></div>
+        </div>
+
+        <div class="card">
+          <h2>3. Reset del database</h2>
+          <p class="muted">
+            Riporta il database allo stato iniziale: agenda da domani al 31/12/2028 con <strong>solo prenotazioni fittizie</strong>
+            (liste piene fino a fine 2027, 2028 calibrato sul dataset). Cancella tutte le prenotazioni, liste d'attesa,
+            proposte, notifiche e disdette, <strong>anche quelle degli utenti reali</strong>; gli account restano.
+            Dura qualche minuto e nel frattempo Prenota e dashboard sono bloccate. Se qualcosa va storto non cambia nulla.
+          </p>
+          <div class="filtri"><button id="reset-avvia" type="button" class="pericolo">Resetta il database</button></div>
+          <div id="reset-stato" class="esito-box" hidden aria-live="polite"></div>
         </div>
 
         <div class="card">
@@ -419,7 +434,7 @@ for (const tab of document.querySelectorAll('button.tab')) {
     for (const p of document.querySelectorAll('.pannello')) p.hidden = p.id !== `tab-${tab.dataset.tab}`;
     if (tab.dataset.tab === 'prenotazioni') caricaPrenotazioni();
     if (tab.dataset.tab === 'slot') caricaSlot();
-    if (tab.dataset.tab === 'test') caricaDisdette();
+    if (tab.dataset.tab === 'test') { caricaDisdette(); seguiReset().catch(() => {}); }
   });
 }
 
@@ -548,6 +563,18 @@ $('#slot-prec').addEventListener('click', () => { offsetSlot = Math.max(0, offse
 $('#slot-succ').addEventListener('click', () => { offsetSlot += LIMITE_SLOT; caricaSlot(); });
 
 // --- test disdetta ---
+function descriviEsitoPrenota(r) {
+  const p = r.risultato_prenota;
+  if (p.reallocated) return 'Prenota: slot riassegnato dalla lista d\'attesa a un utente reale';
+  const o = p.offer;
+  if (o?.offered) {
+    const chi = o.patientId === r.target.patient_id ? 'all\'utente del target' : `a un altro utente reale (${o.patientId.slice(0, 8)}…), in attesa da più tempo`;
+    return `Prenota: proposta di anticipo inviata ${chi}: ${o.daysSaved} giorni prima della sua prenotazione del ${dataOra(o.currentStartAt)}. `
+      + `La vede in Prenota con Accetta / Rifiuta fino al ${dataOra(o.expiresAt)}.`;
+  }
+  return 'Prenota: slot tornato libero, nessun utente reale con una prenotazione successiva compatibile';
+}
+
 function nomePrestazione(id) {
   return catalogo?.prestazioni.find((p) => p.id === id)?.descrizione ?? id;
 }
@@ -593,9 +620,7 @@ $('#disdici-form').addEventListener('submit', (e) => {
         el('div', {}, t.tipo === 'prenotazione'
           ? `Target: prenotazione loggata del ${dataOra(t.starts_at)} a ${nomeStruttura(t.facility_id)} → anticipo possibile di ${t.giorni_anticipo} giorni`
           : `Target: lista d'attesa ${t.waiting_list_id}`),
-        el('div', {}, r.risultato_prenota.reallocated
-          ? 'Prenota: slot riassegnato automaticamente dalla lista d\'attesa'
-          : 'Prenota: slot tornato libero (available), pronto per essere proposto'),
+        el('div', {}, descriviEsitoPrenota(r)),
         el('div', { class: 'id' }, `slot ${d.slot_id}`),
       );
       caricaDisdette();
@@ -605,6 +630,46 @@ $('#disdici-form').addEventListener('submit', (e) => {
     }
     box.hidden = false;
   });
+});
+
+// --- reset del database ---
+function mostraReset(r) {
+  const box = $('#reset-stato');
+  if (!r || r.stato === 'mai_eseguito') { box.hidden = true; return; }
+  const titolo = { in_corso: 'Reset in corso…', completato: 'Reset completato', errore: 'Reset non riuscito: nessun dato modificato' }[r.stato];
+  box.classList.toggle('errore-box', r.stato === 'errore');
+  box.replaceChildren(
+    el('strong', {}, titolo),
+    ...r.passi.map((passo, i) => el('div', {}, `${i < r.passo || r.stato === 'completato' ? '✓' : i === r.passo && r.stato === 'in_corso' ? '…' : '·'} ${passo}`)),
+    ...(r.stato === 'completato' ? [el('div', {}, `Generati: ${r.dettagli.map((d) => `${d.anno} ${d.slot != null ? `${d.slot} slot, ` : ''}${d.prenotazioni} prenotazioni fittizie`).join(' · ')}`)] : []),
+    ...(r.errore ? [el('div', {}, r.errore)] : []),
+    el('div', { class: 'id' }, `avviato da ${r.admin} il ${dataOra(r.iniziato)}${r.finito ? `, finito il ${dataOra(r.finito)}` : ''}`),
+  );
+  box.hidden = false;
+}
+async function seguiReset() {
+  const bottone = $('#reset-avvia');
+  let r;
+  do {
+    r = await api('/test/reset');
+    mostraReset(r);
+    bottone.disabled = r.stato === 'in_corso';
+    if (r.stato === 'in_corso') await new Promise((ok) => setTimeout(ok, 2000));
+  } while (r.stato === 'in_corso');
+  if (r.stato === 'completato') caricaDisdette();
+}
+$('#reset-avvia').addEventListener('click', async () => {
+  const conferma = window.prompt('Il reset cancella TUTTE le prenotazioni (anche degli utenti reali) e rigenera quelle fittizie fino al 2028.\nScrivi RESET per confermare.');
+  if (conferma !== 'RESET') return;
+  try {
+    mostraReset(await api('/test/reset', { method: 'POST', body: JSON.stringify({ conferma: 'RESET' }) }));
+    await seguiReset();
+  } catch (err) {
+    const box = $('#reset-stato');
+    box.classList.add('errore-box');
+    box.replaceChildren(el('div', {}, err.message));
+    box.hidden = false;
+  }
 });
 
 async function caricaDisdette() {
@@ -617,7 +682,7 @@ async function caricaDisdette() {
         `${nomePrestazione(esito.disdetta.specialty_id)} · ${nomeStruttura(esito.disdetta.facility_id)} · ${dataOra(esito.disdetta.starts_at)}`,
         esito.target.tipo === 'prenotazione' ? dataOra(esito.target.starts_at) : 'lista d\'attesa',
         tdNum(esito.target.giorni_anticipo != null ? `${esito.target.giorni_anticipo} gg` : '–'),
-        esito.risultato_prenota.reallocated ? 'riassegnato' : 'libero')));
+        esito.risultato_prenota.reallocated ? 'riassegnato' : esito.risultato_prenota.offer?.offered ? 'proposto' : 'libero')));
   } catch (err) {
     messaggio(corpo, 6, err.message);
   }

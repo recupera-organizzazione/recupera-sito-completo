@@ -1,7 +1,7 @@
 const storageKeys = { session: 'recupera_test_session' };
 const $ = selector => document.querySelector(selector);
 const $$ = selector => [...document.querySelectorAll(selector)];
-const state = { session: readSession(), recoveryAccessToken: null, config: {}, slots: [], slotCatalog: [], activeSlotQuery: '', slotSearchApplied: false, waitlistAutoStatus: null, appointments: [], waiting: [], notifications: [], notificationsLoaded: false, authMode: 'login' };
+const state = { session: readSession(), recoveryAccessToken: null, config: {}, slots: [], slotCatalog: [], activeSlotQuery: '', slotSearchApplied: false, waitlistAutoStatus: null, appointments: [], waiting: [], notifications: [], notificationsLoaded: false, offers: [], offersLoaded: false, authMode: 'login' };
 let toastTimer;
 
 function readSession() {
@@ -121,6 +121,8 @@ function showWorkspace() {
   state.slotCatalog = [];
   state.notifications = [];
   state.notificationsLoaded = false;
+  state.offers = [];
+  state.offersLoaded = false;
   const user = state.session?.user || {};
   const firstName = user.user_metadata?.first_name || '';
   const lastName = user.user_metadata?.last_name || '';
@@ -152,7 +154,7 @@ async function loadDashboard() {
   try {
     const calls = [];
     if (state.slotSearchApplied) calls.push(apiRequest(`api/slots?${state.activeSlotQuery}`));
-    if (!isStaff()) calls.push(apiRequest('api/appointments/me'), apiRequest('api/waitlist/me'), apiRequest('api/notifications/me'));
+    if (!isStaff()) calls.push(apiRequest('api/appointments/me'), apiRequest('api/waitlist/me'), apiRequest('api/notifications/me'), apiRequest('api/offers/me'));
     const result = await Promise.all(calls);
     const previousNotificationIds = new Set(state.notifications.map(item => item.id));
     let resultIndex = 0;
@@ -162,15 +164,21 @@ async function loadDashboard() {
       renderSlotSearchOptions();
     }
     let newWaitlistMatch = false;
+    let newOffer = false;
     if (!isStaff()) {
+      const previousOfferIds = new Set(state.offers.map(item => item.id));
       state.appointments = result[resultIndex++].items || [];
       state.waiting = result[resultIndex++].items || [];
-      state.notifications = result[resultIndex].items || [];
+      state.notifications = result[resultIndex++].items || [];
+      state.offers = result[resultIndex].items || [];
       newWaitlistMatch = state.notificationsLoaded && state.notifications.some(item => item.type === 'waitlist_match' && !previousNotificationIds.has(item.id));
+      newOffer = state.offersLoaded && state.offers.some(item => item.status === 'pending' && !previousOfferIds.has(item.id));
       state.notificationsLoaded = true;
+      state.offersLoaded = true;
     }
     renderDashboard();
     if (newWaitlistMatch) notify('Si è liberata una visita compatibile con la tua lista d’attesa.');
+    if (newOffer) notify('Hai una nuova proposta per anticipare una visita.');
     setApiStatus(true);
   } catch (error) {
     notify(error.message, true);
@@ -190,7 +198,30 @@ function slotRow(slot, staff = false) {
   const patientField = staff ? `<input class="patient-id-input" data-patient-for="${escapeHtml(slot.id)}" aria-label="ID paziente" placeholder="ID paziente">` : '';
   return `<article class="list-row"><div class="row-main"><strong>${escapeHtml(slot.specialtyId)}</strong><span>${escapeHtml(slot.facilityId)}${slot.professionalId ? ` · ${escapeHtml(slot.professionalId)}` : ''}</span></div><div class="row-detail">${escapeHtml(formatDate(slot.startAt))}<br>fino alle ${escapeHtml(endTime)}</div><div class="row-actions">${patientField}<button class="button button-primary" type="button" data-book="${escapeHtml(slot.id)}">Prenota</button></div></article>`;
 }
+function offerPlace(place) {
+  const struttura = place.struttura ? `${place.struttura}${place.comune ? ` · ${place.comune}` : ''}` : place.facilityId;
+  return place.aslNome ? `${struttura} (${place.aslNome})` : struttura;
+}
+function offerCard(offer) {
+  const slot = offer.slot;
+  const days = Number(offer.daysSaved) || 0;
+  const facts = [
+    ['Nuova data', formatDate(slot.startAt)],
+    ['Struttura', slot.struttura ? `${slot.struttura}${slot.comune ? ` · ${slot.comune}` : ''}` : slot.facilityId],
+    ['ASL', slot.aslNome ? `${slot.aslNome} (${slot.aslSigla})` : 'Non indicata'],
+    ['Medico', slot.professionalId || 'Non indicato'],
+    ['Oggi prenotata', `${formatDate(offer.current.startAt)} · ${offerPlace(offer.current)}`]
+  ];
+  return `<article class="offer-card"><div class="offer-main"><p class="offer-kicker">${escapeHtml(slot.specialtyId)}</p><strong class="offer-title">${escapeHtml(slot.prestazione || slot.specialtyId)}</strong><dl class="offer-facts">${facts.map(([label, value]) => `<div><dt>${escapeHtml(label)}</dt><dd>${escapeHtml(value)}</dd></div>`).join('')}</dl></div><div class="offer-side"><p class="offer-days"><strong>${escapeHtml(days)}</strong> ${days === 1 ? 'giorno' : 'giorni'} prima</p><small>Rispondi entro ${escapeHtml(formatDate(offer.expiresAt))}</small><button class="button button-primary button-wide" type="button" data-offer-accept="${escapeHtml(offer.id)}">Accetta <span aria-hidden="true">→</span></button><button class="button button-outline button-wide" type="button" data-offer-reject="${escapeHtml(offer.id)}">Rifiuta</button></div></article>`;
+}
+function renderOffers() {
+  const pending = isStaff() ? [] : state.offers.filter(item => item.status === 'pending');
+  $('#offerPanel').classList.toggle('hidden', !pending.length);
+  $('#offerCount').textContent = pending.length;
+  $('#offerList').innerHTML = pending.map(offerCard).join('');
+}
 function renderDashboard() {
+  renderOffers();
   const activeAppointments = state.appointments.filter(item => item.status === 'booked').length;
   const activeWaitlist = state.waiting.filter(item => item.status === 'waiting').length;
   $('#appointmentCount').textContent = activeAppointments;
@@ -211,7 +242,7 @@ function renderDashboard() {
   $('#staffSlotList').innerHTML = state.slots.length ? state.slots.map(slot => slotRow(slot, true)).join('') : emptyState('Non ci sono slot disponibili.');
   $('#appointmentList').innerHTML = state.appointments.length ? state.appointments.map(item => `<article class="list-row"><div class="row-main"><strong>${escapeHtml(item.specialtyId)}</strong><span>${escapeHtml(item.facilityId)}</span></div><div class="row-detail">${escapeHtml(formatDate(item.startAt))}<br>${escapeHtml(item.status === 'booked' ? 'Confermato' : 'Annullato')}</div><div class="row-actions">${item.status === 'booked' ? `<button class="button button-danger" type="button" data-cancel="${escapeHtml(item.id)}">Annulla</button>` : ''}</div></article>`).join('') : emptyState('Non hai ancora appuntamenti.');
   $('#waitingList').innerHTML = state.waiting.length ? state.waiting.map(item => `<article class="list-row"><div class="row-main"><strong>${escapeHtml(item.specialtyId)}</strong><span>${escapeHtml((item.facilityIds || []).join(', ') || 'Qualsiasi sede')}</span></div><div class="row-detail">${escapeHtml(item.status === 'waiting' ? 'In attesa' : item.status === 'matched' ? 'Abbinata' : 'Ritirata')}<br>Inserita il ${escapeHtml(formatDate(item.createdAt, false))}</div><div class="row-actions">${item.status === 'waiting' ? `<button class="button button-danger" type="button" data-withdraw="${escapeHtml(item.id)}">Ritira</button>` : ''}</div></article>`).join('') : emptyState('La lista d’attesa è vuota.');
-  $('#notificationList').innerHTML = state.notifications.length ? state.notifications.slice(0, 4).map(item => `<article class="list-row"><div class="row-main"><strong>${escapeHtml(item.type === 'waitlist_match' ? 'È disponibile un appuntamento' : item.type)}</strong><span>${escapeHtml(item.type === 'waitlist_match' && item.status === 'pending' ? 'Nuova disponibilità' : item.status)}</span></div><div class="row-detail">${escapeHtml(formatDate(item.createdAt))}</div><span class="row-id">${escapeHtml(item.slotId.slice(0, 8))}</span></article>`).join('') : emptyState('Nessuna notifica recente.');
+  $('#notificationList').innerHTML = state.notifications.length ? state.notifications.slice(0, 4).map(item => `<article class="list-row"><div class="row-main"><strong>${escapeHtml(item.type === 'waitlist_match' ? 'È disponibile un appuntamento' : item.type === 'slot_offer' ? 'Proposta di anticipo' : item.type)}</strong><span>${escapeHtml(item.type === 'waitlist_match' && item.status === 'pending' ? 'Nuova disponibilità' : item.type === 'slot_offer' ? 'Rispondi dalla Panoramica' : item.status)}</span></div><div class="row-detail">${escapeHtml(formatDate(item.createdAt))}</div><span class="row-id">${escapeHtml(item.slotId.slice(0, 8))}</span></article>`).join('') : emptyState('Nessuna notifica recente.');
 }
 function valuesFrom(form) { return Object.fromEntries(new FormData(form).entries()); }
 function toIso(value) { return value ? new Date(value).toISOString() : undefined; }
@@ -401,7 +432,24 @@ document.addEventListener('click', async event => {
   const book = event.target.closest('[data-book]');
   const cancel = event.target.closest('[data-cancel]');
   const withdraw = event.target.closest('[data-withdraw]');
+  const acceptOffer = event.target.closest('[data-offer-accept]');
+  const rejectOffer = event.target.closest('[data-offer-reject]');
   try {
+    if (acceptOffer || rejectOffer) {
+      const offer = state.offers.find(item => item.id === (acceptOffer || rejectOffer).dataset[acceptOffer ? 'offerAccept' : 'offerReject']);
+      if (!offer) return;
+      if (acceptOffer && !window.confirm(`Confermi il nuovo appuntamento del ${formatDate(offer.slot.startAt)}? La prenotazione del ${formatDate(offer.current.startAt)} verrà annullata.`)) return;
+      const button = acceptOffer || rejectOffer;
+      button.disabled = true;
+      try {
+        await apiRequest(`api/offers/${encodeURIComponent(offer.id)}/${acceptOffer ? 'accept' : 'reject'}`, { method: 'POST', body: '{}' });
+        notify(acceptOffer ? 'Appuntamento anticipato. La prenotazione precedente è stata annullata.' : 'Proposta rifiutata: mantieni la prenotazione attuale.');
+      } finally {
+        button.disabled = false;
+        await loadDashboard();
+      }
+      return;
+    }
     if (book) {
       const body = {};
       if (isStaff()) {

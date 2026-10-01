@@ -24,6 +24,9 @@ app.disable('x-powered-by');
 if (process.env.TRUST_PROXY === '1') app.set('trust proxy', 1);
 const cspDirectives = helmet.contentSecurityPolicy.getDefaultDirectives();
 cspDirectives.connectSrc = ["'self'", new URL(process.env.SUPABASE_URL).origin];
+// In locale si usa http: Safari applica upgrade-insecure-requests anche a localhost e
+// chiederebbe CSS e JS in https (pagina senza stile). Resta attiva solo in produzione.
+if (process.env.NODE_ENV !== 'production') cspDirectives['upgrade-insecure-requests'] = null;
 app.use(helmet({ contentSecurityPolicy: { directives: cspDirectives } }));
 app.use(express.static(path.join(__dirname, '..', 'public')));
 // Design system condiviso del sito completo (cartella design/ nella radice del monorepo).
@@ -77,8 +80,15 @@ app.get('/api/slots', requireRole('patient', 'operator', 'admin'), async (req, r
     if (filters.specialtyId) query = query.eq('specialty_id', filters.specialtyId);
     if (filters.facilityId) query = query.eq('facility_id', filters.facilityId);
     if (filters.to) query = query.lte('starts_at', filters.to);
-    const { data, error } = await query.order('starts_at').limit(100);
+    const { data: found, error } = await query.order('starts_at').limit(100);
     raise(error);
+    // Gli slot con una proposta di anticipo in sospeso sono riservati a chi l'ha ricevuta.
+    const { data: offered, error: offerError } = found.length
+      ? await supabase.from('slot_offers').select('slot_id').eq('status', 'pending').in('slot_id', found.map(v => v.id))
+      : { data: [], error: null };
+    raise(offerError);
+    const reserved = new Set(offered.map(v => v.slot_id));
+    const data = found.filter(v => !reserved.has(v.id));
     res.json({ items: data.map(v => ({ id: v.id, specialtyId: v.specialty_id, facilityId: v.facility_id, professionalId: v.professional_id, startAt: v.starts_at, endAt: v.ends_at })) });
   } catch (err) { next(err); }
 });
@@ -157,6 +167,38 @@ app.get('/api/notifications/me', requireRole('patient'), async (req, res, next) 
     res.json({ items: data.map(v => ({ id: v.id, type: v.type, appointmentId: v.appointment_id, slotId: v.slot_id, status: v.status, createdAt: v.created_at })) });
   } catch (err) { next(err); }
 });
+
+// Proposte di anticipo: slot liberati da una disdetta proposti al paziente (vedi
+// supabase/migrations/20261001230000_proposte_anticipo.sql). Il paziente accetta o rifiuta.
+app.get('/api/offers/me', requireRole('patient'), async (req, res, next) => {
+  try {
+    const { data, error } = await supabase.rpc('patient_slot_offers', { p_patient_id: req.user.uid });
+    raise(error);
+    res.json({ items: data || [] });
+  } catch (err) { next(err); }
+});
+
+const offerOutcomes = {
+  accepted: [200, null],
+  rejected: [200, null],
+  expired: [409, 'La proposta è scaduta: lo slot è passato al prossimo in attesa.'],
+  already_answered: [409, 'Hai già risposto a questa proposta.'],
+  slot_unavailable: [409, 'Lo slot non è più disponibile.'],
+  appointment_inactive: [409, 'La prenotazione da anticipare non è più attiva.']
+};
+for (const [action, accept] of [['accept', true], ['reject', false]]) {
+  app.post(`/api/offers/:offerId/${action}`, requireRole('patient'), async (req, res, next) => {
+    try {
+      const { data, error } = await supabase.rpc('respond_slot_offer', {
+        p_offer_id: id.parse(req.params.offerId), p_patient_id: req.user.uid, p_accept: accept
+      });
+      raise(error);
+      const [status, message] = offerOutcomes[data.status] || [500, 'Esito sconosciuto.'];
+      if (message) return res.status(status).json({ error: message });
+      res.json(data);
+    } catch (err) { next(err); }
+  });
+}
 
 app.get('/api/analytics/summary', requireRole('regional_admin', 'admin'), async (req, res, next) => {
   try {

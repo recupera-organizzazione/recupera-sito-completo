@@ -55,3 +55,55 @@ testRouter.get('/disdette', soloAdmin, async (req, res) => {
   );
   res.json({ disdette: rows });
 });
+
+// Reset del database allo stato iniziale (funzioni test_server.reset_*, migrazione
+// 20261001230100_reset_e_proposte.sql): agenda da domani al 2028 con SOLO prenotazioni fittizie,
+// nessuna prenotazione, lista d'attesa, proposta o disdetta di utenti reali (gli account restano).
+// Una sola transazione: se una fase fallisce non cambia nulla. Dura qualche minuto, quindi parte in
+// background e lo stato si legge con GET /reset.
+const resetSchema = z.object({ conferma: z.literal('RESET') });
+let reset = { stato: 'mai_eseguito' };
+
+async function eseguiReset(passi) {
+  const client = await pool.connect();
+  try {
+    await client.query('begin');
+    await client.query("set local statement_timeout = '30min'");
+    for (const [i, [, sql, parametri]] of passi.entries()) {
+      reset.passo = i;
+      const { rows } = await client.query(sql, parametri);
+      if (rows[0]?.r) reset.dettagli.push(rows[0].r);
+    }
+    await client.query('commit');
+    await client.query('analyze public.slots, public.appointments');
+    reset = { ...reset, stato: 'completato', passo: passi.length, finito: new Date().toISOString() };
+  } catch (err) {
+    await client.query('rollback').catch(() => {});
+    console.error('Reset non riuscito:', err);
+    reset = { ...reset, stato: 'errore', errore: err.message, finito: new Date().toISOString() };
+  } finally {
+    client.release();
+  }
+}
+
+testRouter.get('/reset', soloAdmin, (req, res) => {
+  res.json(reset);
+});
+
+testRouter.post('/reset', soloAdmin, async (req, res) => {
+  validazione(resetSchema, req.body ?? {});
+  if (reset.stato === 'in_corso') throw new ApiError(409, 'reset_in_corso', 'Un reset è già in corso');
+  const anni = [];
+  for (let anno = new Date().getFullYear(); anno <= 2028; anno++) anni.push(anno);
+  const passi = [
+    ["Svuoto prenotazioni, slot, liste d'attesa, proposte, notifiche e disdette", 'select test_server.reset_svuota()'],
+    ...anni.map((anno) => [`Genero agenda e prenotazioni fittizie del ${anno}`, 'select test_server.reset_genera_anno($1) as r', [anno]]),
+    ...anni.filter((anno) => anno < 2028).map((anno) => [`Riempio le agende del ${anno} (liste piene fino al 2027)`, 'select test_server.reset_riempi_anno($1) as r', [anno]]),
+  ];
+  reset = {
+    stato: 'in_corso', passo: 0, passi: passi.map(([descrizione]) => descrizione),
+    iniziato: new Date().toISOString(), admin: req.admin.username, dettagli: [],
+  };
+  eseguiReset(passi);
+  res.status(202).json(reset);
+});

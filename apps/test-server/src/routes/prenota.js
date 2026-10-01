@@ -96,7 +96,9 @@ const slotJson = (v) => ({ id: v.id, specialtyId: v.specialty_id, facilityId: v.
 prenotaRouter.get('/api/slots', ruolo('patient', 'operator', 'admin'), async (req, res) => {
   const { rows } = await pool.query(
     `select id, specialty_id, facility_id, professional_id, starts_at, ends_at from public.slots
-     where status = 'available' and starts_at >= now() order by starts_at limit 100`,
+     where status = 'available' and starts_at >= now()
+       and not exists (select 1 from public.slot_offers so where so.slot_id = slots.id and so.status = 'pending')
+     order by starts_at limit 100`,
   );
   res.json({ items: rows.map(slotJson) });
 });
@@ -171,6 +173,33 @@ prenotaRouter.get('/api/notifications/me', ruolo('patient'), async (req, res) =>
     'select * from public.notifications where user_id = $1 order by created_at desc limit 100', [req.user.uid]);
   res.json({ items: rows.map((v) => ({ id: v.id, type: v.type, appointmentId: v.appointment_id, slotId: v.slot_id, status: v.status, createdAt: v.created_at })) });
 });
+
+// Proposte di anticipo (stesso contratto di apps/prenota/src/server.js).
+prenotaRouter.get('/api/offers/me', ruolo('patient'), async (req, res) => {
+  const { rows } = await pool.query('select public.patient_slot_offers($1) as items', [req.user.uid]);
+  res.json({ items: rows[0].items });
+});
+
+const esitiProposta = {
+  accepted: [200, null],
+  rejected: [200, null],
+  expired: [409, 'La proposta è scaduta: lo slot è passato al prossimo in attesa.'],
+  already_answered: [409, 'Hai già risposto a questa proposta.'],
+  slot_unavailable: [409, 'Lo slot non è più disponibile.'],
+  appointment_inactive: [409, 'La prenotazione da anticipare non è più attiva.'],
+};
+for (const [azione, accetta] of [['accept', true], ['reject', false]]) {
+  prenotaRouter.post(`/api/offers/:offerId/${azione}`, ruolo('patient'), async (req, res) => {
+    const offerId = id.parse(req.params.offerId);
+    let esito;
+    try {
+      ({ rows: [{ esito }] } = await pool.query('select public.respond_slot_offer($1, $2, $3) as esito', [offerId, req.user.uid, accetta]));
+    } catch (err) { throw erroreSql(err); }
+    const [status, messaggio] = esitiProposta[esito.status] ?? [500, 'Esito sconosciuto.'];
+    if (messaggio) return res.status(status).json({ error: messaggio });
+    res.json(esito);
+  });
+}
 
 prenotaRouter.use((err, req, res, next) => { // eslint-disable-line no-unused-vars
   if (err.name === 'ZodError') return res.status(400).json({ error: 'Dati non validi.', details: err.issues });

@@ -34,7 +34,10 @@ RLS è attivo su tutte le tabelle e non ci sono policy per client anonimo/autent
 | `DELETE` | `/api/waitlist/:entryId` | patient, operator, admin | Ritira una richiesta in attesa |
 | `GET` | `/api/waitlist/me` | patient | Elenca le proprie richieste |
 | `GET` | `/api/appointments/me` | patient | Elenca le proprie prenotazioni |
-| `GET` | `/api/notifications/me` | patient | Elenca gli avvisi di riassegnazione |
+| `GET` | `/api/notifications/me` | patient | Elenca gli avvisi di riassegnazione (`waitlist_match`) e di proposta (`slot_offer`) |
+| `GET` | `/api/offers/me` | patient | Proposte di anticipo (in sospeso e degli ultimi 30 giorni) con struttura, comune, ASL, medico, prestazione, giorni guadagnati e scadenza |
+| `POST` | `/api/offers/:offerId/accept` | patient | Accetta: il nuovo appuntamento sostituisce quello attuale, che si libera e viene proposto al prossimo |
+| `POST` | `/api/offers/:offerId/reject` | patient | Rifiuta: la prenotazione resta com'è e lo slot passa al prossimo candidato |
 | `GET` | `/api/analytics/summary?from=...&to=...` | regional_admin, admin | KPI aggregati per prestazione e sede |
 | `POST` | `/api/analytics/simulate` | regional_admin, admin | Stima l'effetto di variazioni di capacità |
 
@@ -62,6 +65,16 @@ Esempio di lista d'attesa:
   "latestDate": "2029-02-01T00:00:00+01:00"
 }
 ```
+
+## Proposte di anticipo
+
+Migrazione `supabase/migrations/20261001230000_proposte_anticipo.sql` (applicata al progetto `recupera`). Quando una prenotazione viene disdetta:
+
+1. lo slot va al primo in **lista d'attesa** compatibile (come prima), ma solo se è un utente reale;
+2. altrimenti diventa una **proposta** (`public.slot_offers`) per un utente reale con una prenotazione **successiva** della stessa prestazione: prima la stessa ASL della prenotazione attuale, poi chi ha prenotato da più tempo; mai a chi ha già avuto quello slot o ha un altro appuntamento sovrapposto;
+3. l'utente la vede in Panoramica e accetta o rifiuta entro 24 ore (o 2 ore prima della visita). Rifiuto o scadenza (job pg_cron `scadenza-proposte-anticipo`, ogni 10 minuti) passano lo slot al prossimo candidato; accettando, il vecchio appuntamento si libera e segue lo stesso percorso.
+
+Uno slot proposto non compare nella ricerca e non è prenotabile da altri. **Utente reale** = `public.is_real_patient`: non fittizio (flag `app_metadata.fittizio` e tabella `test_server.pazienti_fittizi`) e con login email/password. Struttura, comune, ASL e prestazione esatta vengono dal catalogo del finto CUP (`test_server`).
 
 ## Note operative
 
