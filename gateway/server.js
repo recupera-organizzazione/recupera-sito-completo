@@ -61,6 +61,9 @@ if (destinazioni.dashboardVite) {
   app.get('/dashboard/{*resto}', (req, res, next) => (existsSync(`${build}/index.html`) ? res.sendFile(`${build}/index.html`) : next()));
 }
 
+// In locale non c'è Vercel Web Analytics: script vuoto, così le pagine non danno errori in console.
+app.get('/_vercel/insights/script.js', (req, res) => res.type('text/javascript').send('// Vercel Web Analytics: attivo solo su Vercel\n'));
+
 app.use('/design', express.static(`${radice}design`));
 app.use(express.static(`${radice}web`));
 
