@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useCancellazioni } from '../hooks/useDashboard.js';
 
-// Disdette e riassegnazioni giornaliere dal gestionale (GET /dashboard/cancellazioni).
+// Disdette e riprenotazioni giornaliere reali fatte in Prenota (GET /dashboard/cancellazioni).
 
 const W = 650;
 const H = 180;
@@ -32,8 +32,8 @@ export default function RecoveryChart() {
     <article className="panel chart-panel">
       <div className="panel-heading">
         <div>
-          <p className="section-kicker">Gestionale prenotazioni · dati reali</p>
-          <h3>Slot recuperati dalla rete</h3>
+          <p className="section-kicker">Prenota · attività reali</p>
+          <h3>Disdette e riprenotazioni</h3>
         </div>
         <select aria-label="Intervallo grafico" value={giorni} onChange={(e) => setGiorni(Number(e.target.value))}>
           <option value={30}>Ultimi 30 giorni</option>
@@ -41,7 +41,7 @@ export default function RecoveryChart() {
         </select>
       </div>
       <div className="legend">
-        <span><i className="legend-green" />Riassegnati</span>
+        <span><i className="legend-green" />Riprenotazioni</span>
         <span><i className="legend-gray" />Disdette</span>
       </div>
       {isLoading && <p className="panel-note" role="status">Caricamento…</p>}
@@ -51,7 +51,7 @@ export default function RecoveryChart() {
           <div className="y-axis">{tacche.map((t, i) => <span key={i}>{t}</span>)}</div>
           <div className="chart-area">
             <div className="grid-lines"><i /><i /><i /><i /><i /></div>
-            <svg viewBox={`0 0 ${W} ${H}`} preserveAspectRatio="none" aria-label={`Disdette e riassegnazioni degli ultimi ${giorni} giorni`}>
+            <svg viewBox={`0 0 ${W} ${H}`} preserveAspectRatio="none" aria-label={`Disdette e riprenotazioni degli ultimi ${giorni} giorni`}>
               <path className="curve" style={{ stroke: 'var(--muted, #9aa3a0)' }} d={percorso(serie.map((g) => g.cancellate), max)} />
               <path className="curve" d={percorso(serie.map((g) => g.da_riassegnazione), max)} />
             </svg>

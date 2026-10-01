@@ -2,7 +2,8 @@ import MetricCard from './MetricCard.jsx';
 import { useKpi } from '../hooks/useKpi.js';
 
 // KPI tutti da GET /dashboard/kpi: dataset regionale (settimana più recente
-// sincronizzata) + disdette reali del gestionale negli ultimi 30 giorni.
+// sincronizzata) + disdette e riprenotazioni reali fatte in Prenota negli ultimi 30 giorni
+// (utenti reali; esclusi i pazienti fittizi del test server).
 
 function formatIT(n, decimals = 0) {
   if (n == null) return '—';
@@ -14,19 +15,23 @@ function buildMetrics(data, fuoriTmaxPct) {
   const zone = data.zone_sotto_pressione || [];
   return [
     {
-      label: 'Slot recuperati',
+      label: 'Riprenotazioni',
       value: formatIT(canc.slot_recuperati_riallocati),
       trend: '30 giorni',
-      note: 'disdette riassegnate a pazienti in lista d’attesa',
+      note: (
+        <>
+          {formatIT(canc.anticipi_accettati)} anticipi accettati (<b>{formatIT(canc.giorni_guadagnati)} giorni</b> guadagnati) · {formatIT(canc.da_lista_attesa)} dalla lista d’attesa
+        </>
+      ),
       type: 'emphasis',
     },
     {
-      label: 'Disdette',
+      label: 'Disdette in Prenota',
       value: formatIT(canc.totale_cancellate),
       trend: '30 giorni',
       note: (
         <>
-          tasso <b>{formatIT((canc.tasso_cancellazione_pct || 0) * 100, 2)}%</b> su {formatIT(canc.totale_prenotazioni)} prenotazioni
+          fatte dagli utenti · <b>{formatIT((canc.tasso_cancellazione_pct || 0) * 100, 1)}%</b> di {formatIT(canc.totale_prenotazioni)} prenotazioni
         </>
       ),
       type: 'days',

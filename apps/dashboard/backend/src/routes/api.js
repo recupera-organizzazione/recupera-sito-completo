@@ -141,7 +141,7 @@ router.get('/dashboard/serie', async (req, res) => {
 });
 
 // GET /dashboard/cancellazioni?da=&a=&specialty_id=&facility_id=
-// Statistiche reali dal gestionale (appointments/cancellation_events).
+// Disdette e riprenotazioni reali fatte in Prenota (public.dashboard_attivita_app).
 // Default: ultimi 30 giorni. Senza Supabase: { disponibile: false }.
 // Data ISO reale (il solo pattern \d{4}-\d{2}-\d{2} lascerebbe passare 2026-13-99,
 // che Postgres rigetterebbe con 500 invece di 400).
@@ -173,7 +173,7 @@ router.get('/dashboard/cancellazioni', async (req, res) => {
   } catch (e) { err(res, 500, 'cancellazioni_error', e.message); }
 });
 
-// Riassegnazioni: ultime disdette del gestionale e se lo slot è stato riassegnato.
+// Riassegnazioni: ultime disdette e riprenotazioni reali fatte in Prenota.
 router.get('/riassegnazioni', async (req, res) => {
   try {
     const limit = Math.min(Math.max(Number(req.query.limit) || 10, 1), 100);

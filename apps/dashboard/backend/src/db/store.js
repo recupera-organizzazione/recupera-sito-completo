@@ -90,69 +90,49 @@ export async function getKpi(settimana) {
       totale_cancellate: canc.totale_cancellate,
       tasso_cancellazione_pct: canc.tasso_cancellazione_pct,
       slot_recuperati_riallocati: canc.slot_recuperati_riallocati,
+      anticipi_accettati: canc.anticipi_accettati,
+      da_lista_attesa: canc.da_lista_attesa,
+      giorni_guadagnati: canc.giorni_guadagnati,
     },
   };
 }
 
-// Cancellazioni dal gestionale prenotazioni (tabelle appointments /
-// cancellation_events, via vista statistiche_cancellazioni).
-// Gli zeri vengono riportati come tali, mai stimati.
-export async function getCancellazioni({ da, a, specialty_id, facility_id } = {}) {
+// Disdette e riprenotazioni EFFETTIVE fatte in Prenota da utenti reali (funzione
+// public.dashboard_attivita_app, migrazione 20261002100000_attivita_app.sql): niente disdette di
+// pazienti fittizi del test server. Riprenotazioni = anticipi accettati + assegnazioni dalla lista
+// d'attesa. Gli zeri vengono riportati come tali, mai stimati. Shape compatibile con le route esistenti.
+async function attivitaApp({ da, a, limit = 10, specialty_id, facility_id } = {}) {
   const oggiISO = new Date().toISOString().slice(0, 10);
   const aISO = a || oggiISO;
-  const shiftDays = (iso, n) => {
-    const d = new Date(`${iso}T00:00:00Z`);
-    d.setUTCDate(d.getUTCDate() + n);
-    return d.toISOString().slice(0, 10);
-  };
-  const daISO = da || shiftDays(aISO, -29);
-  const periodo = { da: daISO, a: aISO };
-  let q = supabase.from('statistiche_cancellazioni').select('*')
-    .gte('giorno', daISO).lte('giorno', aISO).limit(5000);
-  if (specialty_id) q = q.eq('specialty_id', specialty_id);
-  if (facility_id) q = q.eq('facility_id', facility_id);
-  const { data, error } = await q;
+  const d = new Date(`${aISO}T00:00:00Z`);
+  d.setUTCDate(d.getUTCDate() - 29);
+  const daISO = da || d.toISOString().slice(0, 10);
+  const { data, error } = await supabase.rpc('dashboard_attivita_app', {
+    p_da: daISO, p_a: aISO, p_limit: limit, p_specialty: specialty_id || null, p_facility: facility_id || null,
+  });
   if (error) throw error;
+  return data;
+}
 
-  // Prenotazioni per giorno di creazione (vista); disdette e riassegnazioni per giorno di
-  // DISDETTA da cancellation_events (la vista le conta nel giorno di creazione della prenotazione).
-  let ev = supabase.from('cancellation_events').select('cancelled_at, reallocated')
-    .gte('cancelled_at', daISO).lt('cancelled_at', shiftDays(aISO, 1)).limit(5000);
-  if (specialty_id) ev = ev.eq('specialty_id', specialty_id);
-  if (facility_id) ev = ev.eq('facility_id', facility_id);
-  const { data: eventi, error: evErr } = await ev;
-  if (evErr) throw evErr;
-
-  // Aggrega per giorno (somma su specialty/facility) e riempi i buchi con 0.
-  const byDay = new Map();
-  const giorno = (g) => byDay.get(g) || byDay.set(g, { giorno: g, prenotazioni: 0, cancellate: 0, da_riassegnazione: 0 }).get(g);
-  for (const r of data || []) giorno(r.giorno).prenotazioni += r.prenotazioni;
-  for (const e of eventi) {
-    const g = giorno(e.cancelled_at.slice(0, 10));
-    g.cancellate += 1;
-    if (e.reallocated) g.da_riassegnazione += 1;
-  }
-  const serie = [];
-  for (let g = daISO; g <= aISO; g = shiftDays(g, 1)) {
-    serie.push(byDay.get(g) || { giorno: g, prenotazioni: 0, cancellate: 0, da_riassegnazione: 0 });
-  }
-  const totalePrenotazioni = serie.reduce((s, r) => s + r.prenotazioni, 0);
-  const totaleCancellate = eventi.length;
-  const recuperati = eventi.filter((e) => e.reallocated).length;
-
+export async function getCancellazioni({ da, a, specialty_id, facility_id } = {}) {
+  const r = await attivitaApp({ da, a, specialty_id, facility_id });
+  const t = r.totali;
   return {
     disponibile: true,
     fonte: 'supabase',
-    periodo,
+    periodo: r.periodo,
     filtri: { specialty_id: specialty_id || null, facility_id: facility_id || null },
-    totale_prenotazioni: totalePrenotazioni,
-    totale_cancellate: totaleCancellate,
-    tasso_cancellazione_pct: totalePrenotazioni ? totaleCancellate / totalePrenotazioni : 0,
-    slot_recuperati_riallocati: recuperati,
-    serie,
-    nota: totaleCancellate === 0
-      ? 'nessuna cancellazione registrata nel periodo (dati reali dal gestionale, non stima)'
-      : 'dati reali dal gestionale prenotazioni (appointments/cancellation_events)',
+    totale_prenotazioni: t.prenotazioni,
+    totale_cancellate: t.disdette,
+    tasso_cancellazione_pct: t.prenotazioni ? t.disdette / t.prenotazioni : 0,
+    slot_recuperati_riallocati: t.riprenotazioni,
+    anticipi_accettati: t.anticipi,
+    da_lista_attesa: t.da_lista_attesa,
+    giorni_guadagnati: t.giorni_guadagnati,
+    serie: r.serie.map((g) => ({ giorno: g.giorno, cancellate: g.disdette, da_riassegnazione: g.riprenotazioni })),
+    nota: t.disdette + t.riprenotazioni === 0
+      ? 'nessuna disdetta o riprenotazione di utenti reali nel periodo (dati reali di Prenota, non stima)'
+      : 'solo attività reali in Prenota: disdette degli utenti, anticipi accettati e assegnazioni dalla lista d\'attesa (esclusi i pazienti fittizi del test server)',
   };
 }
 
@@ -208,23 +188,25 @@ export async function getSerie({ asl, prestazione } = {}) {
   };
 }
 
-// Ultime disdette registrate dal gestionale (cancellation_events) e se lo slot è stato riassegnato.
+// Ultime disdette e riprenotazioni reali fatte in Prenota (vedi attivitaApp).
 export async function getRiassegnazioni(limit = 10) {
-  const { data, error } = await supabase.from('cancellation_events')
-    .select('appointment_id, specialty_id, facility_id, starts_at, cancelled_at, reallocated')
-    .order('cancelled_at', { ascending: false }).limit(limit);
-  if (error) throw error;
+  const r = await attivitaApp({ limit });
   return {
-    rows: data.map((e) => ({
-      id: e.appointment_id,
-      // Nel gestionale specialty_id è la branca ("cardiologia") e facility_id la sede ("Ospedale ... - Comune").
-      prestazione: e.specialty_id,
-      struttura: e.facility_id,
-      slot_inizio: e.starts_at,
-      disdetta_il: e.cancelled_at,
-      stato: e.reallocated ? 'riassegnato' : 'slot_libero',
+    rows: r.eventi.map((e) => ({
+      id: `${e.tipo}-${e.id}`,
+      tipo: e.tipo,
+      prestazione: e.prestazione,
+      categoria: e.categoria,
+      struttura: e.struttura,
+      comune: e.comune,
+      asl: e.asl,
+      slot_inizio: e.slot_inizio,
+      quando: e.quando,
+      prima_inizio: e.prima_inizio,
+      prima_struttura: e.prima_struttura,
+      giorni_guadagnati: e.giorni_guadagnati,
     })),
-    nota: 'disdette reali dal gestionale (cancellation_events); riassegnato = slot dato a un paziente in lista d\'attesa',
+    nota: 'attività reali in Prenota: disdetta = annullata dall\'utente; anticipo = proposta accettata; lista_attesa = slot assegnato dalla lista d\'attesa',
     fonte: 'supabase',
   };
 }
