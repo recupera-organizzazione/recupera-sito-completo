@@ -174,6 +174,12 @@ prenotaRouter.get('/api/notifications/me', ruolo('patient'), async (req, res) =>
   res.json({ items: rows.map((v) => ({ id: v.id, type: v.type, appointmentId: v.appointment_id, slotId: v.slot_id, status: v.status, createdAt: v.created_at })) });
 });
 
+// Catalogo per le liste dei moduli (stesso contratto di apps/prenota/src/server.js).
+prenotaRouter.get('/api/catalog', ruolo('patient', 'operator', 'regional_admin', 'admin'), async (req, res) => {
+  const { rows } = await pool.query('select public.prenota_catalogo() as catalogo');
+  res.json(rows[0].catalogo);
+});
+
 // Proposte di anticipo (stesso contratto di apps/prenota/src/server.js).
 prenotaRouter.get('/api/offers/me', ruolo('patient'), async (req, res) => {
   const { rows } = await pool.query('select public.patient_slot_offers($1) as items', [req.user.uid]);

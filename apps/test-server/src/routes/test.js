@@ -10,16 +10,19 @@ const disdettaSchema = z.object({
   // id di una prenotazione (appointments) o di una voce di lista d'attesa (waiting_list)
   // di un utente reale; se assente il target è scelto a caso.
   target_id: z.uuid().optional(),
+  // categoria (branca) della visita da disdire, es. "mammografia"; se assente qualsiasi.
+  categoria: z.string().trim().min(1).max(40).optional(),
 });
 
 // Disdice a caso una prenotazione fittizia compatibile con una prenotazione reale di Prenota:
 // stessa prestazione, slot futuro e precedente a quello del target (stessa ASL se possibile).
 testRouter.post('/disdici-casuale', soloAdmin, async (req, res) => {
-  const { target_id } = validazione(disdettaSchema, req.body ?? {});
+  const { target_id, categoria } = validazione(disdettaSchema, req.body ?? {});
   try {
-    const { rows } = await pool.query('select test_server.disdici_casuale($1, $2) as esito', [
+    const { rows } = await pool.query('select test_server.disdici_casuale($1, $2, $3) as esito', [
       target_id ?? null,
       req.admin.id,
+      categoria ?? null,
     ]);
     res.json(rows[0].esito);
   } catch (err) {
@@ -104,6 +107,11 @@ testRouter.post('/reset', soloAdmin, async (req, res) => {
     stato: 'in_corso', passo: 0, passi: passi.map(([descrizione]) => descrizione),
     iniziato: new Date().toISOString(), admin: req.admin.username, dettagli: [],
   };
+  // Su Vercel una funzione si ferma dopo la risposta: il reset gira dentro la richiesta (maxDuration in vercel.json).
+  if (process.env.VERCEL) {
+    await eseguiReset(passi);
+    return res.json(reset);
+  }
   eseguiReset(passi);
   res.status(202).json(reset);
 });

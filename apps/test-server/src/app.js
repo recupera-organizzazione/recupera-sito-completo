@@ -10,6 +10,9 @@ import { statisticheRouter } from './routes/statistiche.js';
 import { testRouter } from './routes/test.js';
 
 export const app = express();
+app.disable('x-powered-by');
+// Dietro il proxy di Vercel l'IP del client arriva in X-Forwarded-For (limite tentativi di login).
+if (process.env.VERCEL) app.set('trust proxy', 1);
 
 // CORS solo per pagine aperte in locale (es. Live Server di VS Code sulla porta 5500).
 app.use((req, res, next) => {

@@ -35,6 +35,7 @@ RLS è attivo su tutte le tabelle e non ci sono policy per client anonimo/autent
 | `GET` | `/api/waitlist/me` | patient | Elenca le proprie richieste |
 | `GET` | `/api/appointments/me` | patient | Elenca le proprie prenotazioni |
 | `GET` | `/api/notifications/me` | patient | Elenca gli avvisi di riassegnazione (`waitlist_match`) e di proposta (`slot_offer`) |
+| `GET` | `/api/catalog` | tutti i ruoli | Visite (branche, es. `mammografia`, con le prestazioni) e sedi con ASL per le liste dei moduli (`public.prenota_catalogo`, migrazione `20261001233000_catalogo_prenota.sql`): niente testo libero, gli id sono quelli dei record |
 | `GET` | `/api/offers/me` | patient | Proposte di anticipo (in sospeso e degli ultimi 30 giorni) con struttura, comune, ASL, medico, prestazione, giorni guadagnati e scadenza |
 | `POST` | `/api/offers/:offerId/accept` | patient | Accetta: il nuovo appuntamento sostituisce quello attuale, che si libera e viene proposto al prossimo |
 | `POST` | `/api/offers/:offerId/reject` | patient | Rifiuta: la prenotazione resta com'è e lo slot passa al prossimo candidato |

@@ -18,3 +18,7 @@ Thumbs.db
 !.vscode/extensions.json
 .idea/
 *.log
+
+# Vercel (build locale e collegamento al progetto)
+vercel-out/
+.vercel/

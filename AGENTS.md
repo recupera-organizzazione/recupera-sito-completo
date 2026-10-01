@@ -20,7 +20,7 @@ git pull --ff-only
 - I frontend di Prenota e del test server usano **percorsi relativi** (`api/...`, `health`, `design/recupera.css`): non reintrodurre percorsi assoluti, si romperebbero sotto il prefisso del gateway. La dashboard usa `base: '/dashboard/'` di Vite e `import.meta.env.BASE_URL` per le API.
 - `apps/test-server/public/prenota` è una copia del frontend di Prenota: dopo ogni modifica di `apps/prenota/public` riesegui `sh apps/test-server/scripts/importa-prenota.sh`.
 - Design: generato con Stitch (progetto "reCUPera — sito completo"). Ogni pagina usa la barra `.rc-sitebar` e i token `--rc-*` di `design/recupera.css`; non introdurre palette o font diversi nelle singole app.
-- Hosting previsto: **Vercel** (non ancora configurato). Non creare progetti Vercel, domini o variabili d'ambiente remote senza richiesta esplicita dell'utente.
+- Hosting: **Vercel** (`vercel.json`, funzioni in `api/`, statici da `scripts/build-vercel.mjs`). Ogni nuova rotta va aggiunta sia al gateway (`gateway/server.js`) sia a `vercel.json`. Niente script inline nelle pagine (la CSP li blocca) e niente lavoro dopo la risposta nelle funzioni (Vercel le ferma). Non creare altri progetti Vercel, domini o variabili d'ambiente remote senza richiesta esplicita dell'utente.
 
 ## 1.1 Vincoli ereditati dai repo delle app
 

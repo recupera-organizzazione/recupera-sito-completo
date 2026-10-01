@@ -168,6 +168,15 @@ app.get('/api/notifications/me', requireRole('patient'), async (req, res, next) 
   } catch (err) { next(err); }
 });
 
+// Catalogo per le liste dei moduli: visite (branche) e sedi con ASL, dagli stessi id dei record.
+app.get('/api/catalog', requireRole('patient', 'operator', 'regional_admin', 'admin'), async (req, res, next) => {
+  try {
+    const { data, error } = await supabase.rpc('prenota_catalogo');
+    raise(error);
+    res.json(data);
+  } catch (err) { next(err); }
+});
+
 // Proposte di anticipo: slot liberati da una disdetta proposti al paziente (vedi
 // supabase/migrations/20261001230000_proposte_anticipo.sql). Il paziente accetta o rifiuta.
 app.get('/api/offers/me', requireRole('patient'), async (req, res, next) => {

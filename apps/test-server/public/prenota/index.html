@@ -76,8 +76,8 @@
           <div class="overview-grid">
             <section class="surface patient-only"><div class="surface-heading"><div><p class="eyebrow">DISPONIBILITÀ</p><h2>Trova una visita</h2></div><span id="slotListCount" class="count-badge">0</span></div>
               <form id="slotSearchForm" class="slot-search">
-                <label>Prestazione<input id="specialtySearch" name="specialtyId" list="specialtySuggestions" placeholder="es. cardiologia" autocomplete="off" required maxlength="160"><datalist id="specialtySuggestions"></datalist></label>
-                <label>Sede<input id="facilitySearch" name="facilityId" list="facilitySuggestions" placeholder="Qualsiasi sede" autocomplete="off" maxlength="160"><datalist id="facilitySuggestions"></datalist></label>
+                <label>Visita<select id="specialtySearch" name="specialtyId" class="specialty-select" required><option value="">Scegli una visita</option></select></label>
+                <label>Sede<select id="facilitySearch" name="facilityId" class="facility-select"><option value="">Qualsiasi sede</option></select></label>
                 <label>Dal<input name="from" type="date" min="2028-01-01"></label>
                 <label>Entro<input name="to" type="date" min="2028-01-01"></label>
                 <button class="button button-primary" type="submit">Cerca disponibilità <span aria-hidden="true">→</span></button>
@@ -86,8 +86,8 @@
               <p id="slotSearchSummary" class="search-summary" aria-live="polite">Scegli una prestazione per trovare gli orari liberi.</p>
               <div id="slotList" class="list-content"></div>
             </section>
-            <section class="surface quick-panel"><div class="surface-heading"><div><p class="eyebrow">PROSSIMO PASSO</p><h2>Nuova richiesta</h2></div><span class="pale-index">02</span></div><p class="muted-copy">Scegli una prestazione e le sedi preferite.</p>
-              <form id="quickWaitlistForm" class="form-stack compact-form"><label>Prestazione<input name="specialtyId" placeholder="es. cardiologia" required maxlength="160"></label><label>Sedi <small>separate da virgola</small><input name="facilityIds" placeholder="sede-roma, sede-latina"></label><button class="button button-primary button-wide" type="submit">Aggiungi alla lista <span aria-hidden="true">→</span></button></form>
+            <section class="surface quick-panel"><div class="surface-heading"><div><p class="eyebrow">PROSSIMO PASSO</p><h2>Nuova richiesta</h2></div><span class="pale-index">02</span></div><p class="muted-copy">Scegli una visita e la sede preferita.</p>
+              <form id="quickWaitlistForm" class="form-stack compact-form"><label>Visita<select name="specialtyId" class="specialty-select" required><option value="">Scegli una visita</option></select></label><label>Sede<select name="facilityIds" class="facility-select"><option value="">Qualsiasi sede</option></select></label><button class="button button-primary button-wide" type="submit">Aggiungi alla lista <span aria-hidden="true">→</span></button></form>
             </section>
           </div>
           <section class="surface notification-panel"><div class="surface-heading"><div><p class="eyebrow">AGGIORNAMENTI</p><h2>Notifiche recenti</h2></div></div><div id="notificationList" class="list-content"></div></section>
@@ -98,13 +98,13 @@
         <section class="view-panel hidden" data-panel="waiting">
           <section class="surface"><div class="surface-heading"><div><p class="eyebrow">RICHIESTE ATTIVE</p><h2>Lista d’attesa</h2></div></div><div id="waitingList" class="list-content"></div></section>
           <section class="surface request-panel"><div class="surface-heading"><div><p class="eyebrow">NUOVA RICERCA</p><h2>Imposta le preferenze</h2></div></div><form id="waitlistForm" class="form-grid">
-            <label>Prestazione<input name="specialtyId" placeholder="es. cardiologia" required maxlength="160"></label><label>Sedi preferite <small>separate da virgola</small><input name="facilityIds" placeholder="sede-roma, sede-latina"></label><label>Dal<input name="earliestDate" type="date"></label><label>Entro<input name="latestDate" type="date"></label><button class="button button-primary" type="submit">Invia richiesta <span aria-hidden="true">→</span></button>
+            <label>Visita<select name="specialtyId" class="specialty-select" required><option value="">Scegli una visita</option></select></label><label>Sedi preferite <small>Ctrl o ⌘ per sceglierne più di una; nessuna = qualsiasi</small><select name="facilityIds" class="facility-select" multiple size="5"></select></label><label>Dal<input name="earliestDate" type="date"></label><label>Entro<input name="latestDate" type="date"></label><button class="button button-primary" type="submit">Invia richiesta <span aria-hidden="true">→</span></button>
           </form></section>
         </section>
 
         <section class="view-panel hidden" data-panel="staff">
           <section class="surface"><div class="surface-heading"><div><p class="eyebrow">OPERATORE</p><h2>Crea uno slot</h2></div><span class="pale-index">04</span></div><form id="slotForm" class="form-grid">
-            <label>Prestazione<input name="specialtyId" placeholder="es. cardiologia" required maxlength="160"></label><label>Sede<input name="facilityId" placeholder="es. sede-roma" required maxlength="160"></label><label>Professionista<input name="professionalId" placeholder="ID, facoltativo" maxlength="160"></label><label>Inizio<input name="startAt" type="datetime-local" required></label><label>Fine<input name="endAt" type="datetime-local" required></label><button class="button button-primary" type="submit">Pubblica slot <span aria-hidden="true">→</span></button>
+            <label>Visita<select name="specialtyId" class="specialty-select" required><option value="">Scegli una visita</option></select></label><label>Sede<select name="facilityId" class="facility-select" required><option value="">Scegli una sede</option></select></label><label>Professionista<input name="professionalId" placeholder="ID, facoltativo" maxlength="160"></label><label>Inizio<input name="startAt" type="datetime-local" required></label><label>Fine<input name="endAt" type="datetime-local" required></label><button class="button button-primary" type="submit">Pubblica slot <span aria-hidden="true">→</span></button>
           </form></section>
           <section class="surface secondary-surface"><div class="surface-heading"><div><p class="eyebrow">PAZIENTE</p><h2>Slot prenotabili</h2></div></div><div id="staffSlotList" class="list-content"></div></section>
         </section>

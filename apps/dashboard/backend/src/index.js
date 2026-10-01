@@ -7,8 +7,13 @@ dotenv.config();
 
 const app = express();
 const PORT = process.env.PORT || 3001;
+const onVercel = Boolean(process.env.VERCEL);
 
-app.use(cors({ origin: process.env.CORS_ORIGIN || true }));
+app.disable('x-powered-by');
+// Dietro il proxy di Vercel l'IP del client arriva in X-Forwarded-For (serve al limite di tentativi di login).
+if (process.env.TRUST_PROXY === '1' || onVercel) app.set('trust proxy', 1);
+// Su Vercel frontend e API hanno la stessa origine: CORS solo se CORS_ORIGIN è impostato.
+app.use(cors({ origin: process.env.CORS_ORIGIN ? process.env.CORS_ORIGIN.split(',').map((o) => o.trim()) : !onVercel }));
 app.use(express.json({ limit: '1mb' }));
 
 // API versioning
@@ -23,6 +28,9 @@ app.use((req, res) => {
 
 export default app;
 
-app.listen(PORT, () => {
-  console.log(`ReCUPera Backend API in esecuzione sulla porta ${PORT} (Supabase: ${process.env.SUPABASE_URL})`);
-});
+// Su Vercel l'app è usata come funzione (api/dashboard.js), senza porta.
+if (!onVercel) {
+  app.listen(PORT, () => {
+    console.log(`ReCUPera Backend API in esecuzione sulla porta ${PORT} (Supabase: ${process.env.SUPABASE_URL})`);
+  });
+}

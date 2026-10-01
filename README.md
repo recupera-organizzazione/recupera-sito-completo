@@ -56,6 +56,16 @@ Ogni app legge il proprio `.env` (mai committato; copia da `.env.example`):
 
 Dashboard e test server condividono lo stesso account admin (Supabase Auth, `app_metadata.role = 'admin'`): usa gli stessi `ADMIN_USER`/`ADMIN_EMAIL` nei due `.env`. In Supabase **Authentication → URL Configuration** aggiungi `http://localhost:3000/prenota/**` alle Redirect URLs per il recupero password di Prenota.
 
+## Pubblicazione su Vercel
+
+Su Vercel non ci sono processi sempre accesi, quindi il gateway non serve: le stesse regole sono in `vercel.json`.
+
+- **Statici** (CDN): `npm run build:vercel` costruisce la dashboard e prepara `vercel-out/` con landing, design, `/dashboard/`, `/prenota/`, `/test-server/` (`scripts/build-vercel.mjs`).
+- **API** (funzioni serverless in `api/`): `api/prenota.js`, `api/dashboard.js`, `api/test-server.js` importano le app Express e tolgono il prefisso, come il gateway. Il reset del test server gira dentro la richiesta (`maxDuration` 300 s).
+- **Sicurezza** (intestazioni per tutto il sito in `vercel.json`): HSTS, Content Security Policy senza script inline, `X-Frame-Options: DENY`, `nosniff`, `Referrer-Policy`, `Permissions-Policy`; `no-store` sulle API. Login admin limitati a 10 tentativi ogni 5 minuti per IP (dashboard e test server), CORS chiuso (stessa origine), `service_role` e `DATABASE_URL` solo nelle variabili d'ambiente del progetto Vercel.
+
+Variabili d'ambiente del progetto Vercel (mai nel repo): `SUPABASE_URL`, `SUPABASE_ANON_KEY`, `SUPABASE_SERVICE_ROLE_KEY`, `DATABASE_URL` (Supabase **Transaction pooler**, porta 6543), `JWT_SECRET` (diverso da quello locale), `ADMIN_USER`, `ADMIN_EMAIL`, `TRUST_PROXY=1`; facoltativa `DATABASE_CA` (certificato CA di Supabase, per verificare il certificato del database). Dopo il primo deploy, in Supabase **Authentication → URL Configuration** imposta il dominio Vercel come Site URL e aggiungi `https://<dominio>/prenota/**` alle Redirect URLs.
+
 ## Design
 
 Il design è stato generato con **Stitch** (progetto "reCUPera — sito completo", design system "reCUPera": primario `#146b51`, corallo `#f17f65`, giallo `#f3c64e`, carta `#f3f5ef`, Manrope + JetBrains Mono, angoli 4px) e implementato a mano in CSS, senza Tailwind:

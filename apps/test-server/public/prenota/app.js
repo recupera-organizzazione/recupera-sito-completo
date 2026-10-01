@@ -1,7 +1,7 @@
 const storageKeys = { session: 'recupera_test_session' };
 const $ = selector => document.querySelector(selector);
 const $$ = selector => [...document.querySelectorAll(selector)];
-const state = { session: readSession(), recoveryAccessToken: null, config: {}, slots: [], slotCatalog: [], activeSlotQuery: '', slotSearchApplied: false, waitlistAutoStatus: null, appointments: [], waiting: [], notifications: [], notificationsLoaded: false, offers: [], offersLoaded: false, authMode: 'login' };
+const state = { session: readSession(), recoveryAccessToken: null, config: {}, slots: [], slotCatalog: [], activeSlotQuery: '', slotSearchApplied: false, waitlistAutoStatus: null, appointments: [], waiting: [], notifications: [], notificationsLoaded: false, offers: [], offersLoaded: false, catalog: null, authMode: 'login' };
 let toastTimer;
 
 function readSession() {
@@ -133,7 +133,44 @@ function showWorkspace() {
   $$('.staff-only').forEach(node => node.classList.toggle('hidden', !isStaff()));
   $('#todayDate').textContent = new Intl.DateTimeFormat('it-IT', { dateStyle: 'full' }).format(new Date());
   setView('overview');
+  loadCatalog();
   loadDashboard();
+}
+// Liste dei moduli (visite e sedi) dal catalogo del CUP: stessi id dei record, niente testo libero.
+async function loadCatalog() {
+  try {
+    if (!state.catalog) state.catalog = await apiRequest('api/catalog');
+    fillCatalogSelects();
+  } catch (error) { notify(`Elenco di visite e sedi non disponibile: ${error.message}`, true); }
+}
+function option(value, text) {
+  const node = document.createElement('option');
+  node.value = value;
+  node.textContent = text;
+  return node;
+}
+function fillCatalogSelects() {
+  const { specialties = [], facilities = [] } = state.catalog || {};
+  $$('.specialty-select').forEach(select => {
+    const selected = select.value;
+    const placeholder = select.options[0]?.value === '' ? [select.options[0]] : [];
+    select.replaceChildren(...placeholder, ...specialties.map(item => option(item.id, `${item.label} — ${item.prestazioni.join(', ')}`)));
+    select.value = selected;
+  });
+  const byAsl = new Map();
+  facilities.forEach(item => byAsl.set(item.aslNome, [...(byAsl.get(item.aslNome) || []), item]));
+  $$('.facility-select').forEach(select => {
+    const selected = [...select.selectedOptions].map(item => item.value);
+    const placeholder = select.options[0]?.value === '' ? [select.options[0]] : [];
+    const groups = [...byAsl].map(([asl, items]) => {
+      const group = document.createElement('optgroup');
+      group.label = asl;
+      group.append(...items.map(item => option(item.id, `${item.nome} · ${item.comune}`)));
+      return group;
+    });
+    select.replaceChildren(...placeholder, ...groups);
+    [...select.options].forEach(item => { item.selected = selected.includes(item.value); });
+  });
 }
 function setView(name) {
   if (['appointments', 'waiting'].includes(name) && isStaff()) return;
@@ -161,7 +198,6 @@ async function loadDashboard() {
     if (state.slotSearchApplied) {
       state.slots = result[resultIndex++].items || [];
       state.slotCatalog = state.slots;
-      renderSlotSearchOptions();
     }
     let newWaitlistMatch = false;
     let newOffer = false;
@@ -187,12 +223,6 @@ async function loadDashboard() {
   }
 }
 function emptyState(message) { return `<div class="empty-state">${escapeHtml(message)}</div>`; }
-function renderSlotSearchOptions() {
-  const specialties = [...new Set(state.slotCatalog.map(slot => slot.specialtyId).filter(Boolean))].sort();
-  const facilities = [...new Set(state.slotCatalog.map(slot => slot.facilityId).filter(Boolean))].sort();
-  $('#specialtySuggestions').innerHTML = specialties.map(value => `<option value="${escapeHtml(value)}"></option>`).join('');
-  $('#facilitySuggestions').innerHTML = facilities.map(value => `<option value="${escapeHtml(value)}"></option>`).join('');
-}
 function slotRow(slot, staff = false) {
   const endTime = new Intl.DateTimeFormat('it-IT', { timeStyle: 'short' }).format(new Date(slot.endAt));
   const patientField = staff ? `<input class="patient-id-input" data-patient-for="${escapeHtml(slot.id)}" aria-label="ID paziente" placeholder="ID paziente">` : '';
@@ -272,7 +302,7 @@ async function createWaitlist(form) {
   const values = valuesFrom(form);
   const body = {
     specialtyId: values.specialtyId.trim(),
-    facilityIds: values.facilityIds.split(',').map(value => value.trim()).filter(Boolean),
+    facilityIds: new FormData(form).getAll('facilityIds').map(value => String(value).trim()).filter(Boolean),
     earliestDate: toIso(values.earliestDate),
     latestDate: toIso(values.latestDate)
   };
@@ -391,7 +421,6 @@ $('#slotSearchForm').addEventListener('submit', async event => {
     state.activeSlotQuery = params.toString();
     state.slots = result.items || [];
     state.slotCatalog = state.slots;
-    renderSlotSearchOptions();
     state.slotSearchApplied = true;
     state.waitlistAutoStatus = null;
     if (!state.slots.length) {

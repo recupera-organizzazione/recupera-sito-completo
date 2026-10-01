@@ -98,7 +98,7 @@ Errori sempre nel formato `{ "error": { "code", "message" } }`. 🔒 = richiede 
 | GET | `/auth/me` 🔒 | admin del token |
 | GET | `/catalogo` | ASL, prestazioni, strutture, medici e offerta, per tradurre gli id di slot e prenotazioni |
 | GET | `/prenotazioni` 🔒 | filtri: `tipo` (`loggata`, `fittizia`, `tutte`), `stato` (`booked`, `cancelled`, `tutti`), `prestazione`, `struttura`, `paziente`, `da`, `a` (YYYY-MM-DD), `limit` (max 500), `offset` |
-| POST | `/test/disdici-casuale` 🔒 | `{ target_id? }` disdice una prenotazione fittizia compatibile con una prenotazione reale (vedi sotto) |
+| POST | `/test/disdici-casuale` 🔒 | `{ target_id?, categoria? }` disdice una prenotazione fittizia compatibile con una prenotazione reale (vedi sotto); `categoria` = branca (es. `mammografia`): se nessun utente reale ne ha una, disdice comunque una visita fittizia di quella categoria |
 | POST | `/test/prenotazione-prova` 🔒 | `{ prestazione? }` l'account di prova con login (`paziente.test@prenota.recupera.test`, altrimenti `utente.prova@…` senza login) prenota uno dei primi slot liberi con `public.book_available_slot`; la prenotazione risulta loggata e può ricevere proposte di anticipo |
 | GET | `/test/disdette` 🔒 | ultime 50 disdette di test |
 | POST | `/test/reset` 🔒 | `{ conferma: "RESET" }` riporta il database allo stato iniziale (vedi sotto); risponde `202` e prosegue in background |
