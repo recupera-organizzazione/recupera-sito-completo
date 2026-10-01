@@ -1,0 +1,21 @@
+{
+  "name": "recupera-test-server",
+  "private": true,
+  "version": "0.1.0",
+  "description": "Finto sistema CUP per testare reCUPera (Prenota e Dashboard)",
+  "type": "module",
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "start": "node src/index.js",
+    "dev": "node --watch src/index.js"
+  },
+  "dependencies": {
+    "dotenv": "^18.0.5",
+    "express": "^5.2.1",
+    "jsonwebtoken": "^9.0.3",
+    "pg": "^8.23.1",
+    "zod": "^4.6.5"
+  }
+}

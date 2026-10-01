@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#146b51">
+  <title>reCUPera | Prenota</title>
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="stylesheet" href="design/recupera.css">
+  <link rel="stylesheet" href="styles.css">
+  <script src="app.js" defer></script>
+</head>
+<body>
+  <div class="app-shell rc-grid-bg">
+    <header class="rc-sitebar">
+      <div class="rc-sitebar__inner">
+        <a class="rc-brand" href="/" aria-label="reCUPera, pagina iniziale"><span class="rc-brand__mark" aria-hidden="true"><i></i><i></i><i></i></span><span>reCUPera</span><span class="rc-brand__tag">Prenota</span></a>
+        <nav class="rc-sitenav" aria-label="Sezioni del sito">
+          <a href="/">Home</a>
+          <a href="/prenota/" aria-current="page">Prenota</a>
+          <a href="/dashboard/">Dashboard</a>
+          <a href="/test-server/">Test server</a>
+        </nav>
+        <div class="rc-sitebar__actions"><button id="logoutButton" class="rc-button rc-button--outline rc-button--small hidden" type="button">Esci</button></div>
+      </div>
+    </header>
+
+    <main id="authView" class="auth-layout">
+      <section class="auth-intro"><p class="kicker">PIATTAFORMA PRENOTAZIONI</p><h1>La cura,<br><em>senza attese.</em></h1><p>Prenota una visita e segui le tue richieste in un unico posto.</p></section>
+      <section class="auth-panel">
+        <div class="section-heading"><div><p class="eyebrow">ACCESSO SICURO</p><h2 id="authTitle">Bentornato</h2></div></div>
+        <form id="authForm" class="form-stack">
+          <p id="configStatus" class="config-status hidden" role="status"></p>
+          <div class="divider">ACCOUNT</div>
+          <div id="nameFields" class="name-fields hidden">
+            <label>Nome<input id="firstName" name="firstName" type="text" autocomplete="given-name" maxlength="80"></label>
+            <label>Cognome<input id="lastName" name="lastName" type="text" autocomplete="family-name" maxlength="80"></label>
+          </div>
+          <label id="emailField">Email<input id="email" type="email" autocomplete="email" placeholder="nome@esempio.it" required></label>
+          <label id="passwordField">Password<input id="password" type="password" autocomplete="current-password" minlength="6" required></label>
+          <label id="confirmPasswordField" class="hidden">Conferma password<input id="passwordConfirm" type="password" autocomplete="new-password" minlength="6"></label>
+          <button id="forgotPasswordButton" class="text-link" type="button">Password dimenticata?</button>
+          <button id="authSubmit" class="button button-primary button-wide" type="submit">Accedi <span aria-hidden="true">→</span></button>
+        </form>
+        <div class="auth-switch"><span id="authModeLabel">Non hai un account?</span><button id="authModeButton" type="button">Crea account</button></div>
+        <p class="security-note">I tuoi dati sono usati per gestire l’accesso e le prenotazioni.</p>
+      </section>
+    </main>
+
+    <div id="workspace" class="workspace hidden">
+      <aside class="sidebar">
+        <p class="sidebar-label">AREA PERSONALE</p>
+        <nav class="main-nav" aria-label="Navigazione">
+          <button class="nav-item active" data-view="overview" type="button"><span>01</span> Panoramica</button>
+          <button class="nav-item patient-only" data-view="appointments" type="button"><span>02</span> Appuntamenti</button>
+          <button class="nav-item patient-only" data-view="waiting" type="button"><span>03</span> Lista d’attesa</button>
+          <button class="nav-item staff-only hidden" data-view="staff" type="button"><span>04</span> Gestione slot</button>
+        </nav>
+        <div class="user-card"><span id="userAvatar" class="avatar">R</span><span class="user-lines"><strong id="userEmail">Utente</strong><small id="userRole">Paziente</small></span><i></i></div>
+      </aside>
+
+      <section class="main-content">
+        <div class="page-heading"><div><p id="pageEyebrow" class="eyebrow">IL TUO SPAZIO</p><h1 id="pageTitle">Panoramica</h1></div><div class="page-actions"><time id="todayDate"></time><button id="refreshButton" class="button button-outline" type="button">Aggiorna <span aria-hidden="true">↻</span></button></div></div>
+        <section class="metrics" aria-label="Riepilogo">
+          <article class="metric metric-dark"><span>APPUNTAMENTI ATTIVI</span><strong id="appointmentCount">—</strong><small>prenotazioni future</small></article>
+          <article class="metric metric-green"><span>IN ATTESA</span><strong id="waitingCount">—</strong><small>richieste aperte</small></article>
+          <article class="metric metric-white"><span>SLOT DISPONIBILI</span><strong id="slotCount">—</strong><small>prossime disponibilità</small></article>
+        </section>
+
+        <section class="view-panel" data-panel="overview">
+          <div class="overview-grid">
+            <section class="surface patient-only"><div class="surface-heading"><div><p class="eyebrow">DISPONIBILITÀ</p><h2>Trova una visita</h2></div><span id="slotListCount" class="count-badge">0</span></div>
+              <form id="slotSearchForm" class="slot-search">
+                <label>Prestazione<input id="specialtySearch" name="specialtyId" list="specialtySuggestions" placeholder="es. cardiologia" autocomplete="off" required maxlength="160"><datalist id="specialtySuggestions"></datalist></label>
+                <label>Sede<input id="facilitySearch" name="facilityId" list="facilitySuggestions" placeholder="Qualsiasi sede" autocomplete="off" maxlength="160"><datalist id="facilitySuggestions"></datalist></label>
+                <label>Dal<input name="from" type="date" min="2028-01-01"></label>
+                <label>Entro<input name="to" type="date" min="2028-01-01"></label>
+                <button class="button button-primary" type="submit">Cerca disponibilità <span aria-hidden="true">→</span></button>
+              </form>
+              <p class="search-summary">Se non troviamo slot, ti inseriamo automaticamente in lista d’attesa per questa ricerca.</p>
+              <p id="slotSearchSummary" class="search-summary" aria-live="polite">Scegli una prestazione per trovare gli orari liberi.</p>
+              <div id="slotList" class="list-content"></div>
+            </section>
+            <section class="surface quick-panel"><div class="surface-heading"><div><p class="eyebrow">PROSSIMO PASSO</p><h2>Nuova richiesta</h2></div><span class="pale-index">02</span></div><p class="muted-copy">Scegli una prestazione e le sedi preferite.</p>
+              <form id="quickWaitlistForm" class="form-stack compact-form"><label>Prestazione<input name="specialtyId" placeholder="es. cardiologia" required maxlength="160"></label><label>Sedi <small>separate da virgola</small><input name="facilityIds" placeholder="sede-roma, sede-latina"></label><button class="button button-primary button-wide" type="submit">Aggiungi alla lista <span aria-hidden="true">→</span></button></form>
+            </section>
+          </div>
+          <section class="surface notification-panel"><div class="surface-heading"><div><p class="eyebrow">AGGIORNAMENTI</p><h2>Notifiche recenti</h2></div></div><div id="notificationList" class="list-content"></div></section>
+        </section>
+
+        <section class="view-panel hidden" data-panel="appointments"><section class="surface"><div class="surface-heading"><div><p class="eyebrow">IL TUO PERCORSO</p><h2>Appuntamenti</h2></div></div><div id="appointmentList" class="list-content"></div></section></section>
+
+        <section class="view-panel hidden" data-panel="waiting">
+          <section class="surface"><div class="surface-heading"><div><p class="eyebrow">RICHIESTE ATTIVE</p><h2>Lista d’attesa</h2></div></div><div id="waitingList" class="list-content"></div></section>
+          <section class="surface request-panel"><div class="surface-heading"><div><p class="eyebrow">NUOVA RICERCA</p><h2>Imposta le preferenze</h2></div></div><form id="waitlistForm" class="form-grid">
+            <label>Prestazione<input name="specialtyId" placeholder="es. cardiologia" required maxlength="160"></label><label>Sedi preferite <small>separate da virgola</small><input name="facilityIds" placeholder="sede-roma, sede-latina"></label><label>Dal<input name="earliestDate" type="date"></label><label>Entro<input name="latestDate" type="date"></label><button class="button button-primary" type="submit">Invia richiesta <span aria-hidden="true">→</span></button>
+          </form></section>
+        </section>
+
+        <section class="view-panel hidden" data-panel="staff">
+          <section class="surface"><div class="surface-heading"><div><p class="eyebrow">OPERATORE</p><h2>Crea uno slot</h2></div><span class="pale-index">04</span></div><form id="slotForm" class="form-grid">
+            <label>Prestazione<input name="specialtyId" placeholder="es. cardiologia" required maxlength="160"></label><label>Sede<input name="facilityId" placeholder="es. sede-roma" required maxlength="160"></label><label>Professionista<input name="professionalId" placeholder="ID, facoltativo" maxlength="160"></label><label>Inizio<input name="startAt" type="datetime-local" required></label><label>Fine<input name="endAt" type="datetime-local" required></label><button class="button button-primary" type="submit">Pubblica slot <span aria-hidden="true">→</span></button>
+          </form></section>
+          <section class="surface secondary-surface"><div class="surface-heading"><div><p class="eyebrow">PAZIENTE</p><h2>Slot prenotabili</h2></div></div><div id="staffSlotList" class="list-content"></div></section>
+        </section>
+        <footer class="page-footer"><span>reCUPera · Prenota</span><span id="footerStatus">Connessione in attesa</span></footer>
+      </section>
+    </div>
+  </div>
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+</body>
+</html>

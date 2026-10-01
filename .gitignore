@@ -1,0 +1,20 @@
+# Segreti: solo i file .env.example sono versionati
+.env
+.env.*
+!.env.example
+
+# Dipendenze e build
+node_modules/
+dist/
+
+# Supabase CLI (stato locale)
+supabase/.temp
+supabase/.branches
+
+# OS / editor
+.DS_Store
+Thumbs.db
+.vscode/*
+!.vscode/extensions.json
+.idea/
+*.log

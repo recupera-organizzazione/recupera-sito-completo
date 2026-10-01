@@ -1,0 +1,22 @@
+{
+  "name": "recupera-sito-completo",
+  "private": true,
+  "version": "0.1.0",
+  "description": "Sito completo reCUPera: landing, Prenota, Dashboard e Test server dietro un unico gateway",
+  "type": "module",
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "setup": "npm install && npm --prefix apps/dashboard install && npm --prefix apps/dashboard/backend install && npm --prefix apps/prenota install && npm --prefix apps/test-server install",
+    "dev": "node scripts/avvia.mjs",
+    "build": "npm --prefix apps/dashboard run build",
+    "start": "node scripts/avvia.mjs --prod",
+    "dev:gateway": "node --watch gateway/server.js",
+    "start:gateway": "node gateway/server.js"
+  },
+  "dependencies": {
+    "express": "^5.2.1",
+    "http-proxy-middleware": "^4.2.0"
+  }
+}

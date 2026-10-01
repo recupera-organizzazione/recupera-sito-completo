@@ -1,0 +1,191 @@
+/* reCUPera — design system condiviso (landing, Prenota, Dashboard, Test server).
+   Token generati con Stitch (progetto "reCUPera — sito completo", design system "reCUPera"):
+   primario #146b51, corallo #f17f65/#fc886d, giallo #f3c64e, carta #f3f5ef, Manrope + JetBrains Mono.
+   Le app importano questo file e usano le variabili --rc-*; i componenti comuni hanno prefisso .rc-. */
+
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap');
+
+:root {
+  /* Superfici */
+  --rc-paper: #f3f5ef;          /* sfondo pagina */
+  --rc-surface: #f8faf4;
+  --rc-surface-low: #f2f4ee;
+  --rc-surface-mid: #edefe9;
+  --rc-card: #ffffff;
+  --rc-ink: #172a29;            /* testo principale, superfici scure */
+  --rc-ink-soft: #2e312d;
+  --rc-on-ink: #eff1eb;
+  --rc-muted: #5b6863;          /* testo secondario (AA su carta e bianco) */
+  --rc-line: #dce4dd;
+  --rc-line-strong: #bec9c2;
+
+  /* Colori */
+  --rc-green: #146b51;
+  --rc-green-dark: #00513c;
+  --rc-green-hover: #0e5843;
+  --rc-mint: #bce8d1;
+  --rc-mint-soft: #dcefe5;
+  --rc-mint-ink: #002116;
+  --rc-mint-on-ink: #88d6b6;
+  --rc-coral: #f17f65;
+  --rc-coral-ink: #9f412b;
+  --rc-coral-soft: #fff5f1;
+  --rc-yellow: #f3c64e;
+  --rc-yellow-ink: #594400;
+  --rc-red: #c65e4b;
+  --rc-danger: #ba1a1a;
+
+  /* Tipografia */
+  --rc-font: 'Manrope', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --rc-mono: 'JetBrains Mono', ui-monospace, 'Cascadia Mono', Consolas, monospace;
+
+  /* Forma ed elevazione */
+  --rc-radius: 4px;
+  --rc-radius-sm: 2px;
+  --rc-shadow-offset: 12px 12px 0 rgba(20, 107, 81, .09);
+  --rc-focus: 3px solid var(--rc-coral);
+  --rc-sitebar-h: 60px;
+}
+
+/* Griglia tecnica leggera di 32px */
+.rc-grid-bg {
+  background-image:
+    linear-gradient(to right, rgba(20, 107, 81, .04) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(20, 107, 81, .04) 1px, transparent 1px);
+  background-size: 32px 32px;
+}
+
+/* ── Barra di navigazione condivisa ───────────────────────────────────── */
+.rc-sitebar {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  height: var(--rc-sitebar-h);
+  background: var(--rc-card);
+  border-bottom: 1px solid var(--rc-line-strong);
+  font-family: var(--rc-font);
+}
+.rc-sitebar__inner {
+  height: 100%;
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 0 clamp(16px, 3vw, 32px);
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
+.rc-brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--rc-ink);
+  text-decoration: none;
+  font-weight: 800;
+  font-size: 19px;
+  letter-spacing: -.5px;
+  flex: 0 0 auto;
+}
+.rc-brand__mark { display: inline-flex; align-items: center; gap: 3px; }
+.rc-brand__mark i { display: block; width: 8px; border-radius: 99px; transition: transform .2s ease; }
+.rc-brand__mark i:nth-child(1) { height: 20px; background: var(--rc-green); transform: rotate(-12deg); }
+.rc-brand__mark i:nth-child(2) { height: 24px; background: var(--rc-coral); transform: rotate(6deg); }
+.rc-brand__mark i:nth-child(3) { height: 16px; background: var(--rc-ink); transform: rotate(-6deg); }
+.rc-brand:hover .rc-brand__mark i { transform: none; }
+.rc-brand__tag {
+  padding: 2px 6px;
+  border: 1px solid var(--rc-line-strong);
+  border-radius: var(--rc-radius-sm);
+  background: var(--rc-surface-mid);
+  color: var(--rc-muted);
+  font: 600 9px var(--rc-mono);
+  letter-spacing: .6px;
+  text-transform: uppercase;
+}
+.rc-sitenav { display: flex; align-items: center; gap: 28px; margin: 0 auto; }
+.rc-sitenav a {
+  padding: 6px 0 4px;
+  border-bottom: 2px solid transparent;
+  color: var(--rc-muted);
+  font-size: 14px;
+  font-weight: 600;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: color .15s ease;
+}
+.rc-sitenav a:hover { color: var(--rc-green); }
+.rc-sitenav a[aria-current='page'] { color: var(--rc-green-dark); border-bottom-color: var(--rc-green-dark); font-weight: 700; }
+.rc-sitebar__actions { display: flex; align-items: center; gap: 12px; flex: 0 0 auto; }
+
+/* ── Componenti comuni ─────────────────────────────────────────────────── */
+.rc-kicker {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0 0 10px;
+  color: var(--rc-muted);
+  font: 700 11px var(--rc-mono);
+  letter-spacing: .8px;
+  text-transform: uppercase;
+}
+.rc-kicker::before { content: ''; width: 12px; height: 2px; background: var(--rc-coral); }
+
+.rc-button {
+  min-height: 40px;
+  padding: 0 16px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  border: 1px solid transparent;
+  border-radius: var(--rc-radius);
+  font: 600 13px var(--rc-font);
+  text-decoration: none;
+  cursor: pointer;
+  transition: background .15s ease, transform .15s ease;
+}
+.rc-button:active { transform: scale(.98); }
+.rc-button--primary { background: var(--rc-green); color: #fff; }
+.rc-button--primary:hover { background: var(--rc-green-dark); }
+.rc-button--outline { background: var(--rc-card); color: var(--rc-ink); border-color: var(--rc-line-strong); }
+.rc-button--outline:hover { background: var(--rc-surface-low); }
+.rc-button--small { min-height: 32px; padding: 0 11px; font-size: 12px; }
+
+.rc-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 2px 8px;
+  border-radius: var(--rc-radius-sm);
+  font: 600 11px var(--rc-mono);
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+.rc-status::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: currentColor; }
+.rc-status--ok { background: #a3f3d1; color: var(--rc-green-dark); }
+.rc-status--ko { background: #ffdad2; color: var(--rc-coral-ink); }
+.rc-status--wait { background: var(--rc-surface-mid); color: var(--rc-muted); }
+
+.rc-sitebar a:focus-visible,
+.rc-button:focus-visible,
+.rc-focus:focus-visible { outline: var(--rc-focus); outline-offset: 2px; }
+
+@media (max-width: 760px) {
+  .rc-sitebar { height: auto; }
+  .rc-sitebar__inner { flex-wrap: wrap; gap: 4px 12px; padding-top: 10px; padding-bottom: 0; }
+  .rc-brand__tag { display: none; }
+  .rc-sitebar__actions { margin-left: auto; }
+  .rc-sitenav {
+    order: 3;
+    width: 100%;
+    margin: 0;
+    gap: 20px;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+  .rc-sitenav::-webkit-scrollbar { display: none; }
+  .rc-sitenav a { padding: 8px 0 8px; font-size: 13px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .rc-brand__mark i, .rc-button, .rc-sitenav a { transition: none; }
+}

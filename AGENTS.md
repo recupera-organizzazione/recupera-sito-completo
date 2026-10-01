@@ -15,9 +15,19 @@ git pull --ff-only
 
 ## 1. Contesto e stato reale
 
-- Repo appena creato per il **sito completo** di reCUPera: contiene solo i file di istruzioni per agenti (`AGENTS.md`, `CLAUDE.md`, `GEMINI.md`). Nessun codice, `package.json`, build o backend.
-- Repo collegati nella stessa organizzazione: `recupera-dashboard` (dashboard ASL), `recupera-prenotazioni` (area cittadino), `recupera-test-server` (finto sistema CUP). Leggi i loro `AGENTS.md` prima di riusarne codice o dati.
+- Monorepo del **sito completo** di reCUPera: landing (`web/`), design system condiviso (`design/recupera.css`), gateway Express 5 (`gateway/server.js`) e le tre app copiate dai loro repo in `apps/`: `apps/dashboard` (da `recupera-dashboard`), `apps/prenota` (da `recupera-prenotazioni`), `apps/test-server` (da `recupera-test-server`). Struttura, porte e avvio: `README.md`.
+- Le app restano **processi separati** dietro il gateway (`/dashboard/`, `/prenota/`, `/test-server/`); non fonderle in un solo server Express (versioni di Express diverse, `/api/v1` in comune tra dashboard e test server).
+- I frontend di Prenota e del test server usano **percorsi relativi** (`api/...`, `health`, `design/recupera.css`): non reintrodurre percorsi assoluti, si romperebbero sotto il prefisso del gateway. La dashboard usa `base: '/dashboard/'` di Vite e `import.meta.env.BASE_URL` per le API.
+- `apps/test-server/public/prenota` è una copia del frontend di Prenota: dopo ogni modifica di `apps/prenota/public` riesegui `sh apps/test-server/scripts/importa-prenota.sh`.
+- Design: generato con Stitch (progetto "reCUPera — sito completo"). Ogni pagina usa la barra `.rc-sitebar` e i token `--rc-*` di `design/recupera.css`; non introdurre palette o font diversi nelle singole app.
 - Hosting previsto: **Vercel** (non ancora configurato). Non creare progetti Vercel, domini o variabili d'ambiente remote senza richiesta esplicita dell'utente.
+
+## 1.1 Vincoli ereditati dai repo delle app
+
+- **Database condiviso** (progetto Supabase `recupera`, ref `jjkxvbjwruobclgwhtdt`): le tabelle `public.slots`, `appointments`, `waiting_list`, `cancellation_events`, `notifications` e le funzioni `public.book_available_slot` / `public.cancel_appointment_and_reallocate` sono del team Prenota: non cambiarne struttura senza accordo. Lo schema `test_server` è del test server e non va esposto ad `anon`/`authenticated`. Ogni modifica di schema = nuova migrazione in `apps/*/supabase/migrations/`, mai dalla dashboard Supabase.
+- **Test server:** solo dati fittizi; mai toccare utenti e prenotazioni reali; le disdette passano sempre da `public.cancel_appointment_and_reallocate`.
+- **Dataset** (dashboard): fonte viva = Supabase sincronizzato da dati.puglia.it; `*_TMAX` = prenotazioni **entro** il tempo massimo; mapping ASL fisso `160106=BR, 160112=TA, 160113=BT, 160114=BA, 160115=FG, 160116=LE`; mai inventare giorni di attesa, serie storiche o coordinate (le stime vanno marcate `stimato`). Totali di controllo per la settimana 07-11 ottobre 2024: BA 19.370, FG 10.042, LE 7.754, TA 7.113, BT 5.607, BR 4.686.
+- **Admin** condivisi tra dashboard e test server: Supabase Auth con `app_metadata.role = 'admin'`, stessi `ADMIN_USER`/`ADMIN_EMAIL`; nessuna password in repo.
 
 ## 2. Regole di lavoro
 
@@ -31,5 +41,6 @@ git pull --ff-only
 
 ## 3. Definizione di "fatto"
 
-- Il sito si avvia in locale senza errori in console e `npm run build` (quando esisterà) passa. Riporta comandi e output.
+- `npm run build` passa e `npm run dev` / `npm start` avviano tutto su http://localhost:3000 senza errori in console; `curl` su ogni percorso toccato (landing, `/prenota/health`, `/dashboard/api/v1/health`, `/test-server/api/v1/health`). Riporta comandi e output.
+- Le pagine toccate usano la barra comune e i token del design system, anche a 390px di larghezza (niente scroll orizzontale).
 - Nessun nuovo dato hardcoded non marcato `demo`.

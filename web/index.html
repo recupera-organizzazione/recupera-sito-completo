@@ -1,0 +1,164 @@
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#146b51">
+  <title>reCUPera | Posti liberati, liste d'attesa più corte</title>
+  <meta name="description" content="reCUPera recupera i posti liberati dalle disdette delle visite specialistiche e li propone a chi aspetta da più tempo, nelle 6 ASL della Puglia.">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <link rel="stylesheet" href="/design/recupera.css">
+  <link rel="stylesheet" href="/landing.css">
+  <script src="/landing.js" defer></script>
+</head>
+<body>
+  <header class="rc-sitebar">
+    <div class="rc-sitebar__inner">
+      <a class="rc-brand" href="/" aria-label="reCUPera, pagina iniziale">
+        <span class="rc-brand__mark" aria-hidden="true"><i></i><i></i><i></i></span>
+        <span>reCUPera</span>
+        <span class="rc-brand__tag">Puglia</span>
+      </a>
+      <nav class="rc-sitenav" aria-label="Sezioni del sito">
+        <a href="/" aria-current="page">Home</a>
+        <a href="/prenota/">Prenota</a>
+        <a href="/dashboard/">Dashboard</a>
+        <a href="/test-server/">Test server</a>
+      </nav>
+      <div class="rc-sitebar__actions">
+        <a class="rc-button rc-button--primary rc-button--small" href="/prenota/">Prenota una visita</a>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero rc-grid-bg" aria-labelledby="hero-title">
+      <div class="wrap hero__grid">
+        <div class="hero__copy">
+          <p class="hero__chip"><i aria-hidden="true"></i>Regione Puglia · CUP</p>
+          <h1 id="hero-title">Ogni posto liberato, <em>a chi aspetta da più tempo.</em></h1>
+          <p class="hero__lead">reCUPera recupera i posti lasciati liberi dalle disdette delle visite specialistiche e riequilibra le liste d'attesa tra le 6 ASL pugliesi (BA, BR, BT, FG, LE, TA). Nessuno spostamento automatico: il cittadino riceve una proposta e decide se anticipare.</p>
+          <div class="hero__actions">
+            <a class="rc-button rc-button--primary hero__cta" href="/prenota/">Accedi a Prenota <span aria-hidden="true">→</span></a>
+            <a class="rc-button rc-button--outline hero__cta" href="/dashboard/">Area operatori</a>
+          </div>
+          <p class="hero__note">Se rifiuti una proposta mantieni la tua prenotazione originale.</p>
+        </div>
+
+        <aside class="status-panel" aria-labelledby="status-title">
+          <div class="status-panel__head">
+            <div>
+              <h2 id="status-title">Stato dei servizi</h2>
+              <p>Verificato ora da questa pagina</p>
+            </div>
+            <button id="status-refresh" class="rc-button rc-button--outline rc-button--small" type="button">Ricontrolla</button>
+          </div>
+          <ul class="status-list" aria-live="polite">
+            <li class="status-row">
+              <span class="status-row__icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M7 3v3M17 3v3M4 9h16M5 5h14a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1Z"/></svg></span>
+              <span class="status-row__text"><strong>Prenota</strong><small>Area personale del cittadino</small></span>
+              <span class="rc-status rc-status--wait" data-service="prenota">verifica…</span>
+            </li>
+            <li class="status-row">
+              <span class="status-row__icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg></span>
+              <span class="status-row__text"><strong>Dashboard</strong><small>Pannello operatori CUP e Regione</small></span>
+              <span class="rc-status rc-status--wait" data-service="dashboard">verifica…</span>
+            </li>
+            <li class="status-row">
+              <span class="status-row__icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m8 9-3 3 3 3M16 9l3 3-3 3M13 6l-2 12"/></svg></span>
+              <span class="status-row__text"><strong>Test server</strong><small>Finto CUP per il collaudo</small></span>
+              <span class="rc-status rc-status--wait" data-service="test-server">verifica…</span>
+            </li>
+          </ul>
+          <p id="dataset-note" class="status-panel__foot">Dati regionali: in caricamento…</p>
+        </aside>
+      </div>
+    </section>
+
+    <section class="section section--tint" aria-labelledby="come-title">
+      <div class="wrap">
+        <header class="section__head">
+          <p class="rc-kicker">Trasparenza e priorità</p>
+          <h2 id="come-title">Come funziona</h2>
+          <p>Lo slot liberato va prima a chi ha la classe di priorità più urgente e, a parità, a chi aspetta da più tempo.</p>
+        </header>
+        <ol class="steps">
+          <li class="step">
+            <span class="step__num">01</span>
+            <h3>Disdetta</h3>
+            <p>Un cittadino disdice una visita prenotata e lo slot torna libero nell'agenda.</p>
+          </li>
+          <li class="step">
+            <span class="step__num">02</span>
+            <h3>Proposta</h3>
+            <p>Lo slot viene proposto a chi è in lista d'attesa per la stessa prestazione, in ordine di priorità (B, D, P) e di attesa.</p>
+          </li>
+          <li class="step">
+            <span class="step__num">03</span>
+            <h3>Scelta</h3>
+            <p>Il cittadino conferma o rifiuta. Se rifiuta mantiene la prenotazione originale e resta in lista.</p>
+          </li>
+        </ol>
+      </div>
+    </section>
+
+    <section class="section" aria-labelledby="spazi-title">
+      <div class="wrap">
+        <header class="section__head">
+          <p class="rc-kicker">Un solo sistema</p>
+          <h2 id="spazi-title">Tre spazi, un solo sistema</h2>
+          <p>Cittadini, operatori e collaudo condividono gli stessi dati su Supabase.</p>
+        </header>
+        <div class="spaces">
+          <a class="space space--ink" href="/prenota/">
+            <span class="space__tag">Cittadini</span>
+            <h3>Prenota</h3>
+            <p>Cerca una visita, prenota uno slot libero, entra in lista d'attesa e segui le notifiche di riassegnazione.</p>
+            <span class="space__link">Apri Prenota <span aria-hidden="true">→</span></span>
+          </a>
+          <a class="space space--mint" href="/dashboard/">
+            <span class="space__tag">Operatori CUP e ASL</span>
+            <h3>Dashboard</h3>
+            <p>Prenotazioni e quota oltre il tempo massimo per ASL, disdette, territorio e simulatore di spostamento delle ore.</p>
+            <span class="space__link">Apri Dashboard <span aria-hidden="true">→</span></span>
+          </a>
+          <a class="space space--white" href="/test-server/">
+            <span class="space__tag">Collaudo</span>
+            <h3>Test server</h3>
+            <p>Agenda simulata calibrata sul dataset regionale, prenotazioni fittizie e disdette di prova per testare Prenota.</p>
+            <span class="space__link">Apri Test server <span aria-hidden="true">→</span></span>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <section class="source" aria-label="Fonte dei dati">
+      <div class="wrap">
+        <div class="source__box">
+          <span class="status-row__icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 6c0-1.7 3.6-3 8-3s8 1.3 8 3-3.6 3-8 3-8-1.3-8-3Zm0 0v12c0 1.7 3.6 3 8 3s8-1.3 8-3V6M4 12c0 1.7 3.6 3 8 3s8-1.3 8-3"/></svg></span>
+          <div>
+            <h2>Origine dei dati</h2>
+            <p>Dataset <em>Monitoraggio dei tempi di attesa</em> della Regione Puglia (<a href="https://dati.puglia.it/ckan/dataset/monitoraggio-tempi-di-attesa" target="_blank" rel="noopener noreferrer">dati.puglia.it</a>, licenza CC BY 4.0), sincronizzato ogni giorno. Pazienti, medici e prenotazioni del test server sono fittizi.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap site-footer__grid">
+      <a class="rc-brand" href="/" aria-label="reCUPera, pagina iniziale">
+        <span class="rc-brand__mark" aria-hidden="true"><i></i><i></i><i></i></span>
+        <span>reCUPera</span>
+      </a>
+      <nav aria-label="Collegamenti a piè di pagina">
+        <a href="/prenota/">Prenota</a>
+        <a href="/dashboard/">Dashboard</a>
+        <a href="/test-server/">Test server</a>
+        <a href="https://dati.puglia.it/ckan/dataset/monitoraggio-tempi-di-attesa" target="_blank" rel="noopener noreferrer">Dataset regionale</a>
+      </nav>
+      <p>Progetto reCUPera · prototipo, non è il servizio ufficiale CUP della Regione Puglia.</p>
+    </div>
+  </footer>
+</body>
+</html>

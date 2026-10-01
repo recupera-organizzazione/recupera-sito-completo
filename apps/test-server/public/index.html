@@ -1,0 +1,658 @@
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>reCUPera | Test server</title>
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="stylesheet" href="design/recupera.css">
+  <style>
+/* Stile del test server sul design system condiviso (design/recupera.css), schermata Stitch "Test server". */
+:root {
+  --bg: var(--rc-surface);
+  --card: var(--rc-card);
+  --testo: var(--rc-ink);
+  --muted: var(--rc-muted);
+  --bordo: var(--rc-line-strong);
+  --accento: var(--rc-green);
+  --pericolo: var(--rc-coral-ink);
+  --barra-bassa: var(--rc-green);
+  --barra-media: #c79a1c;
+  --barra-alta: var(--rc-red);
+}
+
+* { box-sizing: border-box; }
+/* senza questa regola display: grid di .login e .pannello vince su hidden */
+[hidden] { display: none !important; }
+body { margin: 0; font: 14px/1.5 var(--rc-font); background: var(--bg); color: var(--testo); }
+h1 { font-size: 24px; font-weight: 800; letter-spacing: -.6px; margin: 0 0 4px; }
+h2 { font-size: 18px; font-weight: 700; letter-spacing: -.3px; margin: 0 0 12px; }
+h2::before { content: ''; display: block; width: 12px; height: 2px; margin-bottom: 10px; background: var(--rc-coral); }
+.muted { color: var(--muted); margin: 0 0 12px; }
+.errore { color: var(--pericolo); min-height: 1.2em; margin: 8px 0 0; }
+a { color: var(--accento); }
+a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible, summary:focus-visible { outline: var(--rc-focus); outline-offset: 2px; }
+
+.login { display: grid; place-items: center; min-height: calc(100vh - var(--rc-sitebar-h)); padding: 24px 16px; }
+.login form { width: min(400px, 100%); display: grid; gap: 12px; padding: 32px 28px; box-shadow: var(--rc-shadow-offset); }
+.login label { display: grid; gap: 4px; font-size: 13px; font-weight: 600; }
+.login button[type=submit] { min-height: 42px; margin-top: 4px; }
+
+.top { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 24px; padding: 0 clamp(16px, 3vw, 32px); background: var(--card); border-bottom: 1px solid var(--bordo); }
+.top > strong { font: 700 11px var(--rc-mono); letter-spacing: .8px; text-transform: uppercase; color: var(--muted); }
+.top nav { display: flex; gap: 22px; flex-wrap: wrap; }
+.utente { margin-left: auto; color: var(--muted); font-size: 13px; }
+.fonte { margin: 0; padding: 12px clamp(16px, 3vw, 32px); background: var(--rc-mint-soft); border-bottom: 1px solid #a4d8bd; color: #24413a; font-size: 13px; }
+
+main { padding: 24px clamp(16px, 3vw, 32px); display: grid; gap: 20px; max-width: 1280px; margin: 0 auto; }
+.pannello { display: grid; gap: 20px; }
+.card { background: var(--card); border: 1px solid var(--bordo); border-radius: var(--rc-radius); padding: 22px; overflow-x: auto; }
+
+input, select, button { font: inherit; color: inherit; }
+input, select { min-height: 36px; padding: 6px 10px; border: 1px solid var(--bordo); border-radius: var(--rc-radius); background: var(--card); }
+input:focus, select:focus { outline: 0; border-color: var(--accento); box-shadow: 0 0 0 3px rgba(20, 107, 81, .12); }
+button { min-height: 36px; padding: 6px 14px; border: 1px solid var(--accento); border-radius: var(--rc-radius); background: var(--accento); color: #fff; font-weight: 600; cursor: pointer; }
+button:hover { background: var(--rc-green-dark); }
+button:disabled { opacity: .5; cursor: wait; }
+button.pericolo { background: var(--rc-coral); border-color: var(--rc-coral); color: var(--rc-ink); }
+button.pericolo:hover { background: #e96c51; }
+button.link { min-height: 0; background: none; border: none; color: var(--accento); padding: 0; text-decoration: underline; }
+.tab { min-height: 0; padding: 16px 0 13px; background: none; color: var(--muted); border: 0; border-bottom: 3px solid transparent; border-radius: 0; font-weight: 600; }
+.tab:hover { background: none; color: var(--accento); }
+.tab.attiva { border-bottom-color: var(--rc-green-dark); color: var(--rc-green-dark); font-weight: 700; }
+a.tab { text-decoration: none; }
+h3 { margin: 18px 0 8px; font-size: 15px; }
+.due-colonne { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
+
+.filtri { display: flex; flex-wrap: wrap; gap: 10px 14px; align-items: end; margin-bottom: 14px; }
+.filtri label { display: grid; gap: 3px; font: 600 10px var(--rc-mono); letter-spacing: .6px; text-transform: uppercase; color: var(--muted); }
+.filtri label input, .filtri label select { font: 14px var(--rc-font); text-transform: none; letter-spacing: 0; color: var(--testo); }
+
+table { width: 100%; border-collapse: collapse; }
+th, td { text-align: left; padding: 9px 10px; border-bottom: 1px solid var(--rc-line); white-space: nowrap; }
+th { font: 600 10px var(--rc-mono); letter-spacing: .6px; text-transform: uppercase; color: var(--muted); border-bottom-color: var(--bordo); }
+tbody tr:hover { background: var(--rc-surface-low); }
+.num { text-align: right; font-family: var(--rc-mono); font-variant-numeric: tabular-nums; }
+.id { font-family: var(--rc-mono); font-size: 12px; color: var(--muted); }
+details { margin-top: 14px; }
+summary { cursor: pointer; color: var(--accento); font-weight: 600; margin-bottom: 8px; }
+
+.barra { display: flex; align-items: center; gap: 8px; min-width: 180px; }
+.barra .traccia { flex: 1; height: 8px; background: var(--rc-surface-mid); border-radius: 4px; overflow: hidden; }
+.barra .riempita { height: 100%; }
+.barra span { width: 48px; text-align: right; font-family: var(--rc-mono); font-variant-numeric: tabular-nums; }
+
+.badge { display: inline-block; padding: 1px 8px; border-radius: var(--rc-radius-sm); font: 600 11px var(--rc-mono); border: 1px solid var(--bordo); color: var(--muted); }
+.badge.loggata { border-color: var(--accento); background: #a3f3d1; color: var(--rc-green-dark); }
+.pagine { display: flex; gap: 8px; margin-top: 14px; }
+.pagine button { background: var(--card); color: var(--testo); border-color: var(--bordo); }
+.pagine button:hover { background: var(--rc-surface-low); }
+
+.esito { background: var(--rc-surface-low); border: 1px solid var(--bordo); border-radius: var(--rc-radius); padding: 12px; overflow-x: auto; margin: 0; font: 12px/1.5 var(--rc-mono); }
+.esito-box { border: 1px solid var(--bordo); border-radius: var(--rc-radius); padding: 14px; display: grid; gap: 6px; background: var(--rc-surface-low); }
+.esito-box.errore-box { border-color: var(--rc-coral); background: var(--rc-coral-soft); color: var(--pericolo); }
+
+@media (max-width: 640px) {
+  .top { padding-top: 8px; }
+  .utente { margin-left: 0; width: 100%; padding-bottom: 10px; }
+  .card { padding: 16px; }
+}
+  </style>
+</head>
+<body>
+  <header class="rc-sitebar">
+    <div class="rc-sitebar__inner">
+      <a class="rc-brand" href="/" aria-label="reCUPera, pagina iniziale"><span class="rc-brand__mark" aria-hidden="true"><i></i><i></i><i></i></span><span>reCUPera</span><span class="rc-brand__tag">Test server</span></a>
+      <nav class="rc-sitenav" aria-label="Sezioni del sito">
+        <a href="/">Home</a>
+        <a href="/prenota/">Prenota</a>
+        <a href="/dashboard/">Dashboard</a>
+        <a href="/test-server/" aria-current="page">Test server</a>
+      </nav>
+    </div>
+  </header>
+
+  <section id="login" class="login rc-grid-bg" hidden>
+    <form id="login-form" class="card">
+      <p class="rc-kicker">Finto sistema CUP</p>
+      <h1>Accesso admin</h1>
+      <p class="muted">Accesso riservato agli admin. Non esiste registrazione.</p>
+      <label>Username <input name="username" autocomplete="username" required></label>
+      <label>Password <input name="password" type="password" autocomplete="current-password" required></label>
+      <button type="submit">Accedi</button>
+      <p id="login-errore" class="errore" role="alert"></p>
+    </form>
+  </section>
+
+  <div id="app" hidden>
+    <header class="top">
+      <strong>Test server</strong>
+      <nav aria-label="Schede del test server">
+        <button class="tab attiva" data-tab="centri">Centri</button>
+        <button class="tab" data-tab="prenotazioni">Prenotazioni</button>
+        <button class="tab" data-tab="slot">Slot liberi</button>
+        <button class="tab" data-tab="test">Test disdetta</button>
+        <a class="tab" href="/prenota/" target="_blank" rel="noopener">App Prenota ↗</a>
+      </nav>
+      <span class="utente"><span id="admin-nome"></span> <button id="logout" class="link">Esci</button></span>
+    </header>
+
+    <p class="fonte" id="fonte">
+      Volumi basati sul dataset reale <em>Monitoraggio dei tempi di attesa</em> della Regione Puglia
+      (dati.puglia.it), <strong id="fonte-settimana">settimana 07-11 ottobre 2024</strong>.
+      Prenotazioni, pazienti e medici sono fittizi; volumi in scala <strong id="fonte-scala">1:20</strong>.
+    </p>
+
+    <main>
+      <!-- CENTRI -->
+      <section id="tab-centri" class="pannello">
+        <div class="card">
+          <h2>Riempimento delle strutture</h2>
+          <form id="centri-form" class="filtri">
+            <label>Da <input type="date" name="da"></label>
+            <label>A <input type="date" name="a"></label>
+            <button type="submit">Aggiorna</button>
+          </form>
+          <table>
+            <thead><tr><th>Struttura</th><th>ASL</th><th class="num">Slot</th><th class="num">Prenotati</th><th class="num">Liberi</th><th>Riempimento</th></tr></thead>
+            <tbody id="centri-body"></tbody>
+          </table>
+        </div>
+
+        <div class="card">
+          <h2>Confronto con il dataset per ASL</h2>
+          <p class="muted">
+            <em>Dataset</em> = prenotazioni nella settimana 07-11 ottobre 2024 per le 10 prestazioni simulate.
+            <em>Simulate</em> = media settimanale delle prenotazioni generate, moltiplicata per la scala.
+            <em>Pressione</em> = quota di prenotazioni da garantire <strong>non</strong> garantite entro il tempo massimo
+            (interpretazione delle colonne *_TMAX, vedi README): più è alta, più le agende sono piene.
+          </p>
+          <table>
+            <thead><tr><th>ASL</th><th class="num">Dataset / sett.</th><th class="num">Simulate / sett.</th><th class="num">Scarto</th><th class="num">Pressione</th><th>Riempimento simulato</th></tr></thead>
+            <tbody id="asl-body"></tbody>
+          </table>
+          <details>
+            <summary>Dettaglio per prestazione</summary>
+            <table>
+              <thead><tr><th>ASL</th><th>Prestazione</th><th class="num">Dataset</th><th class="num">Simulate</th><th class="num">Pressione</th><th class="num">Riempimento</th></tr></thead>
+              <tbody id="dettaglio-body"></tbody>
+            </table>
+          </details>
+        </div>
+      </section>
+
+      <!-- PRENOTAZIONI -->
+      <section id="tab-prenotazioni" class="pannello" hidden>
+        <div class="card">
+          <h2>Prenotazioni</h2>
+          <form id="pren-form" class="filtri">
+            <label>Tipo
+              <select name="tipo">
+                <option value="tutte">Tutte</option>
+                <option value="loggata">Loggate (Prenota)</option>
+                <option value="fittizia">Fittizie</option>
+              </select>
+            </label>
+            <label>Stato
+              <select name="stato">
+                <option value="booked">Attive</option>
+                <option value="cancelled">Disdette</option>
+                <option value="tutti">Tutte</option>
+              </select>
+            </label>
+            <label>Prestazione <select name="prestazione" class="sel-prestazione"><option value="">Tutte</option></select></label>
+            <label>Struttura <select name="struttura" class="sel-struttura"><option value="">Tutte</option></select></label>
+            <label>Da <input type="date" name="da"></label>
+            <label>A <input type="date" name="a"></label>
+            <button type="submit">Cerca</button>
+          </form>
+          <p class="muted" id="pren-totale"></p>
+          <table>
+            <thead><tr><th>Data e ora</th><th>Prestazione</th><th>Struttura</th><th>Medico</th><th>Paziente</th><th>Tipo</th><th>Stato</th><th>ID</th></tr></thead>
+            <tbody id="pren-body"></tbody>
+          </table>
+          <div class="pagine">
+            <button id="pren-prec" type="button">← Precedenti</button>
+            <button id="pren-succ" type="button">Successive →</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLOT LIBERI -->
+      <section id="tab-slot" class="pannello" hidden>
+        <div class="card">
+          <h2>Slot liberi</h2>
+          <p class="muted">
+            Slot futuri ancora prenotabili. Le agende sono piene fino a fine 2027 (seed 05): le prime disponibilità
+            sono nel 2028, tranne gli slot liberati da una disdetta, che Prenota deve proporre.
+          </p>
+          <form id="slot-form" class="filtri">
+            <label>Prestazione <select name="prestazione" class="sel-prestazione"><option value="">Tutte</option></select></label>
+            <label>Struttura <select name="struttura" class="sel-struttura"><option value="">Tutte</option></select></label>
+            <label>Da <input type="date" name="da"></label>
+            <label>A <input type="date" name="a"></label>
+            <button type="submit">Cerca</button>
+          </form>
+          <p class="muted" id="slot-totale"></p>
+          <div class="due-colonne">
+            <div>
+              <h3>Per mese</h3>
+              <table>
+                <thead><tr><th>Mese</th><th class="num">Liberi</th></tr></thead>
+                <tbody id="slot-mesi"></tbody>
+              </table>
+            </div>
+            <div>
+              <h3>Prima disponibilità per prestazione</h3>
+              <table>
+                <thead><tr><th>Prestazione</th><th>Primo slot</th><th class="num">Liberi</th></tr></thead>
+                <tbody id="slot-primi"></tbody>
+              </table>
+            </div>
+          </div>
+          <h3>Elenco</h3>
+          <table>
+            <thead><tr><th>Data e ora</th><th>Prestazione</th><th>Struttura</th><th>ASL</th><th>Medico</th><th>Origine</th><th>ID</th></tr></thead>
+            <tbody id="slot-body"></tbody>
+          </table>
+          <div class="pagine">
+            <button id="slot-prec" type="button">← Precedenti</button>
+            <button id="slot-succ" type="button">Successivi →</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- TEST -->
+      <section id="tab-test" class="pannello" hidden>
+        <div class="card">
+          <h2>1. Prenotazione di un utente loggato</h2>
+          <p class="muted">
+            Crea una prenotazione con l'<em>utente di prova</em> (utente.prova@prenota.recupera.test), che risulta
+            "loggata", su una delle prime disponibilità. In alternativa registrati su <a href="/prenota/" target="_blank" rel="noopener">App Prenota</a>
+            e prenota da lì: anche quelle prenotazioni risultano loggate.
+          </p>
+          <form id="prova-form" class="filtri">
+            <label>Prestazione <select name="prestazione" class="sel-prestazione"><option value="">Qualsiasi</option></select></label>
+            <button type="submit">Crea prenotazione di prova</button>
+          </form>
+          <pre id="prova-esito" class="esito" hidden></pre>
+        </div>
+
+        <div class="card">
+          <h2>2. Disdetta casuale compatibile</h2>
+          <p class="muted">
+            Disdice a caso una prenotazione fittizia con la stessa prestazione e uno slot precedente
+            a quello di una prenotazione loggata (stessa ASL se possibile). Lascia vuoto l'ID per scegliere il target a caso.
+          </p>
+          <form id="disdici-form" class="filtri">
+            <label>ID prenotazione target (opzionale) <input name="target_id" size="38" placeholder="uuid"></label>
+            <button type="submit" class="pericolo">Disdici a caso</button>
+          </form>
+          <div id="disdici-esito" class="esito-box" hidden></div>
+        </div>
+
+        <div class="card">
+          <h2>Ultime disdette di test</h2>
+          <table>
+            <thead><tr><th>Quando</th><th>Admin</th><th>Slot liberato</th><th>Target</th><th class="num">Anticipo</th><th>Esito Prenota</th></tr></thead>
+            <tbody id="disdette-body"></tbody>
+          </table>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script>
+// Frontend di test del server CUP: niente framework, solo fetch + DOM.
+// Servita dal test-server (anche sotto /test-server/ del gateway del sito completo): percorso relativo.
+// Aperta con Live Server (porta 5500) o da file: punta al server locale standalone.
+const API = location.protocol.startsWith('http') && location.port !== '5500' ? 'api/v1' : 'http://localhost:3001/api/v1';
+const $ = (sel) => document.querySelector(sel);
+
+let token = leggiToken();
+let catalogo = null;
+let offsetPren = 0;
+const LIMITE_PREN = 50;
+
+function leggiToken() {
+  try { return sessionStorage.getItem('token'); } catch { return null; }
+}
+function salvaToken(t) {
+  token = t;
+  try { t ? sessionStorage.setItem('token', t) : sessionStorage.removeItem('token'); } catch { /* storage non disponibile */ }
+}
+
+async function api(percorso, opzioni = {}) {
+  const risposta = await fetch(API + percorso, {
+    ...opzioni,
+    headers: {
+      'content-type': 'application/json',
+      ...(token ? { authorization: `Bearer ${token}` } : {}),
+    },
+  });
+  const corpo = await risposta.json().catch(() => ({}));
+  if (risposta.status === 401 && percorso !== '/auth/login') {
+    salvaToken(null);
+    mostraLogin();
+  }
+  if (!risposta.ok) throw new Error(corpo.error?.message ?? `Errore ${risposta.status}`);
+  return corpo;
+}
+
+// --- helper DOM (solo textContent: niente innerHTML con dati) ---
+function el(tag, attributi = {}, ...figli) {
+  const nodo = document.createElement(tag);
+  for (const [k, v] of Object.entries(attributi)) {
+    if (k === 'class') nodo.className = v;
+    else nodo.setAttribute(k, v);
+  }
+  for (const f of figli) nodo.append(f instanceof Node ? f : document.createTextNode(f ?? ''));
+  return nodo;
+}
+function riga(...celle) {
+  return el('tr', {}, ...celle.map((c) => (c instanceof Node && c.tagName === 'TD' ? c : el('td', {}, c))));
+}
+function num(v, cifre = 0) {
+  return v === null || v === undefined ? '–' : Number(v).toLocaleString('it-IT', { maximumFractionDigits: cifre, minimumFractionDigits: cifre });
+}
+function pct(v) {
+  return v === null || v === undefined ? '–' : `${Math.round(v * 100)}%`;
+}
+function dataOra(iso) {
+  return new Date(iso).toLocaleString('it-IT', { timeZone: 'Europe/Rome', dateStyle: 'short', timeStyle: 'short' });
+}
+function barra(valore) {
+  const colore = valore >= 0.75 ? 'var(--barra-alta)' : valore >= 0.55 ? 'var(--barra-media)' : 'var(--barra-bassa)';
+  const riempita = el('div', { class: 'riempita' });
+  riempita.style.width = `${Math.round((valore ?? 0) * 100)}%`;
+  riempita.style.background = colore;
+  return el('td', {}, el('div', { class: 'barra' }, el('div', { class: 'traccia' }, riempita), el('span', {}, pct(valore))));
+}
+function tdNum(testo) {
+  return el('td', { class: 'num' }, testo);
+}
+function messaggio(tbody, colonne, testo) {
+  tbody.replaceChildren(el('tr', {}, el('td', { colspan: String(colonne), class: 'muted' }, testo)));
+}
+function isoGiorno(offsetGiorni) {
+  const d = new Date();
+  d.setDate(d.getDate() + offsetGiorni);
+  return d.toLocaleDateString('sv-SE', { timeZone: 'Europe/Rome' });
+}
+async function conBottone(form, azione) {
+  const bottone = form.querySelector('button[type=submit]');
+  bottone.disabled = true;
+  try { await azione(); } finally { bottone.disabled = false; }
+}
+
+// --- login ---
+function mostraLogin() {
+  $('#app').hidden = true;
+  $('#login').hidden = false;
+}
+
+$('#login-form').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const dati = Object.fromEntries(new FormData(e.target));
+  $('#login-errore').textContent = '';
+  await conBottone(e.target, async () => {
+    try {
+      const { token: t } = await api('/auth/login', { method: 'POST', body: JSON.stringify(dati) });
+      salvaToken(t);
+      e.target.reset();
+      await avvia();
+    } catch (err) {
+      $('#login-errore').textContent = err.message;
+    }
+  });
+});
+
+$('#logout').addEventListener('click', () => {
+  salvaToken(null);
+  mostraLogin();
+});
+
+// --- tab ---
+for (const tab of document.querySelectorAll('button.tab')) {
+  tab.addEventListener('click', () => {
+    for (const t of document.querySelectorAll('button.tab')) t.classList.toggle('attiva', t === tab);
+    for (const p of document.querySelectorAll('.pannello')) p.hidden = p.id !== `tab-${tab.dataset.tab}`;
+    if (tab.dataset.tab === 'prenotazioni') caricaPrenotazioni();
+    if (tab.dataset.tab === 'slot') caricaSlot();
+    if (tab.dataset.tab === 'test') caricaDisdette();
+  });
+}
+
+// --- centri ---
+async function caricaCentri() {
+  const corpo = $('#centri-body');
+  messaggio(corpo, 6, 'Caricamento…');
+  const params = new URLSearchParams(new FormData($('#centri-form')));
+  try {
+    const { centri } = await api(`/statistiche/centri?${params}`);
+    if (!centri.length) return messaggio(corpo, 6, 'Nessuna struttura');
+    corpo.replaceChildren(...centri.map((c) =>
+      riga(`${c.struttura} (${c.comune})`, c.asl, tdNum(num(c.slot)), tdNum(num(c.prenotati)), tdNum(num(c.liberi)), barra(c.riempimento))));
+  } catch (err) {
+    messaggio(corpo, 6, err.message);
+  }
+}
+
+async function caricaConfronto() {
+  const corpoAsl = $('#asl-body');
+  const corpoDett = $('#dettaglio-body');
+  messaggio(corpoAsl, 6, 'Caricamento…');
+  try {
+    const { parametri, righe } = await api('/statistiche/dataset');
+    $('#fonte-settimana').textContent = `settimana ${parametri.settimana_dataset}`;
+    $('#fonte-scala').textContent = `1:${parametri.scala}`;
+
+    const perAsl = new Map();
+    for (const r of righe) {
+      const a = perAsl.get(r.asl) ?? { asl: r.asl, dataset: 0, simulate: 0, prenotati: 0, slot: 0, pressPesata: 0 };
+      a.dataset += r.dataset_settimana;
+      a.simulate += r.simulate_settimana_scalate;
+      a.prenotati += r.prenotati;
+      a.slot += r.slot;
+      a.pressPesata += (r.pressione ?? 0) * r.dataset_settimana;
+      perAsl.set(r.asl, a);
+    }
+    const asl = [...perAsl.values()]
+      .map((a) => ({ ...a, pressione: a.pressPesata / a.dataset, riempimento: a.prenotati / a.slot }))
+      .sort((x, y) => y.pressione - x.pressione);
+    corpoAsl.replaceChildren(...asl.map((a) =>
+      riga(a.asl, tdNum(num(a.dataset)), tdNum(num(a.simulate)), tdNum(`${a.simulate >= a.dataset ? '+' : ''}${num((a.simulate / a.dataset - 1) * 100, 1)}%`),
+        tdNum(pct(a.pressione)), barra(a.riempimento))));
+    corpoDett.replaceChildren(...righe.map((r) =>
+      riga(r.asl, r.prestazione, tdNum(num(r.dataset_settimana)), tdNum(num(r.simulate_settimana_scalate)), tdNum(pct(r.pressione)), tdNum(pct(r.riempimento_simulato)))));
+  } catch (err) {
+    messaggio(corpoAsl, 6, err.message);
+  }
+}
+
+$('#centri-form').addEventListener('submit', (e) => {
+  e.preventDefault();
+  conBottone(e.target, caricaCentri);
+});
+
+// --- prenotazioni ---
+async function caricaPrenotazioni() {
+  const corpo = $('#pren-body');
+  messaggio(corpo, 8, 'Caricamento…');
+  const params = new URLSearchParams([...new FormData($('#pren-form'))].filter(([, v]) => v !== ''));
+  params.set('limit', LIMITE_PREN);
+  params.set('offset', offsetPren);
+  try {
+    const { totale, prenotazioni } = await api(`/prenotazioni?${params}`);
+    $('#pren-totale').textContent = totale
+      ? `${num(totale)} prenotazioni · ${num(offsetPren + 1)}–${num(offsetPren + prenotazioni.length)}`
+      : '';
+    $('#pren-prec').disabled = offsetPren === 0;
+    $('#pren-succ').disabled = offsetPren + LIMITE_PREN >= totale;
+    if (!prenotazioni.length) return messaggio(corpo, 8, 'Nessuna prenotazione con questi filtri');
+    corpo.replaceChildren(...prenotazioni.map((p) =>
+      riga(dataOra(p.starts_at), p.prestazione, p.struttura, p.medico, p.email,
+        el('td', {}, el('span', { class: `badge ${p.tipo}` }, p.utente_prova ? 'loggata (prova)' : p.tipo)),
+        p.status === 'booked' ? 'attiva' : 'disdetta',
+        el('td', { class: 'id' }, p.id))));
+  } catch (err) {
+    messaggio(corpo, 8, err.message);
+  }
+}
+
+$('#pren-form').addEventListener('submit', (e) => {
+  e.preventDefault();
+  offsetPren = 0;
+  conBottone(e.target, caricaPrenotazioni);
+});
+$('#pren-prec').addEventListener('click', () => { offsetPren = Math.max(0, offsetPren - LIMITE_PREN); caricaPrenotazioni(); });
+$('#pren-succ').addEventListener('click', () => { offsetPren += LIMITE_PREN; caricaPrenotazioni(); });
+
+// --- slot liberi ---
+let offsetSlot = 0;
+const LIMITE_SLOT = 50;
+const nomeMese = (m) => new Date(`${m}-01T12:00:00`).toLocaleDateString('it-IT', { month: 'long', year: 'numeric' });
+
+async function caricaSlot() {
+  const corpo = $('#slot-body');
+  messaggio(corpo, 7, 'Caricamento…');
+  const params = new URLSearchParams([...new FormData($('#slot-form'))].filter(([, v]) => v !== ''));
+  params.set('limit', LIMITE_SLOT);
+  params.set('offset', offsetSlot);
+  try {
+    const { totale, slot, mesi, primi } = await api(`/slot/liberi?${params}`);
+    $('#slot-totale').textContent = totale
+      ? `${num(totale)} slot liberi · ${num(offsetSlot + 1)}–${num(offsetSlot + slot.length)}`
+      : '';
+    $('#slot-prec').disabled = offsetSlot === 0;
+    $('#slot-succ').disabled = offsetSlot + LIMITE_SLOT >= totale;
+    $('#slot-mesi').replaceChildren(...mesi.map((m) => riga(nomeMese(m.mese), tdNum(num(m.liberi)))));
+    $('#slot-primi').replaceChildren(...primi.map((p) => riga(p.prestazione ?? p.specialty_id, dataOra(p.primo), tdNum(num(p.liberi)))));
+    if (!slot.length) return messaggio(corpo, 7, 'Nessuno slot libero con questi filtri');
+    corpo.replaceChildren(...slot.map((s) =>
+      riga(dataOra(s.starts_at), s.prestazione ?? s.specialty_id, s.struttura ? `${s.struttura} (${s.comune})` : s.facility_id,
+        s.asl ?? '–', s.medico ?? '–',
+        el('td', {}, el('span', { class: `badge ${s.da_disdetta ? 'loggata' : 'fittizia'}` }, s.da_disdetta ? 'da disdetta' : 'agenda')),
+        el('td', { class: 'id' }, s.id))));
+  } catch (err) {
+    messaggio(corpo, 7, err.message);
+  }
+}
+
+$('#slot-form').addEventListener('submit', (e) => {
+  e.preventDefault();
+  offsetSlot = 0;
+  conBottone(e.target, caricaSlot);
+});
+$('#slot-prec').addEventListener('click', () => { offsetSlot = Math.max(0, offsetSlot - LIMITE_SLOT); caricaSlot(); });
+$('#slot-succ').addEventListener('click', () => { offsetSlot += LIMITE_SLOT; caricaSlot(); });
+
+// --- test disdetta ---
+function nomePrestazione(id) {
+  return catalogo?.prestazioni.find((p) => p.id === id)?.descrizione ?? id;
+}
+function nomeStruttura(id) {
+  return catalogo?.strutture.find((s) => s.id === id)?.nome ?? id;
+}
+
+$('#prova-form').addEventListener('submit', (e) => {
+  e.preventDefault();
+  const prestazione = new FormData(e.target).get('prestazione');
+  const esito = $('#prova-esito');
+  conBottone(e.target, async () => {
+    try {
+      const r = await api('/test/prenotazione-prova', {
+        method: 'POST',
+        body: JSON.stringify(prestazione ? { prestazione } : {}),
+      });
+      esito.textContent = `Prenotazione creata il ${dataOra(r.startAt)}\nID prenotazione: ${r.appointmentId}\n(copiala nel campo "ID prenotazione target" qui sotto per usarla come target)`;
+      $('#disdici-form').elements.target_id.value = r.appointmentId;
+    } catch (err) {
+      esito.textContent = err.message;
+    }
+    esito.hidden = false;
+  });
+});
+
+$('#disdici-form').addEventListener('submit', (e) => {
+  e.preventDefault();
+  const targetId = new FormData(e.target).get('target_id').trim();
+  const box = $('#disdici-esito');
+  conBottone(e.target, async () => {
+    box.classList.remove('errore-box');
+    try {
+      const r = await api('/test/disdici-casuale', {
+        method: 'POST',
+        body: JSON.stringify(targetId ? { target_id: targetId } : {}),
+      });
+      const d = r.disdetta;
+      const t = r.target;
+      box.replaceChildren(
+        el('strong', {}, 'Prenotazione fittizia disdetta'),
+        el('div', {}, `${nomePrestazione(d.specialty_id)} · ${nomeStruttura(d.facility_id)} · ${dataOra(d.starts_at)}`),
+        el('div', {}, t.tipo === 'prenotazione'
+          ? `Target: prenotazione loggata del ${dataOra(t.starts_at)} a ${nomeStruttura(t.facility_id)} → anticipo possibile di ${t.giorni_anticipo} giorni`
+          : `Target: lista d'attesa ${t.waiting_list_id}`),
+        el('div', {}, r.risultato_prenota.reallocated
+          ? 'Prenota: slot riassegnato automaticamente dalla lista d\'attesa'
+          : 'Prenota: slot tornato libero (available), pronto per essere proposto'),
+        el('div', { class: 'id' }, `slot ${d.slot_id}`),
+      );
+      caricaDisdette();
+    } catch (err) {
+      box.classList.add('errore-box');
+      box.replaceChildren(el('div', {}, err.message));
+    }
+    box.hidden = false;
+  });
+});
+
+async function caricaDisdette() {
+  const corpo = $('#disdette-body');
+  try {
+    const { disdette } = await api('/test/disdette');
+    if (!disdette.length) return messaggio(corpo, 6, 'Nessuna disdetta di test');
+    corpo.replaceChildren(...disdette.map(({ created_at, admin, esito }) =>
+      riga(dataOra(created_at), admin ?? '–',
+        `${nomePrestazione(esito.disdetta.specialty_id)} · ${nomeStruttura(esito.disdetta.facility_id)} · ${dataOra(esito.disdetta.starts_at)}`,
+        esito.target.tipo === 'prenotazione' ? dataOra(esito.target.starts_at) : 'lista d\'attesa',
+        tdNum(esito.target.giorni_anticipo != null ? `${esito.target.giorni_anticipo} gg` : '–'),
+        esito.risultato_prenota.reallocated ? 'riassegnato' : 'libero')));
+  } catch (err) {
+    messaggio(corpo, 6, err.message);
+  }
+}
+
+// --- avvio ---
+async function avvia() {
+  try {
+    const { admin } = await api('/auth/me');
+    $('#admin-nome').textContent = admin.username;
+  } catch {
+    return mostraLogin();
+  }
+  $('#login').hidden = true;
+  $('#app').hidden = false;
+
+  const formCentri = $('#centri-form');
+  formCentri.elements.da.value ||= isoGiorno(1);
+  formCentri.elements.a.value ||= isoGiorno(56);
+
+  catalogo = await api('/catalogo');
+  for (const select of document.querySelectorAll('.sel-prestazione')) {
+    select.replaceChildren(select.options[0],
+      ...catalogo.prestazioni.map((p) => el('option', { value: p.id }, `${p.descrizione} (${p.branca})`)));
+  }
+  for (const select of document.querySelectorAll('.sel-struttura')) {
+    select.replaceChildren(select.options[0],
+      ...catalogo.strutture.map((s) => el('option', { value: s.id }, `${s.nome} (${s.comune})`)));
+  }
+
+  caricaCentri();
+  caricaConfronto();
+}
+
+token ? avvia() : mostraLogin();
+  </script>
+</body>
+</html>

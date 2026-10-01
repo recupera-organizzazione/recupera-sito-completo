@@ -1,0 +1,415 @@
+"ASL","ANNO","SETTIMANA_INDICE","ID_PRESTAZIONE","DESC_PRESTAZIONE","COD_PRESTAZIONE","PRENOTAZIONI","PRENOTAZIONI_DAGARANTIRE","PRENOTAZIONI_DAGARANTIRE_B","PRENOTAZIONI_DAGARANTIRE_B_TMAX","PRENOTAZIONI_DAGARANTIRE_D","PRENOTAZIONI_DAGARANTIRE_D_TMAX","PRENOTAZIONI_DAGARANTIRE_P","PRENOTAZIONI_DAGARANTIRE_P_TMAX"
+"160114","2024","07-11 OTTOBRE 2024",1,"Prima Visita cardiologica","89.7",935,781,254,50,219,22,245,79
+"160114","2024","07-11 OTTOBRE 2024",2,"Prima Visita chirurgia vascolare","89.7",115,82,27,6,16,4,32,15
+"160114","2024","07-11 OTTOBRE 2024",3,"Prima Visita endocrinologica","89.7",652,555,171,16,141,24,210,119
+"160114","2024","07-11 OTTOBRE 2024",4,"Prima Visita neurologica","89.13",547,455,170,22,136,20,119,60
+"160114","2024","07-11 OTTOBRE 2024",5,"Prima Visita oculistica","95.02",986,844,179,38,307,88,330,110
+"160114","2024","07-11 OTTOBRE 2024",6,"Prima Visita ortopedica","89.7",780,621,255,36,215,40,127,52
+"160114","2024","07-11 OTTOBRE 2024",7,"Prima Visita ginecologica","89.26",378,273,83,38,79,24,100,70
+"160114","2024","07-11 OTTOBRE 2024",8,"Prima Visita otorinolaringoiatrica","89.7",843,693,233,37,226,38,197,163
+"160114","2024","07-11 OTTOBRE 2024",9,"Prima Visita urologica","89.7",406,362,118,15,103,13,111,44
+"160114","2024","07-11 OTTOBRE 2024",10,"Prima Visita dermatologica","89.7",584,468,146,31,135,31,154,62
+"160114","2024","07-11 OTTOBRE 2024",11,"Prima Visita fisiatrica","89.7",979,741,142,108,186,179,404,396
+"160114","2024","07-11 OTTOBRE 2024",12,"Prima Visita gastroenterologica","89.7",177,158,52,15,47,11,54,23
+"160114","2024","07-11 OTTOBRE 2024",13,"Prima Visita oncologica","89.7",143,118,74,62,8,7,28,28
+"160114","2024","07-11 OTTOBRE 2024",14,"Prima Visita pneumologica","89.7",304,255,95,13,71,20,79,62
+"160114","2024","07-11 OTTOBRE 2024",15,"Mammografia bilaterale","87.37.1",537,418,61,46,71,60,267,228
+"160114","2024","07-11 OTTOBRE 2024",16,"Mammografia monolaterale","87.37.2",16,11,9,3,1,1,,
+"160114","2024","07-11 OTTOBRE 2024",17,"TC del Torace","87.41",290,233,79,68,59,52,87,72
+"160114","2024","07-11 OTTOBRE 2024",18,"TC del Torace senza e con MDC","87.41.1",441,310,132,74,67,50,100,74
+"160114","2024","07-11 OTTOBRE 2024",19,"TC dell’addome superiore","88.01.1",3,3,1,1,1,1,1,1
+"160114","2024","07-11 OTTOBRE 2024",20,"TC dell’addome superiore senza e con MDC","88.01.2",54,44,18,12,13,11,9,5
+"160114","2024","07-11 OTTOBRE 2024",21,"TC dell’addome inferiore","88.01.3",5,4,2,2,1,1,1,1
+"160114","2024","07-11 OTTOBRE 2024",22,"TC dell’addome inferiore senza e con MDC","88.01.4",53,39,15,9,11,10,10,6
+"160114","2024","07-11 OTTOBRE 2024",23,"TC dell’addome completo","88.01.5",58,46,18,12,7,6,19,15
+"160114","2024","07-11 OTTOBRE 2024",24,"TC dell’addome completo senza e con MDC","88.01.6",497,346,138,87,64,55,128,105
+"160114","2024","07-11 OTTOBRE 2024",25,"TC Cranio - encefalo","87.03",131,113,44,38,28,28,37,36
+"160114","2024","07-11 OTTOBRE 2024",26,"TC Cranio - encefalo senza e con MDC","87.03.1",229,161,77,35,32,29,42,33
+"160114","2024","07-11 OTTOBRE 2024",27,"TC del rachide e dello speco vertebrale cervicale","88.38.1",13,13,5,5,2,2,4,4
+"160114","2024","07-11 OTTOBRE 2024",28,"TC del rachide e dello speco vertebrale toracico","88.38.1",17,16,8,7,3,3,4,4
+"160114","2024","07-11 OTTOBRE 2024",29,"TC del rachide e dello speco vertebrale lombosacrale","88.38.1",24,20,9,9,3,3,7,7
+"160114","2024","07-11 OTTOBRE 2024",30,"TC del rachide e dello speco vertebrale cervicale senza e con MDC","88.38.2",3,2,1,,1,1,,
+"160114","2024","07-11 OTTOBRE 2024",31,"TC del rachide e dello speco vertebrale toracico senza e con MDC","88.38.2",1,,,,,,,
+"160114","2024","07-11 OTTOBRE 2024",32,"TC del rachide e dello speco vertebrale lombosacrale senza e con MDC","88.38.2",2,1,,,,,1,1
+"160114","2024","07-11 OTTOBRE 2024",33,"TC di Bacino e articolazioni sacroiliache","88.38.5",12,8,2,2,,,4,4
+"160114","2024","07-11 OTTOBRE 2024",34,"RM di encefalo e tronco encefalico, giunzione cranio spinale e relativo distretto vascolare","88.91.1",181,158,41,21,47,46,64,60
+"160114","2024","07-11 OTTOBRE 2024",35,"RM di encefalo e tronco encefalico, giunzione cranio spinale e relativo distretto vascolare senza e con MDC","88.91.2",186,149,40,16,25,13,64,21
+"160114","2024","07-11 OTTOBRE 2024",36,"RM di addome inferiore e scavo pelvico","88.95.4",17,15,5,1,3,3,7,6
+"160114","2024","07-11 OTTOBRE 2024",37,"RM di addome inferiore e scavo pelvico senza e con MDC","88.95.5",127,117,35,23,24,14,38,24
+"160114","2024","07-11 OTTOBRE 2024",38,"RM della colonna in toto","88.93",12,11,5,2,1,,5,1
+"160114","2024","07-11 OTTOBRE 2024",39,"RM della colonna in toto senza e con MDC","88.93.1",3,3,,,1,,2,1
+"160114","2024","07-11 OTTOBRE 2024",40,"Diagnostica ecografica del capo e del collo","88.71.4",632,510,148,39,125,75,224,111
+"160114","2024","07-11 OTTOBRE 2024",41,"Eco (color) dopplergrafia cardiaca","88.72.3",303,210,64,13,55,44,76,69
+"160114","2024","07-11 OTTOBRE 2024",42,"Eco (color) dopplergrafia dei tronchi sovra aortici","88.73.5",756,622,141,28,189,104,286,180
+"160114","2024","07-11 OTTOBRE 2024",43,"Ecografia dell’addome superiore","88.74.1",311,243,65,23,70,57,104,86
+"160114","2024","07-11 OTTOBRE 2024",44,"Ecografia dell’addome inferiore","88.75.1",123,96,30,9,30,21,31,20
+"160114","2024","07-11 OTTOBRE 2024",45,"Ecografia dell’addome completo","88.76.1",1244,989,262,87,281,245,400,341
+"160114","2024","07-11 OTTOBRE 2024",46,"Ecografia bilaterale della mammella","88.73.1",746,580,98,67,111,92,347,300
+"160114","2024","07-11 OTTOBRE 2024",47,"Ecografia monolaterale della mammella","88.73.2",7,3,1,1,2,2,,
+"160114","2024","07-11 OTTOBRE 2024",48,"Ecografia ostetrica","88.78",123,98,11,6,15,15,68,68
+"160114","2024","07-11 OTTOBRE 2024",49,"Ecografia ginecologica","88.78.2",114,99,40,22,27,8,30,14
+"160114","2024","07-11 OTTOBRE 2024",50,"Ecocolor doppler degli arti inferiori arterioso e/o venoso","88.77.2",317,284,84,20,90,48,83,53
+"160114","2024","07-11 OTTOBRE 2024",51,"Colonscopia totale con endoscopio flessibile","45.23",256,233,35,5,38,12,154,85
+"160114","2024","07-11 OTTOBRE 2024",52,"Polipectomia dell’intestino crasso in corso di endoscopia sede unica","45.42",,,,,,,,
+"160114","2024","07-11 OTTOBRE 2024",53,"Rettosigmoidoscopia con endoscopio flessibile","45.24",17,17,2,,2,1,11,11
+"160114","2024","07-11 OTTOBRE 2024",54,"Esofagogastroduodenoscopia","45.13",236,218,74,19,69,37,58,39
+"160114","2024","07-11 OTTOBRE 2024",55,"Esofagogastroduodenoscopia con biopsia in sede unica","45.16",159,141,58,8,31,20,40,28
+"160114","2024","07-11 OTTOBRE 2024",56,"Elettrocardiogramma","89.52",1244,1031,297,72,287,90,369,191
+"160114","2024","07-11 OTTOBRE 2024",57,"Elettrocardiogramma dinamico (Holter)","89.50",253,219,70,18,69,25,66,33
+"160114","2024","07-11 OTTOBRE 2024",58,"Test cardiovascolare da sforzo con cicloergometro o con pedana mobile","89.41 - 89.43",117,94,21,2,31,12,41,31
+"160114","2024","07-11 OTTOBRE 2024",59,"Altri test cardiovascolari da sforzo","89.44",1,1,,,1,1,,
+"160114","2024","07-11 OTTOBRE 2024",60,"Esame audiometrico tonale","95.41.1",399,327,82,24,105,59,131,119
+"160114","2024","07-11 OTTOBRE 2024",61,"Spirometria semplice","89.37.1",197,137,43,14,28,14,65,51
+"160114","2024","07-11 OTTOBRE 2024",62,"Spirometria globale","89.37.2",125,90,20,5,24,20,40,32
+"160114","2024","07-11 OTTOBRE 2024",63,"Fotografia del fundus","95.11",39,27,14,,11,1,2,2
+"160114","2024","07-11 OTTOBRE 2024",64,"ELETTROMIOGRAFIA SEMPLICE [EMG] PER ARTO SUPERIORE. Analisi qualitativa fino a 6 muscoli. Non associabile a 93.09.1 e 93.09.2","93.08.1",453,418,111,12,105,70,180,148
+"160114","2024","07-11 OTTOBRE 2024",65,"ELETTROMIOGRAFIA SEMPLICE [EMG] PER ARTO INFERIORE fino a 4 muscoli. Analisi qualitativa. Non associabile a 93.09.1 e 93.09.2","93.08.1",323,297,99,12,82,50,108,56
+"160114","2024","07-11 OTTOBRE 2024","66 - 67","ELETTROMIOGRAFIA SEMPLICE [EMG] DEL CAPO fino a 4 muscoli. Analisi qualitativa. Escluso: EMG dell'occhio (95.25) e POLISONNOGRAFIA (89.17)","93.08.1",134,130,50,12,34,20,42,24
+"160114","2024","07-11 OTTOBRE 2024",,"ELETTROMIOGRAFIA SEMPLICE [EMG] DEL TRONCO. Analisi qualitativa. Fino a 4 muscoli",,,,,,,,,
+"160114","2024","07-11 OTTOBRE 2024",68,"VALUTAZIONE EMG DINAMICA DEL CAMMINO. Valutazione EMG di superficie o con elettrodi a filo (4 muscoli), associato ad esame basografico per la definizione delle fasi del passo. Non associabile a ANALISI DELLA CINEMATICA E DELLA DINAMICA DEL PASSO (93.05.7)","93.08.1",,,,,,,,
+"160114","2024","07-11 OTTOBRE 2024",69,"EMG DINAMICA DELL'ARTO SUPERIORE. Valutazione EMG di superficie o con elettrodi a filo (4 muscoli)","93.08.1",,,,,,,,
+"160113","2024","07-11 OTTOBRE 2024",1,"Prima Visita cardiologica","89.7",438,356,172,16,130,9,46,16
+"160113","2024","07-11 OTTOBRE 2024",2,"Prima Visita chirurgia vascolare","89.7",37,34,10,,14,1,9,6
+"160113","2024","07-11 OTTOBRE 2024",3,"Prima Visita endocrinologica","89.7",185,155,58,7,64,3,28,10
+"160113","2024","07-11 OTTOBRE 2024",4,"Prima Visita neurologica","89.13",212,173,80,5,70,5,10,10
+"160113","2024","07-11 OTTOBRE 2024",5,"Prima Visita oculistica","95.02",243,234,79,10,87,10,63,5
+"160113","2024","07-11 OTTOBRE 2024",6,"Prima Visita ortopedica","89.7",149,144,68,5,55,5,19,1
+"160113","2024","07-11 OTTOBRE 2024",7,"Prima Visita ginecologica","89.26",93,80,30,3,27,4,23,21
+"160113","2024","07-11 OTTOBRE 2024",8,"Prima Visita otorinolaringoiatrica","89.7",274,265,111,6,90,4,56,11
+"160113","2024","07-11 OTTOBRE 2024",9,"Prima Visita urologica","89.7",76,76,29,3,31,2,14,3
+"160113","2024","07-11 OTTOBRE 2024",10,"Prima Visita dermatologica","89.7",350,324,103,6,119,14,93,20
+"160113","2024","07-11 OTTOBRE 2024",11,"Prima Visita fisiatrica","89.7",310,172,73,14,30,15,67,67
+"160113","2024","07-11 OTTOBRE 2024",12,"Prima Visita gastroenterologica","89.7",84,68,33,4,20,1,8,7
+"160113","2024","07-11 OTTOBRE 2024",13,"Prima Visita oncologica","89.7",29,12,4,4,3,2,4,4
+"160113","2024","07-11 OTTOBRE 2024",14,"Prima Visita pneumologica","89.7",186,140,67,8,35,12,32,31
+"160113","2024","07-11 OTTOBRE 2024",15,"Mammografia bilaterale","87.37.1",78,73,26,8,20,19,25,23
+"160113","2024","07-11 OTTOBRE 2024",16,"Mammografia monolaterale","87.37.2",,,,,,,,
+"160113","2024","07-11 OTTOBRE 2024",17,"TC del Torace","87.41",79,58,20,10,13,13,22,22
+"160113","2024","07-11 OTTOBRE 2024",18,"TC del Torace senza e con MDC","87.41.1",87,86,35,3,21,1,23,3
+"160113","2024","07-11 OTTOBRE 2024",19,"TC dell’addome superiore","88.01.1",2,2,2,,,,,
+"160113","2024","07-11 OTTOBRE 2024",20,"TC dell’addome superiore senza e con MDC","88.01.2",9,9,4,,2,,3,1
+"160113","2024","07-11 OTTOBRE 2024",21,"TC dell’addome inferiore","88.01.3",1,1,1,,,,,
+"160113","2024","07-11 OTTOBRE 2024",22,"TC dell’addome inferiore senza e con MDC","88.01.4",7,7,3,,2,,2,1
+"160113","2024","07-11 OTTOBRE 2024",23,"TC dell’addome completo","88.01.5",16,16,11,1,1,1,4,2
+"160113","2024","07-11 OTTOBRE 2024",24,"TC dell’addome completo senza e con MDC","88.01.6",79,77,31,3,21,1,20,2
+"160113","2024","07-11 OTTOBRE 2024",25,"TC Cranio - encefalo","87.03",36,33,20,,6,2,5,2
+"160113","2024","07-11 OTTOBRE 2024",26,"TC Cranio - encefalo senza e con MDC","87.03.1",30,29,13,,7,,5,1
+"160113","2024","07-11 OTTOBRE 2024",27,"TC del rachide e dello speco vertebrale cervicale","88.38.1",3,3,3,,,,,
+"160113","2024","07-11 OTTOBRE 2024",28,"TC del rachide e dello speco vertebrale toracico","88.38.1",3,3,2,,1,1,,
+"160113","2024","07-11 OTTOBRE 2024",29,"TC del rachide e dello speco vertebrale lombosacrale","88.38.1",6,5,4,,1,1,,
+"160113","2024","07-11 OTTOBRE 2024",30,"TC del rachide e dello speco vertebrale cervicale senza e con MDC","88.38.2",,,,,,,,
+"160113","2024","07-11 OTTOBRE 2024",31,"TC del rachide e dello speco vertebrale toracico senza e con MDC","88.38.2",,,,,,,,
+"160113","2024","07-11 OTTOBRE 2024",32,"TC del rachide e dello speco vertebrale lombosacrale senza e con MDC","88.38.2",,,,,,,,
+"160113","2024","07-11 OTTOBRE 2024",33,"TC di Bacino e articolazioni sacroiliache","88.38.5",,,,,,,,
+"160113","2024","07-11 OTTOBRE 2024",34,"RM di encefalo e tronco encefalico, giunzione cranio spinale e relativo distretto vascolare","88.91.1",74,68,32,,24,20,11,8
+"160113","2024","07-11 OTTOBRE 2024",35,"RM di encefalo e tronco encefalico, giunzione cranio spinale e relativo distretto vascolare senza e con MDC","88.91.2",48,48,21,1,11,1,13,1
+"160113","2024","07-11 OTTOBRE 2024",36,"RM di addome inferiore e scavo pelvico","88.95.4",4,4,3,,,,,
+"160113","2024","07-11 OTTOBRE 2024",37,"RM di addome inferiore e scavo pelvico senza e con MDC","88.95.5",29,29,13,,8,,6,3
+"160113","2024","07-11 OTTOBRE 2024",38,"RM della colonna in toto","88.93",1,1,1,,,,,
+"160113","2024","07-11 OTTOBRE 2024",39,"RM della colonna in toto senza e con MDC","88.93.1",,,,,,,,
+"160113","2024","07-11 OTTOBRE 2024",40,"Diagnostica ecografica del capo e del collo","88.71.4",124,116,41,8,46,12,29,10
+"160113","2024","07-11 OTTOBRE 2024",41,"Eco (color) dopplergrafia cardiaca","88.72.3",89,78,22,3,20,1,34,15
+"160113","2024","07-11 OTTOBRE 2024",42,"Eco (color) dopplergrafia dei tronchi sovra aortici","88.73.5",137,134,42,1,50,7,38,12
+"160113","2024","07-11 OTTOBRE 2024",43,"Ecografia dell’addome superiore","88.74.1",103,84,34,6,25,20,25,18
+"160113","2024","07-11 OTTOBRE 2024",44,"Ecografia dell’addome inferiore","88.75.1",15,14,5,1,7,3,2,2
+"160113","2024","07-11 OTTOBRE 2024",45,"Ecografia dell’addome completo","88.76.1",233,211,82,8,77,26,49,27
+"160113","2024","07-11 OTTOBRE 2024",46,"Ecografia bilaterale della mammella","88.73.1",80,79,33,10,17,11,27,22
+"160113","2024","07-11 OTTOBRE 2024",47,"Ecografia monolaterale della mammella","88.73.2",,,,,,,,
+"160113","2024","07-11 OTTOBRE 2024",48,"Ecografia ostetrica","88.78",33,32,6,4,3,3,23,23
+"160113","2024","07-11 OTTOBRE 2024",49,"Ecografia ginecologica","88.78.2",67,61,23,2,19,2,19,17
+"160113","2024","07-11 OTTOBRE 2024",50,"Ecocolor doppler degli arti inferiori arterioso e/o venoso","88.77.2",53,52,16,1,19,5,11,4
+"160113","2024","07-11 OTTOBRE 2024",51,"Colonscopia totale con endoscopio flessibile","45.23",27,26,16,1,7,,2,
+"160113","2024","07-11 OTTOBRE 2024",52,"Polipectomia dell’intestino crasso in corso di endoscopia sede unica","45.42",,,,,,,,
+"160113","2024","07-11 OTTOBRE 2024",53,"Rettosigmoidoscopia con endoscopio flessibile","45.24",,,,,,,,
+"160113","2024","07-11 OTTOBRE 2024",54,"Esofagogastroduodenoscopia","45.13",35,35,16,1,10,,9,1
+"160113","2024","07-11 OTTOBRE 2024",55,"Esofagogastroduodenoscopia con biopsia in sede unica","45.16",32,32,19,2,8,,4,
+"160113","2024","07-11 OTTOBRE 2024",56,"Elettrocardiogramma","89.52",472,379,175,19,138,28,57,29
+"160113","2024","07-11 OTTOBRE 2024",57,"Elettrocardiogramma dinamico (Holter)","89.50",52,32,12,1,13,5,7,5
+"160113","2024","07-11 OTTOBRE 2024",58,"Test cardiovascolare da sforzo con cicloergometro o con pedana mobile","89.41 - 89.43",22,22,5,1,9,2,8,3
+"160113","2024","07-11 OTTOBRE 2024",59,"Altri test cardiovascolari da sforzo","89.44",,,,,,,,
+"160113","2024","07-11 OTTOBRE 2024",60,"Esame audiometrico tonale","95.41.1",129,76,34,9,27,19,14,13
+"160113","2024","07-11 OTTOBRE 2024",61,"Spirometria semplice","89.37.1",89,65,30,6,16,15,17,17
+"160113","2024","07-11 OTTOBRE 2024",62,"Spirometria globale","89.37.2",55,46,21,1,10,6,14,13
+"160113","2024","07-11 OTTOBRE 2024",63,"Fotografia del fundus","95.11",,,,,,,,
+"160113","2024","07-11 OTTOBRE 2024",64,"ELETTROMIOGRAFIA SEMPLICE [EMG] PER ARTO SUPERIORE. Analisi qualitativa fino a 6 muscoli. Non associabile a 93.09.1 e 93.09.2","93.08.1",242,216,73,2,57,21,86,86
+"160113","2024","07-11 OTTOBRE 2024",65,"ELETTROMIOGRAFIA SEMPLICE [EMG] PER ARTO INFERIORE fino a 4 muscoli. Analisi qualitativa. Non associabile a 93.09.1 e 93.09.2","93.08.1",245,231,73,6,62,16,96,96
+"160113","2024","07-11 OTTOBRE 2024","66 - 67","ELETTROMIOGRAFIA SEMPLICE [EMG] DEL CAPO fino a 4 muscoli. Analisi qualitativa. Escluso: EMG dell'occhio (95.25) e POLISONNOGRAFIA (89.17)","93.08.1",15,15,7,2,,,8,8
+"160113","2024","07-11 OTTOBRE 2024",,"ELETTROMIOGRAFIA SEMPLICE [EMG] DEL TRONCO. Analisi qualitativa. Fino a 4 muscoli",,,,,,,,,
+"160113","2024","07-11 OTTOBRE 2024",68,"VALUTAZIONE EMG DINAMICA DEL CAMMINO. Valutazione EMG di superficie o con elettrodi a filo (4 muscoli), associato ad esame basografico per la definizione delle fasi del passo. Non associabile a ANALISI DELLA CINEMATICA E DELLA DINAMICA DEL PASSO (93.05.7)","93.08.1",,,,,,,,
+"160113","2024","07-11 OTTOBRE 2024",69,"EMG DINAMICA DELL'ARTO SUPERIORE. Valutazione EMG di superficie o con elettrodi a filo (4 muscoli)","93.08.1",,,,,,,,
+"160106","2024","07-11 OTTOBRE 2024",1,"Prima Visita cardiologica","89.7",220,214,49,10,65,25,96,26
+"160106","2024","07-11 OTTOBRE 2024",2,"Prima Visita chirurgia vascolare","89.7",29,29,12,3,8,1,6,3
+"160106","2024","07-11 OTTOBRE 2024",3,"Prima Visita endocrinologica","89.7",201,193,33,4,49,8,107,50
+"160106","2024","07-11 OTTOBRE 2024",4,"Prima Visita neurologica","89.13",82,81,21,1,17,5,43,3
+"160106","2024","07-11 OTTOBRE 2024",5,"Prima Visita oculistica","95.02",245,155,32,32,39,17,81,28
+"160106","2024","07-11 OTTOBRE 2024",6,"Prima Visita ortopedica","89.7",138,132,26,2,49,14,53,9
+"160106","2024","07-11 OTTOBRE 2024",7,"Prima Visita ginecologica","89.26",127,114,10,10,30,11,74,73
+"160106","2024","07-11 OTTOBRE 2024",8,"Prima Visita otorinolaringoiatrica","89.7",271,251,34,34,73,20,142,45
+"160106","2024","07-11 OTTOBRE 2024",9,"Prima Visita urologica","89.7",81,80,17,6,29,10,33,4
+"160106","2024","07-11 OTTOBRE 2024",10,"Prima Visita dermatologica","89.7",238,221,44,9,47,17,129,27
+"160106","2024","07-11 OTTOBRE 2024",11,"Prima Visita fisiatrica","89.7",181,140,22,21,46,28,72,72
+"160106","2024","07-11 OTTOBRE 2024",12,"Prima Visita gastroenterologica","89.7",51,44,12,2,14,3,18,9
+"160106","2024","07-11 OTTOBRE 2024",13,"Prima Visita oncologica","89.7",55,53,7,7,10,10,34,34
+"160106","2024","07-11 OTTOBRE 2024",14,"Prima Visita pneumologica","89.7",159,154,23,13,54,37,77,77
+"160106","2024","07-11 OTTOBRE 2024",15,"Mammografia bilaterale","87.37.1",100,93,16,15,17,11,58,15
+"160106","2024","07-11 OTTOBRE 2024",16,"Mammografia monolaterale","87.37.2",4,4,,,,,4,2
+"160106","2024","07-11 OTTOBRE 2024",17,"TC del Torace","87.41",83,73,9,9,18,18,43,40
+"160106","2024","07-11 OTTOBRE 2024",18,"TC del Torace senza e con MDC","87.41.1",70,64,25,16,14,11,24,19
+"160106","2024","07-11 OTTOBRE 2024",19,"TC dell’addome superiore","88.01.1",1,1,,,,,1,1
+"160106","2024","07-11 OTTOBRE 2024",20,"TC dell’addome superiore senza e con MDC","88.01.2",8,8,1,1,3,2,4,4
+"160106","2024","07-11 OTTOBRE 2024",21,"TC dell’addome inferiore","88.01.3",1,1,1,1,,,,
+"160106","2024","07-11 OTTOBRE 2024",22,"TC dell’addome inferiore senza e con MDC","88.01.4",2,2,1,1,,,1,1
+"160106","2024","07-11 OTTOBRE 2024",23,"TC dell’addome completo","88.01.5",14,14,3,3,5,4,6,5
+"160106","2024","07-11 OTTOBRE 2024",24,"TC dell’addome completo senza e con MDC","88.01.6",100,91,30,20,29,25,31,26
+"160106","2024","07-11 OTTOBRE 2024",25,"TC Cranio - encefalo","87.03",57,56,13,13,15,14,27,26
+"160106","2024","07-11 OTTOBRE 2024",26,"TC Cranio - encefalo senza e con MDC","87.03.1",33,32,16,8,10,8,4,4
+"160106","2024","07-11 OTTOBRE 2024",27,"TC del rachide e dello speco vertebrale cervicale","88.38.1",12,11,1,1,2,2,8,8
+"160106","2024","07-11 OTTOBRE 2024",28,"TC del rachide e dello speco vertebrale toracico","88.38.1",6,6,,,1,1,5,5
+"160106","2024","07-11 OTTOBRE 2024",29,"TC del rachide e dello speco vertebrale lombosacrale","88.38.1",12,12,1,1,6,6,5,5
+"160106","2024","07-11 OTTOBRE 2024",30,"TC del rachide e dello speco vertebrale cervicale senza e con MDC","88.38.2",1,1,,,,,1,
+"160106","2024","07-11 OTTOBRE 2024",31,"TC del rachide e dello speco vertebrale toracico senza e con MDC","88.38.2",1,1,,,,,1,
+"160106","2024","07-11 OTTOBRE 2024",32,"TC del rachide e dello speco vertebrale lombosacrale senza e con MDC","88.38.2",1,1,,,,,1,
+"160106","2024","07-11 OTTOBRE 2024",33,"TC di Bacino e articolazioni sacroiliache","88.38.5",4,4,1,1,,,3,3
+"160106","2024","07-11 OTTOBRE 2024",34,"RM di encefalo e tronco encefalico, giunzione cranio spinale e relativo distretto vascolare","88.91.1",10,10,4,1,3,3,3,3
+"160106","2024","07-11 OTTOBRE 2024",35,"RM di encefalo e tronco encefalico, giunzione cranio spinale e relativo distretto vascolare senza e con MDC","88.91.2",31,31,6,,16,16,8,8
+"160106","2024","07-11 OTTOBRE 2024",36,"RM di addome inferiore e scavo pelvico","88.95.4",1,1,,,,,1,1
+"160106","2024","07-11 OTTOBRE 2024",37,"RM di addome inferiore e scavo pelvico senza e con MDC","88.95.5",16,16,8,1,5,5,3,3
+"160106","2024","07-11 OTTOBRE 2024",38,"RM della colonna in toto","88.93",1,1,1,,,,,
+"160106","2024","07-11 OTTOBRE 2024",39,"RM della colonna in toto senza e con MDC","88.93.1",,,,,,,,
+"160106","2024","07-11 OTTOBRE 2024",40,"Diagnostica ecografica del capo e del collo","88.71.4",134,120,19,11,29,21,70,34
+"160106","2024","07-11 OTTOBRE 2024",41,"Eco (color) dopplergrafia cardiaca","88.72.3",26,23,3,2,3,2,17,4
+"160106","2024","07-11 OTTOBRE 2024",42,"Eco (color) dopplergrafia dei tronchi sovra aortici","88.73.5",83,77,17,16,30,30,30,30
+"160106","2024","07-11 OTTOBRE 2024",43,"Ecografia dell’addome superiore","88.74.1",64,51,8,5,18,15,25,23
+"160106","2024","07-11 OTTOBRE 2024",44,"Ecografia dell’addome inferiore","88.75.1",48,45,5,3,9,9,30,30
+"160106","2024","07-11 OTTOBRE 2024",45,"Ecografia dell’addome completo","88.76.1",232,225,50,47,68,68,104,96
+"160106","2024","07-11 OTTOBRE 2024",46,"Ecografia bilaterale della mammella","88.73.1",120,111,25,23,19,12,66,20
+"160106","2024","07-11 OTTOBRE 2024",47,"Ecografia monolaterale della mammella","88.73.2",,,,,,,,
+"160106","2024","07-11 OTTOBRE 2024",48,"Ecografia ostetrica","88.78",23,23,2,2,3,3,18,18
+"160106","2024","07-11 OTTOBRE 2024",49,"Ecografia ginecologica","88.78.2",32,30,1,1,6,6,23,22
+"160106","2024","07-11 OTTOBRE 2024",50,"Ecocolor doppler degli arti inferiori arterioso e/o venoso","88.77.2",100,95,25,9,26,15,40,38
+"160106","2024","07-11 OTTOBRE 2024",51,"Colonscopia totale con endoscopio flessibile","45.23",30,30,,,12,5,17,1
+"160106","2024","07-11 OTTOBRE 2024",52,"Polipectomia dell’intestino crasso in corso di endoscopia sede unica","45.42",1,1,,,,,1,1
+"160106","2024","07-11 OTTOBRE 2024",53,"Rettosigmoidoscopia con endoscopio flessibile","45.24",1,,,,,,,
+"160106","2024","07-11 OTTOBRE 2024",54,"Esofagogastroduodenoscopia","45.13",36,36,7,2,9,4,20,2
+"160106","2024","07-11 OTTOBRE 2024",55,"Esofagogastroduodenoscopia con biopsia in sede unica","45.16",33,31,8,1,8,4,15,2
+"160106","2024","07-11 OTTOBRE 2024",56,"Elettrocardiogramma","89.52",343,320,56,19,79,48,180,115
+"160106","2024","07-11 OTTOBRE 2024",57,"Elettrocardiogramma dinamico (Holter)","89.50",74,70,18,3,24,6,28,7
+"160106","2024","07-11 OTTOBRE 2024",58,"Test cardiovascolare da sforzo con cicloergometro o con pedana mobile","89.41 - 89.43",40,31,5,,10,4,16,10
+"160106","2024","07-11 OTTOBRE 2024",59,"Altri test cardiovascolari da sforzo","89.44",,,,,,,,
+"160106","2024","07-11 OTTOBRE 2024",60,"Esame audiometrico tonale","95.41.1",129,120,5,5,25,14,89,40
+"160106","2024","07-11 OTTOBRE 2024",61,"Spirometria semplice","89.37.1",138,117,10,6,42,42,65,65
+"160106","2024","07-11 OTTOBRE 2024",62,"Spirometria globale","89.37.2",12,11,2,,4,3,5,1
+"160106","2024","07-11 OTTOBRE 2024",63,"Fotografia del fundus","95.11",,,,,,,,
+"160106","2024","07-11 OTTOBRE 2024",64,"ELETTROMIOGRAFIA SEMPLICE [EMG] PER ARTO SUPERIORE. Analisi qualitativa fino a 6 muscoli. Non associabile a 93.09.1 e 93.09.2","93.08.1",128,126,21,,46,6,59,16
+"160106","2024","07-11 OTTOBRE 2024",65,"ELETTROMIOGRAFIA SEMPLICE [EMG] PER ARTO INFERIORE fino a 4 muscoli. Analisi qualitativa. Non associabile a 93.09.1 e 93.09.2","93.08.1",156,150,34,,56,10,60,22
+"160106","2024","07-11 OTTOBRE 2024","66 - 67","ELETTROMIOGRAFIA SEMPLICE [EMG] DEL CAPO fino a 4 muscoli. Analisi qualitativa. Escluso: EMG dell'occhio (95.25) e POLISONNOGRAFIA (89.17)","93.08.1",56,56,,,28,,28,9
+"160106","2024","07-11 OTTOBRE 2024",,"ELETTROMIOGRAFIA SEMPLICE [EMG] DEL TRONCO. Analisi qualitativa. Fino a 4 muscoli",,,,,,,,,
+"160106","2024","07-11 OTTOBRE 2024",68,"VALUTAZIONE EMG DINAMICA DEL CAMMINO. Valutazione EMG di superficie o con elettrodi a filo (4 muscoli), associato ad esame basografico per la definizione delle fasi del passo. Non associabile a ANALISI DELLA CINEMATICA E DELLA DINAMICA DEL PASSO (93.05.7)","93.08.1",,,,,,,,
+"160106","2024","07-11 OTTOBRE 2024",69,"EMG DINAMICA DELL'ARTO SUPERIORE. Valutazione EMG di superficie o con elettrodi a filo (4 muscoli)","93.08.1",,,,,,,,
+"160115","2024","07-11 OTTOBRE 2024",1,"Prima Visita cardiologica","89.7",499,220,18,18,21,21,176,167
+"160115","2024","07-11 OTTOBRE 2024",2,"Prima Visita chirurgia vascolare","89.7",90,39,11,10,4,3,22,20
+"160115","2024","07-11 OTTOBRE 2024",3,"Prima Visita endocrinologica","89.7",546,252,23,23,19,18,205,204
+"160115","2024","07-11 OTTOBRE 2024",4,"Prima Visita neurologica","89.13",314,213,20,19,11,10,180,174
+"160115","2024","07-11 OTTOBRE 2024",5,"Prima Visita oculistica","95.02",783,380,12,12,16,16,352,352
+"160115","2024","07-11 OTTOBRE 2024",6,"Prima Visita ortopedica","89.7",431,232,37,36,14,14,174,174
+"160115","2024","07-11 OTTOBRE 2024",7,"Prima Visita ginecologica","89.26",212,163,12,12,14,13,135,134
+"160115","2024","07-11 OTTOBRE 2024",8,"Prima Visita otorinolaringoiatrica","89.7",498,429,34,34,27,25,361,361
+"160115","2024","07-11 OTTOBRE 2024",9,"Prima Visita urologica","89.7",370,244,23,22,20,19,198,188
+"160115","2024","07-11 OTTOBRE 2024",10,"Prima Visita dermatologica","89.7",493,302,26,26,16,16,254,254
+"160115","2024","07-11 OTTOBRE 2024",11,"Prima Visita fisiatrica","89.7",531,413,19,19,31,31,359,359
+"160115","2024","07-11 OTTOBRE 2024",12,"Prima Visita gastroenterologica","89.7",113,46,12,11,4,3,29,28
+"160115","2024","07-11 OTTOBRE 2024",13,"Prima Visita oncologica","89.7",51,45,14,14,6,6,25,25
+"160115","2024","07-11 OTTOBRE 2024",14,"Prima Visita pneumologica","89.7",202,132,23,23,26,22,74,61
+"160115","2024","07-11 OTTOBRE 2024",15,"Mammografia bilaterale","87.37.1",269,159,17,16,10,10,130,130
+"160115","2024","07-11 OTTOBRE 2024",16,"Mammografia monolaterale","87.37.2",15,1,,,,,1,1
+"160115","2024","07-11 OTTOBRE 2024",17,"TC del Torace","87.41",106,69,11,9,8,7,48,47
+"160115","2024","07-11 OTTOBRE 2024",18,"TC del Torace senza e con MDC","87.41.1",144,88,15,13,11,11,59,57
+"160115","2024","07-11 OTTOBRE 2024",19,"TC dell’addome superiore","88.01.1",3,3,1,1,,,2,2
+"160115","2024","07-11 OTTOBRE 2024",20,"TC dell’addome superiore senza e con MDC","88.01.2",15,7,,,2,2,5,5
+"160115","2024","07-11 OTTOBRE 2024",21,"TC dell’addome inferiore","88.01.3",5,5,2,2,,,3,3
+"160115","2024","07-11 OTTOBRE 2024",22,"TC dell’addome inferiore senza e con MDC","88.01.4",12,5,,,2,2,3,3
+"160115","2024","07-11 OTTOBRE 2024",23,"TC dell’addome completo","88.01.5",24,20,3,3,2,2,14,14
+"160115","2024","07-11 OTTOBRE 2024",24,"TC dell’addome completo senza e con MDC","88.01.6",144,96,21,17,14,14,58,56
+"160115","2024","07-11 OTTOBRE 2024",25,"TC Cranio - encefalo","87.03",42,36,9,7,6,6,21,21
+"160115","2024","07-11 OTTOBRE 2024",26,"TC Cranio - encefalo senza e con MDC","87.03.1",71,51,12,10,8,8,29,27
+"160115","2024","07-11 OTTOBRE 2024",27,"TC del rachide e dello speco vertebrale cervicale","88.38.1",12,12,4,2,1,1,6,6
+"160115","2024","07-11 OTTOBRE 2024",28,"TC del rachide e dello speco vertebrale toracico","88.38.1",5,5,2,,1,1,2,2
+"160115","2024","07-11 OTTOBRE 2024",29,"TC del rachide e dello speco vertebrale lombosacrale","88.38.1",14,14,4,1,2,2,8,8
+"160115","2024","07-11 OTTOBRE 2024",30,"TC del rachide e dello speco vertebrale cervicale senza e con MDC","88.38.2",,,,,,,,
+"160115","2024","07-11 OTTOBRE 2024",31,"TC del rachide e dello speco vertebrale toracico senza e con MDC","88.38.2",,,,,,,,
+"160115","2024","07-11 OTTOBRE 2024",32,"TC del rachide e dello speco vertebrale lombosacrale senza e con MDC","88.38.2",,,,,,,,
+"160115","2024","07-11 OTTOBRE 2024",33,"TC di Bacino e articolazioni sacroiliache","88.38.5",6,4,2,,,,2,2
+"160115","2024","07-11 OTTOBRE 2024",34,"RM di encefalo e tronco encefalico, giunzione cranio spinale e relativo distretto vascolare","88.91.1",59,35,8,8,4,4,23,21
+"160115","2024","07-11 OTTOBRE 2024",35,"RM di encefalo e tronco encefalico, giunzione cranio spinale e relativo distretto vascolare senza e con MDC","88.91.2",37,21,2,2,5,5,14,14
+"160115","2024","07-11 OTTOBRE 2024",36,"RM di addome inferiore e scavo pelvico","88.95.4",11,9,1,1,1,1,7,7
+"160115","2024","07-11 OTTOBRE 2024",37,"RM di addome inferiore e scavo pelvico senza e con MDC","88.95.5",25,19,1,1,2,2,15,15
+"160115","2024","07-11 OTTOBRE 2024",38,"RM della colonna in toto","88.93",9,5,1,1,,,4,4
+"160115","2024","07-11 OTTOBRE 2024",39,"RM della colonna in toto senza e con MDC","88.93.1",8,2,1,1,1,1,,
+"160115","2024","07-11 OTTOBRE 2024",40,"Diagnostica ecografica del capo e del collo","88.71.4",324,142,14,14,19,19,108,102
+"160115","2024","07-11 OTTOBRE 2024",41,"Eco (color) dopplergrafia cardiaca","88.72.3",196,124,9,9,21,20,93,85
+"160115","2024","07-11 OTTOBRE 2024",42,"Eco (color) dopplergrafia dei tronchi sovra aortici","88.73.5",343,142,9,8,13,10,118,109
+"160115","2024","07-11 OTTOBRE 2024",43,"Ecografia dell’addome superiore","88.74.1",219,159,15,15,24,24,119,117
+"160115","2024","07-11 OTTOBRE 2024",44,"Ecografia dell’addome inferiore","88.75.1",89,66,2,2,7,7,56,48
+"160115","2024","07-11 OTTOBRE 2024",45,"Ecografia dell’addome completo","88.76.1",520,339,45,42,52,52,235,232
+"160115","2024","07-11 OTTOBRE 2024",46,"Ecografia bilaterale della mammella","88.73.1",300,183,32,26,16,16,132,132
+"160115","2024","07-11 OTTOBRE 2024",47,"Ecografia monolaterale della mammella","88.73.2",7,1,,,,,1,1
+"160115","2024","07-11 OTTOBRE 2024",48,"Ecografia ostetrica","88.78",56,56,2,2,2,2,50,50
+"160115","2024","07-11 OTTOBRE 2024",49,"Ecografia ginecologica","88.78.2",25,18,,,4,4,14,14
+"160115","2024","07-11 OTTOBRE 2024",50,"Ecocolor doppler degli arti inferiori arterioso e/o venoso","88.77.2",234,109,24,19,7,7,77,66
+"160115","2024","07-11 OTTOBRE 2024",51,"Colonscopia totale con endoscopio flessibile","45.23",53,29,4,4,5,4,20,19
+"160115","2024","07-11 OTTOBRE 2024",52,"Polipectomia dell’intestino crasso in corso di endoscopia sede unica","45.42",6,6,3,3,,,3,3
+"160115","2024","07-11 OTTOBRE 2024",53,"Rettosigmoidoscopia con endoscopio flessibile","45.24",,,,,,,,
+"160115","2024","07-11 OTTOBRE 2024",54,"Esofagogastroduodenoscopia","45.13",71,49,9,8,8,7,31,27
+"160115","2024","07-11 OTTOBRE 2024",55,"Esofagogastroduodenoscopia con biopsia in sede unica","45.16",48,37,9,9,9,7,19,17
+"160115","2024","07-11 OTTOBRE 2024",56,"Elettrocardiogramma","89.52",689,372,26,26,44,44,299,290
+"160115","2024","07-11 OTTOBRE 2024",57,"Elettrocardiogramma dinamico (Holter)","89.50",107,88,9,9,9,9,69,67
+"160115","2024","07-11 OTTOBRE 2024",58,"Test cardiovascolare da sforzo con cicloergometro o con pedana mobile","89.41 - 89.43",90,49,9,8,4,3,35,23
+"160115","2024","07-11 OTTOBRE 2024",59,"Altri test cardiovascolari da sforzo","89.44",,,,,,,,
+"160115","2024","07-11 OTTOBRE 2024",60,"Esame audiometrico tonale","95.41.1",216,162,15,15,7,5,140,140
+"160115","2024","07-11 OTTOBRE 2024",61,"Spirometria semplice","89.37.1",95,49,3,3,4,3,40,29
+"160115","2024","07-11 OTTOBRE 2024",62,"Spirometria globale","89.37.2",41,30,4,4,8,6,17,5
+"160115","2024","07-11 OTTOBRE 2024",63,"Fotografia del fundus","95.11",1,1,,,,,1,1
+"160115","2024","07-11 OTTOBRE 2024",64,"ELETTROMIOGRAFIA SEMPLICE [EMG] PER ARTO SUPERIORE. Analisi qualitativa fino a 6 muscoli. Non associabile a 93.09.1 e 93.09.2","93.08.1",74,64,2,2,8,2,50,48
+"160115","2024","07-11 OTTOBRE 2024",65,"ELETTROMIOGRAFIA SEMPLICE [EMG] PER ARTO INFERIORE fino a 4 muscoli. Analisi qualitativa. Non associabile a 93.09.1 e 93.09.2","93.08.1",56,46,3,3,6,2,37,35
+"160115","2024","07-11 OTTOBRE 2024","66 - 67","ELETTROMIOGRAFIA SEMPLICE [EMG] DEL CAPO fino a 4 muscoli. Analisi qualitativa. Escluso: EMG dell'occhio (95.25) e POLISONNOGRAFIA (89.17)","93.08.1",13,12,1,1,,,10,5
+"160115","2024","07-11 OTTOBRE 2024",,"ELETTROMIOGRAFIA SEMPLICE [EMG] DEL TRONCO. Analisi qualitativa. Fino a 4 muscoli",,,,,,,,,
+"160115","2024","07-11 OTTOBRE 2024",68,"VALUTAZIONE EMG DINAMICA DEL CAMMINO. Valutazione EMG di superficie o con elettrodi a filo (4 muscoli), associato ad esame basografico per la definizione delle fasi del passo. Non associabile a ANALISI DELLA CINEMATICA E DELLA DINAMICA DEL PASSO (93.05.7)","93.08.1",,,,,,,,
+"160115","2024","07-11 OTTOBRE 2024",69,"EMG DINAMICA DELL'ARTO SUPERIORE. Valutazione EMG di superficie o con elettrodi a filo (4 muscoli)","93.08.1",,,,,,,,
+"160116","2024","07-11 OTTOBRE 2024",1,"Prima Visita cardiologica","89.7",474,414,59,55,61,10,283,70
+"160116","2024","07-11 OTTOBRE 2024",2,"Prima Visita chirurgia vascolare","89.7",62,60,4,4,4,3,49,27
+"160116","2024","07-11 OTTOBRE 2024",3,"Prima Visita endocrinologica","89.7",258,238,53,51,50,26,114,43
+"160116","2024","07-11 OTTOBRE 2024",4,"Prima Visita neurologica","89.13",288,219,28,28,31,8,153,138
+"160116","2024","07-11 OTTOBRE 2024",5,"Prima Visita oculistica","95.02",583,552,35,35,43,19,463,95
+"160116","2024","07-11 OTTOBRE 2024",6,"Prima Visita ortopedica","89.7",337,320,39,39,42,19,229,62
+"160116","2024","07-11 OTTOBRE 2024",7,"Prima Visita ginecologica","89.26",220,208,19,19,16,10,172,61
+"160116","2024","07-11 OTTOBRE 2024",8,"Prima Visita otorinolaringoiatrica","89.7",444,428,57,55,72,10,296,70
+"160116","2024","07-11 OTTOBRE 2024",9,"Prima Visita urologica","89.7",105,77,5,5,8,5,61,22
+"160116","2024","07-11 OTTOBRE 2024",10,"Prima Visita dermatologica","89.7",502,489,62,61,69,28,351,79
+"160116","2024","07-11 OTTOBRE 2024",11,"Prima Visita fisiatrica","89.7",311,310,31,31,58,33,221,215
+"160116","2024","07-11 OTTOBRE 2024",12,"Prima Visita gastroenterologica","89.7",82,75,4,4,8,4,63,32
+"160116","2024","07-11 OTTOBRE 2024",13,"Prima Visita oncologica","89.7",86,84,8,8,3,3,73,73
+"160116","2024","07-11 OTTOBRE 2024",14,"Prima Visita pneumologica","89.7",157,153,24,24,19,6,105,78
+"160116","2024","07-11 OTTOBRE 2024",15,"Mammografia bilaterale","87.37.1",189,125,21,21,,,104,104
+"160116","2024","07-11 OTTOBRE 2024",16,"Mammografia monolaterale","87.37.2",6,3,,,,,3,3
+"160116","2024","07-11 OTTOBRE 2024",17,"TC del Torace","87.41",140,138,9,9,21,21,108,85
+"160116","2024","07-11 OTTOBRE 2024",18,"TC del Torace senza e con MDC","87.41.1",148,140,12,12,10,10,117,83
+"160116","2024","07-11 OTTOBRE 2024",19,"TC dell’addome superiore","88.01.1",3,3,2,2,,,1,1
+"160116","2024","07-11 OTTOBRE 2024",20,"TC dell’addome superiore senza e con MDC","88.01.2",5,4,2,2,,,2,
+"160116","2024","07-11 OTTOBRE 2024",21,"TC dell’addome inferiore","88.01.3",4,4,1,1,,,3,3
+"160116","2024","07-11 OTTOBRE 2024",22,"TC dell’addome inferiore senza e con MDC","88.01.4",5,4,1,1,,,3,1
+"160116","2024","07-11 OTTOBRE 2024",23,"TC dell’addome completo","88.01.5",32,30,2,2,7,7,21,18
+"160116","2024","07-11 OTTOBRE 2024",24,"TC dell’addome completo senza e con MDC","88.01.6",167,161,21,21,17,17,123,82
+"160116","2024","07-11 OTTOBRE 2024",25,"TC Cranio - encefalo","87.03",119,119,16,16,19,19,79,75
+"160116","2024","07-11 OTTOBRE 2024",26,"TC Cranio - encefalo senza e con MDC","87.03.1",47,45,2,2,2,2,41,31
+"160116","2024","07-11 OTTOBRE 2024",27,"TC del rachide e dello speco vertebrale cervicale","88.38.1",9,9,1,1,3,3,5,5
+"160116","2024","07-11 OTTOBRE 2024",28,"TC del rachide e dello speco vertebrale toracico","88.38.1",5,5,,,,,5,5
+"160116","2024","07-11 OTTOBRE 2024",29,"TC del rachide e dello speco vertebrale lombosacrale","88.38.1",22,21,,,2,2,19,19
+"160116","2024","07-11 OTTOBRE 2024",30,"TC del rachide e dello speco vertebrale cervicale senza e con MDC","88.38.2",,,,,,,,
+"160116","2024","07-11 OTTOBRE 2024",31,"TC del rachide e dello speco vertebrale toracico senza e con MDC","88.38.2",,,,,,,,
+"160116","2024","07-11 OTTOBRE 2024",32,"TC del rachide e dello speco vertebrale lombosacrale senza e con MDC","88.38.2",,,,,,,,
+"160116","2024","07-11 OTTOBRE 2024",33,"TC di Bacino e articolazioni sacroiliache","88.38.5",4,4,,,2,2,2,2
+"160116","2024","07-11 OTTOBRE 2024",34,"RM di encefalo e tronco encefalico, giunzione cranio spinale e relativo distretto vascolare","88.91.1",20,16,5,5,1,1,9,9
+"160116","2024","07-11 OTTOBRE 2024",35,"RM di encefalo e tronco encefalico, giunzione cranio spinale e relativo distretto vascolare senza e con MDC","88.91.2",40,39,3,3,6,6,28,9
+"160116","2024","07-11 OTTOBRE 2024",36,"RM di addome inferiore e scavo pelvico","88.95.4",2,2,,,,,2,
+"160116","2024","07-11 OTTOBRE 2024",37,"RM di addome inferiore e scavo pelvico senza e con MDC","88.95.5",45,44,2,2,3,3,39,13
+"160116","2024","07-11 OTTOBRE 2024",38,"RM della colonna in toto","88.93",1,1,,,,,1,
+"160116","2024","07-11 OTTOBRE 2024",39,"RM della colonna in toto senza e con MDC","88.93.1",1,1,,,,,1,1
+"160116","2024","07-11 OTTOBRE 2024",40,"Diagnostica ecografica del capo e del collo","88.71.4",189,186,12,11,15,15,155,22
+"160116","2024","07-11 OTTOBRE 2024",41,"Eco (color) dopplergrafia cardiaca","88.72.3",90,61,4,2,6,6,51,37
+"160116","2024","07-11 OTTOBRE 2024",42,"Eco (color) dopplergrafia dei tronchi sovra aortici","88.73.5",258,249,5,5,11,11,232,147
+"160116","2024","07-11 OTTOBRE 2024",43,"Ecografia dell’addome superiore","88.74.1",55,53,5,5,3,3,45,15
+"160116","2024","07-11 OTTOBRE 2024",44,"Ecografia dell’addome inferiore","88.75.1",16,15,,,2,2,13,6
+"160116","2024","07-11 OTTOBRE 2024",45,"Ecografia dell’addome completo","88.76.1",317,313,25,24,24,24,253,76
+"160116","2024","07-11 OTTOBRE 2024",46,"Ecografia bilaterale della mammella","88.73.1",211,131,19,19,2,2,110,109
+"160116","2024","07-11 OTTOBRE 2024",47,"Ecografia monolaterale della mammella","88.73.2",3,3,,,,,3,3
+"160116","2024","07-11 OTTOBRE 2024",48,"Ecografia ostetrica","88.78",84,84,,,3,3,81,71
+"160116","2024","07-11 OTTOBRE 2024",49,"Ecografia ginecologica","88.78.2",46,46,4,4,5,5,36,5
+"160116","2024","07-11 OTTOBRE 2024",50,"Ecocolor doppler degli arti inferiori arterioso e/o venoso","88.77.2",194,189,17,17,10,10,159,99
+"160116","2024","07-11 OTTOBRE 2024",51,"Colonscopia totale con endoscopio flessibile","45.23",107,101,12,12,14,14,75,60
+"160116","2024","07-11 OTTOBRE 2024",52,"Polipectomia dell’intestino crasso in corso di endoscopia sede unica","45.42",,,,,,,,
+"160116","2024","07-11 OTTOBRE 2024",53,"Rettosigmoidoscopia con endoscopio flessibile","45.24",1,1,,,,,1,1
+"160116","2024","07-11 OTTOBRE 2024",54,"Esofagogastroduodenoscopia","45.13",106,101,7,7,6,6,88,51
+"160116","2024","07-11 OTTOBRE 2024",55,"Esofagogastroduodenoscopia con biopsia in sede unica","45.16",8,8,2,2,,,6,1
+"160116","2024","07-11 OTTOBRE 2024",56,"Elettrocardiogramma","89.52",613,552,69,65,70,70,400,165
+"160116","2024","07-11 OTTOBRE 2024",57,"Elettrocardiogramma dinamico (Holter)","89.50",149,148,4,4,23,23,121,116
+"160116","2024","07-11 OTTOBRE 2024",58,"Test cardiovascolare da sforzo con cicloergometro o con pedana mobile","89.41 - 89.43",69,65,,,1,1,64,24
+"160116","2024","07-11 OTTOBRE 2024",59,"Altri test cardiovascolari da sforzo","89.44",,,,,,,,
+"160116","2024","07-11 OTTOBRE 2024",60,"Esame audiometrico tonale","95.41.1",202,191,8,8,9,9,174,78
+"160116","2024","07-11 OTTOBRE 2024",61,"Spirometria semplice","89.37.1",77,68,9,9,10,10,49,49
+"160116","2024","07-11 OTTOBRE 2024",62,"Spirometria globale","89.37.2",19,13,1,1,6,6,6,5
+"160116","2024","07-11 OTTOBRE 2024",63,"Fotografia del fundus","95.11",,,,,,,,
+"160116","2024","07-11 OTTOBRE 2024",64,"ELETTROMIOGRAFIA SEMPLICE [EMG] PER ARTO SUPERIORE. Analisi qualitativa fino a 6 muscoli. Non associabile a 93.09.1 e 93.09.2","93.08.1",15,15,,,,,15,9
+"160116","2024","07-11 OTTOBRE 2024",65,"ELETTROMIOGRAFIA SEMPLICE [EMG] PER ARTO INFERIORE fino a 4 muscoli. Analisi qualitativa. Non associabile a 93.09.1 e 93.09.2","93.08.1",2,2,,,,,2,2
+"160116","2024","07-11 OTTOBRE 2024","66 - 67","ELETTROMIOGRAFIA SEMPLICE [EMG] DEL CAPO fino a 4 muscoli. Analisi qualitativa. Escluso: EMG dell'occhio (95.25) e POLISONNOGRAFIA (89.17)","93.08.1",,,,,,,,
+"160116","2024","07-11 OTTOBRE 2024",,"ELETTROMIOGRAFIA SEMPLICE [EMG] DEL TRONCO. Analisi qualitativa. Fino a 4 muscoli",,,,,,,,,
+"160116","2024","07-11 OTTOBRE 2024",68,"VALUTAZIONE EMG DINAMICA DEL CAMMINO. Valutazione EMG di superficie o con elettrodi a filo (4 muscoli), associato ad esame basografico per la definizione delle fasi del passo. Non associabile a ANALISI DELLA CINEMATICA E DELLA DINAMICA DEL PASSO (93.05.7)","93.08.1",,,,,,,,
+"160116","2024","07-11 OTTOBRE 2024",69,"EMG DINAMICA DELL'ARTO SUPERIORE. Valutazione EMG di superficie o con elettrodi a filo (4 muscoli)","93.08.1",,,,,,,,
+"160112","2024","07-11 OTTOBRE 2024",1,"Prima Visita cardiologica","89.7",337,193,56,15,36,25,100,66
+"160112","2024","07-11 OTTOBRE 2024",2,"Prima Visita chirurgia vascolare","89.7",58,33,10,6,1,1,21,20
+"160112","2024","07-11 OTTOBRE 2024",3,"Prima Visita endocrinologica","89.7",325,279,42,11,22,9,213,37
+"160112","2024","07-11 OTTOBRE 2024",4,"Prima Visita neurologica","89.13",193,167,23,16,31,11,112,55
+"160112","2024","07-11 OTTOBRE 2024",5,"Prima Visita oculistica","95.02",370,249,17,11,27,20,205,138
+"160112","2024","07-11 OTTOBRE 2024",6,"Prima Visita ortopedica","89.7",286,268,28,16,37,19,202,89
+"160112","2024","07-11 OTTOBRE 2024",7,"Prima Visita ginecologica","89.26",104,41,5,5,5,4,31,31
+"160112","2024","07-11 OTTOBRE 2024",8,"Prima Visita otorinolaringoiatrica","89.7",219,130,23,12,23,11,82,53
+"160112","2024","07-11 OTTOBRE 2024",9,"Prima Visita urologica","89.7",170,157,15,4,11,9,130,29
+"160112","2024","07-11 OTTOBRE 2024",10,"Prima Visita dermatologica","89.7",325,165,8,6,16,12,141,76
+"160112","2024","07-11 OTTOBRE 2024",11,"Prima Visita fisiatrica","89.7",495,457,25,20,46,43,385,385
+"160112","2024","07-11 OTTOBRE 2024",12,"Prima Visita gastroenterologica","89.7",82,57,14,6,21,16,21,12
+"160112","2024","07-11 OTTOBRE 2024",13,"Prima Visita oncologica","89.7",59,58,10,10,4,4,42,42
+"160112","2024","07-11 OTTOBRE 2024",14,"Prima Visita pneumologica","89.7",230,194,25,14,30,22,138,123
+"160112","2024","07-11 OTTOBRE 2024",15,"Mammografia bilaterale","87.37.1",160,123,14,14,8,8,101,101
+"160112","2024","07-11 OTTOBRE 2024",16,"Mammografia monolaterale","87.37.2",6,6,,,1,1,5,5
+"160112","2024","07-11 OTTOBRE 2024",17,"TC del Torace","87.41",176,158,18,16,28,28,111,111
+"160112","2024","07-11 OTTOBRE 2024",18,"TC del Torace senza e con MDC","87.41.1",176,147,26,24,24,24,97,97
+"160112","2024","07-11 OTTOBRE 2024",19,"TC dell’addome superiore","88.01.1",1,1,,,,,1,1
+"160112","2024","07-11 OTTOBRE 2024",20,"TC dell’addome superiore senza e con MDC","88.01.2",8,6,2,2,1,1,3,3
+"160112","2024","07-11 OTTOBRE 2024",21,"TC dell’addome inferiore","88.01.3",,,,,,,,
+"160112","2024","07-11 OTTOBRE 2024",22,"TC dell’addome inferiore senza e con MDC","88.01.4",4,4,2,2,1,1,1,1
+"160112","2024","07-11 OTTOBRE 2024",23,"TC dell’addome completo","88.01.5",35,33,4,4,8,8,20,20
+"160112","2024","07-11 OTTOBRE 2024",24,"TC dell’addome completo senza e con MDC","88.01.6",180,150,28,25,23,23,99,99
+"160112","2024","07-11 OTTOBRE 2024",25,"TC Cranio - encefalo","87.03",70,68,9,8,15,15,42,42
+"160112","2024","07-11 OTTOBRE 2024",26,"TC Cranio - encefalo senza e con MDC","87.03.1",78,68,10,10,9,9,49,49
+"160112","2024","07-11 OTTOBRE 2024",27,"TC del rachide e dello speco vertebrale cervicale","88.38.1",10,10,2,2,1,1,7,7
+"160112","2024","07-11 OTTOBRE 2024",28,"TC del rachide e dello speco vertebrale toracico","88.38.1",8,8,2,2,,,6,6
+"160112","2024","07-11 OTTOBRE 2024",29,"TC del rachide e dello speco vertebrale lombosacrale","88.38.1",17,16,3,3,2,2,11,11
+"160112","2024","07-11 OTTOBRE 2024",30,"TC del rachide e dello speco vertebrale cervicale senza e con MDC","88.38.2",,,,,,,,
+"160112","2024","07-11 OTTOBRE 2024",31,"TC del rachide e dello speco vertebrale toracico senza e con MDC","88.38.2",,,,,,,,
+"160112","2024","07-11 OTTOBRE 2024",32,"TC del rachide e dello speco vertebrale lombosacrale senza e con MDC","88.38.2",1,1,,,,,1,1
+"160112","2024","07-11 OTTOBRE 2024",33,"TC di Bacino e articolazioni sacroiliache","88.38.5",3,3,1,1,1,1,1,1
+"160112","2024","07-11 OTTOBRE 2024",34,"RM di encefalo e tronco encefalico, giunzione cranio spinale e relativo distretto vascolare","88.91.1",30,30,7,1,21,21,2,2
+"160112","2024","07-11 OTTOBRE 2024",35,"RM di encefalo e tronco encefalico, giunzione cranio spinale e relativo distretto vascolare senza e con MDC","88.91.2",100,94,19,9,56,56,19,19
+"160112","2024","07-11 OTTOBRE 2024",36,"RM di addome inferiore e scavo pelvico","88.95.4",9,9,1,1,4,4,4,4
+"160112","2024","07-11 OTTOBRE 2024",37,"RM di addome inferiore e scavo pelvico senza e con MDC","88.95.5",42,40,1,,22,22,16,16
+"160112","2024","07-11 OTTOBRE 2024",38,"RM della colonna in toto","88.93",2,2,,,,,2,2
+"160112","2024","07-11 OTTOBRE 2024",39,"RM della colonna in toto senza e con MDC","88.93.1",,,,,,,,
+"160112","2024","07-11 OTTOBRE 2024",40,"Diagnostica ecografica del capo e del collo","88.71.4",240,220,26,22,15,10,178,82
+"160112","2024","07-11 OTTOBRE 2024",41,"Eco (color) dopplergrafia cardiaca","88.72.3",75,67,4,4,5,4,58,52
+"160112","2024","07-11 OTTOBRE 2024",42,"Eco (color) dopplergrafia dei tronchi sovra aortici","88.73.5",498,470,15,8,27,26,428,403
+"160112","2024","07-11 OTTOBRE 2024",43,"Ecografia dell’addome superiore","88.74.1",50,48,5,1,5,5,38,24
+"160112","2024","07-11 OTTOBRE 2024",44,"Ecografia dell’addome inferiore","88.75.1",29,27,1,1,5,4,21,14
+"160112","2024","07-11 OTTOBRE 2024",45,"Ecografia dell’addome completo","88.76.1",334,301,60,42,55,52,186,125
+"160112","2024","07-11 OTTOBRE 2024",46,"Ecografia bilaterale della mammella","88.73.1",116,75,10,10,10,10,55,51
+"160112","2024","07-11 OTTOBRE 2024",47,"Ecografia monolaterale della mammella","88.73.2",1,1,,,1,1,,
+"160112","2024","07-11 OTTOBRE 2024",48,"Ecografia ostetrica","88.78",19,19,1,1,4,4,14,14
+"160112","2024","07-11 OTTOBRE 2024",49,"Ecografia ginecologica","88.78.2",5,4,,,,,4,3
+"160112","2024","07-11 OTTOBRE 2024",50,"Ecocolor doppler degli arti inferiori arterioso e/o venoso","88.77.2",151,137,20,15,11,9,104,42
+"160112","2024","07-11 OTTOBRE 2024",51,"Colonscopia totale con endoscopio flessibile","45.23",81,77,12,1,16,12,49,5
+"160112","2024","07-11 OTTOBRE 2024",52,"Polipectomia dell’intestino crasso in corso di endoscopia sede unica","45.42",5,4,2,2,,,2,2
+"160112","2024","07-11 OTTOBRE 2024",53,"Rettosigmoidoscopia con endoscopio flessibile","45.24",,,,,,,,
+"160112","2024","07-11 OTTOBRE 2024",54,"Esofagogastroduodenoscopia","45.13",70,66,7,6,10,9,49,6
+"160112","2024","07-11 OTTOBRE 2024",55,"Esofagogastroduodenoscopia con biopsia in sede unica","45.16",77,73,13,12,17,13,43,6
+"160112","2024","07-11 OTTOBRE 2024",56,"Elettrocardiogramma","89.52",440,295,59,19,43,33,191,158
+"160112","2024","07-11 OTTOBRE 2024",57,"Elettrocardiogramma dinamico (Holter)","89.50",101,80,12,9,10,9,58,49
+"160112","2024","07-11 OTTOBRE 2024",58,"Test cardiovascolare da sforzo con cicloergometro o con pedana mobile","89.41 - 89.43",22,22,1,,2,1,19,17
+"160112","2024","07-11 OTTOBRE 2024",59,"Altri test cardiovascolari da sforzo","89.44",,,,,,,,
+"160112","2024","07-11 OTTOBRE 2024",60,"Esame audiometrico tonale","95.41.1",192,174,3,3,11,11,160,160
+"160112","2024","07-11 OTTOBRE 2024",61,"Spirometria semplice","89.37.1",154,126,10,5,18,12,98,91
+"160112","2024","07-11 OTTOBRE 2024",62,"Spirometria globale","89.37.2",67,54,4,3,4,3,46,33
+"160112","2024","07-11 OTTOBRE 2024",63,"Fotografia del fundus","95.11",1,1,,,,,1,1
+"160112","2024","07-11 OTTOBRE 2024",64,"ELETTROMIOGRAFIA SEMPLICE [EMG] PER ARTO SUPERIORE. Analisi qualitativa fino a 6 muscoli. Non associabile a 93.09.1 e 93.09.2","93.08.1",7,6,1,,2,2,3,2
+"160112","2024","07-11 OTTOBRE 2024",65,"ELETTROMIOGRAFIA SEMPLICE [EMG] PER ARTO INFERIORE fino a 4 muscoli. Analisi qualitativa. Non associabile a 93.09.1 e 93.09.2","93.08.1",9,9,4,,4,4,1,1
+"160112","2024","07-11 OTTOBRE 2024","66 - 67","ELETTROMIOGRAFIA SEMPLICE [EMG] DEL CAPO fino a 4 muscoli. Analisi qualitativa. Escluso: EMG dell'occhio (95.25) e POLISONNOGRAFIA (89.17)","93.08.1",,,,,,,,
+"160112","2024","07-11 OTTOBRE 2024",,"ELETTROMIOGRAFIA SEMPLICE [EMG] DEL TRONCO. Analisi qualitativa. Fino a 4 muscoli",,,,,,,,,
+"160112","2024","07-11 OTTOBRE 2024",68,"VALUTAZIONE EMG DINAMICA DEL CAMMINO. Valutazione EMG di superficie o con elettrodi a filo (4 muscoli), associato ad esame basografico per la definizione delle fasi del passo. Non associabile a ANALISI DELLA CINEMATICA E DELLA DINAMICA DEL PASSO (93.05.7)","93.08.1",,,,,,,,
+"160112","2024","07-11 OTTOBRE 2024",69,"EMG DINAMICA DELL'ARTO SUPERIORE. Valutazione EMG di superficie o con elettrodi a filo (4 muscoli)","93.08.1",,,,,,,,
